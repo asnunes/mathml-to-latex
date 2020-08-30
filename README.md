@@ -1,1 +1,1 @@
-# mathml2latex
+# mathml-to-latex

@@ -1,0 +1,26 @@
+{
+  "name": "mathml2latex",
+  "version": "1.0.0",
+  "description": "A JavaScript tool to convert mathml string to LaTeX string",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asnunes/mathml2latex.git"
+  },
+  "keywords": [
+    "mathml",
+    "latex",
+    "convert",
+    "parser",
+    "mathml2latex"
+  ],
+  "author": "Alexandre Nunes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/asnunes/mathml2latex/issues"
+  },
+  "homepage": "https://github.com/asnunes/mathml2latex#readme"
+}

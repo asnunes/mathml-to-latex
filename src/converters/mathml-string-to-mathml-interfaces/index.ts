@@ -1,0 +1,1 @@
+export { MathMLStringToMathMLInterfaces } from './MathMLStringToMathMLInterfaces';

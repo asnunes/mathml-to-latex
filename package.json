@@ -1,26 +1,52 @@
 {
-  "name": "mathml2latex",
+  "name": "mathml-to-latex",
   "version": "1.0.0",
   "description": "A JavaScript tool to convert mathml string to LaTeX string",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "watch": "tsc -w",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix"
+    ]
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/asnunes/mathml2latex.git"
+    "url": "git+https://github.com/asnunes/mathml-to-latex.git"
   },
   "keywords": [
     "mathml",
     "latex",
     "convert",
     "parser",
-    "mathml2latex"
+    "mathml-to-latex"
   ],
   "author": "Alexandre Nunes",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/asnunes/mathml2latex/issues"
+    "url": "https://github.com/asnunes/mathml-to-latex/issues"
   },
-  "homepage": "https://github.com/asnunes/mathml2latex#readme"
+  "homepage": "https://github.com/asnunes/mathml-to-latex#readme",
+  "devDependencies": {
+    "@types/jest": "24.9.0",
+    "@types/xmldom": "^0.1.30",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
+    "eslint": "^7.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "24.9.0",
+    "prettier": "^2.1.1",
+    "ts-jest": "^26.3.0",
+    "typescript": "^4.0.2"
+  }
 }

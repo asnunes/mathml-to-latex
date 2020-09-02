@@ -16,7 +16,7 @@ export class ElementsToMathMLInterfacesConvertor {
 
   private _convertElementAttributes(attributes: NamedNodeMap): Record<string, string> {
     return Array.from(attributes).reduce(
-      (acc, attr: Attr) => Object.assign({ [attr.nodeName]: attr.nodeValue }, acc),
+      (acc, attr: Attr) => Object.assign({ [attr.nodeName]: attr.nodeValue === attr.nodeName ? '' : attr.nodeValue }, acc),
       {},
     );
   }

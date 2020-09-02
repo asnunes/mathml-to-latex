@@ -9,8 +9,8 @@ export class ElementsToMathMLInterfacesConvertor {
     return {
       name: el.tagName,
       attributes: el.attributes ? this._convertElementAttributes(el.attributes) : {},
-      value: this._hasChild(el) ? '' : el.textContent || '',
-      children: this._hasChild(el) ? this.convert(Array.from(el.childNodes) as Element[]) : ([] as MathML[]),
+      value: this._hasElementChild(el) ? '' : el.textContent || '',
+      children: this._hasElementChild(el) ? this.convert(Array.from(el.childNodes) as Element[]) : ([] as MathML[]),
     };
   }
 
@@ -21,7 +21,12 @@ export class ElementsToMathMLInterfacesConvertor {
     );
   }
 
-  private _hasChild(el: Element): boolean {
-    return !!el.childNodes && el.childNodes.length !== 0;
+  private _hasElementChild(el: Element): boolean {
+    const childNodes = el.childNodes;
+    return !!childNodes && childNodes.length !== 0 && this._isThereAnyNoTextNode(childNodes);
+  }
+
+  private _isThereAnyNoTextNode(children: NodeListOf<ChildNode>): boolean {
+    return Array.from(children).some(child => child.nodeName !== '#text');
   }
 }

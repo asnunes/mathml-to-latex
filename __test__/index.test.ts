@@ -66,4 +66,83 @@ describe('#convert', () => {
       expect(result).toMatch('2 + 2');
     });
   });
+
+  describe('given math string with msqrt', () => {
+    describe('single mn tag is inside', () => {
+      test('convert msqrt wrapping its content inside sqrt LaTeX command', () => {
+        const mathml = `
+        <root>
+          <math>
+            <msqrt>
+              <mn>2</mn>
+            </msqrt>
+          </math>
+        </root>
+      `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('\\sqrt{2}');
+      });
+    });
+
+    describe('there are many children inside sqrt tag', () => {
+      test('convert msqrt wrapping its content inside sqrt LaTeX command', () => {
+        const mathml = `
+        <root>
+          <math>
+            <msqrt>
+              <mn>2</mn>
+              <mo>+</mo>
+              <mn>2</mn>
+            </msqrt>
+          </math>
+        </root>
+      `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('\\sqrt{2 + 2}');
+      });
+    });
+
+    describe('sqrt tag has single mrow child', () => {
+      test('convert msqrt wrapping its content inside sqrt LaTeX command', () => {
+        const mathml = `
+        <root>
+          <math>
+            <msqrt>
+              <mrow>
+                <mn>2</mn>
+                <mo>+</mo>
+                <mn>2</mn>
+              </mrow>
+            </msqrt>
+          </math>
+        </root>
+      `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('\\sqrt{2 + 2}');
+      });
+    });
+
+    describe('there is no content inside msqrt', () => {
+      test('empty sqrt is given', () => {
+        const mathml = `
+        <root>
+          <math>
+            <msqrt>
+            </msqrt>
+          </math>
+        </root>
+      `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('\\sqrt{}');
+      });
+    });
+  });
 });

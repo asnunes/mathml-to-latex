@@ -1,4 +1,4 @@
-import { Math, MathMLTag, MI, MO, MN, MRow } from './mathml-tags';
+import { Math, MathMLTag, MI, MO, MN, MSqrt, MRow } from './mathml-tags';
 
 export class Dispatcher {
   private _name: string;
@@ -23,6 +23,8 @@ export class Dispatcher {
         return new MO(this._value, this._attributes, this._children);
       case 'mn':
         return new MN(this._value, this._attributes, this._children);
+      case 'msqrt':
+        return new MSqrt(this._value, this._attributes, this._children);
       case 'mrow':
         return new MRow(this._value, this._attributes, this._children);
       default:

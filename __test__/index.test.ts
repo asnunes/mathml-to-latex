@@ -239,4 +239,76 @@ describe('#convert', () => {
       });
     });
   });
+
+  describe('given math string with mfenced with single content and no attr', () => {
+    test('convert mfenced wrapping it content in dots', () => {
+      const mathml = `
+        <root>
+          <math>
+          <mfenced>
+            <mn>3</mn>
+          </mfenced>
+          </math>
+        </root>
+      `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toMatch('\\left.3\\right.');
+    });
+  });
+
+  describe('given math string with mfenced with single content and open attribute in parenthesis char', () => {
+    test('convert mfenced wrapping it content between parenthesis and dot', () => {
+      const mathml = `
+        <root>
+          <math>
+          <mfenced open="(">
+            <mn>3</mn>
+          </mfenced>
+          </math>
+        </root>
+      `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toMatch('\\left(3\\right.');
+    });
+  });
+
+  describe('given math string with mfenced with single content and open and closes attributes in parenthesis char', () => {
+    test('convert mfenced wrapping it content between parenthesis', () => {
+      const mathml = `
+        <root>
+          <math>
+          <mfenced open="(" close=")">
+            <mn>3</mn>
+          </mfenced>
+          </math>
+        </root>
+      `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toMatch('\\left(3\\right)');
+    });
+  });
+
+  describe('given math string with mfenced with single content and open attribute in parenthesis char and close attribute without value', () => {
+    test('convert mfenced wrapping it content between parenthesis', () => {
+      const mathml = `
+        <root>
+          <math>
+          <mfenced open="(" close>
+            <mn>3</mn>
+          </mfenced>
+          </math>
+        </root>
+      `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toMatch('\\left(3\\right.');
+    });
+  });
 });

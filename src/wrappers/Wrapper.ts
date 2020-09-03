@@ -1,9 +1,9 @@
 export abstract class Wrapper {
-  protected abstract _openChar: string;
-  protected abstract _closeChar: string;
+  protected abstract _open: string;
+  protected abstract _close: string;
 
   wrap(str: string): string {
-    return this._openChar + str + this._closeChar;
+    return this._open + str + this._close;
   }
 
   wrapIfMoreThanOneChar(str: string): string {

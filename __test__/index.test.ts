@@ -30,4 +30,20 @@ describe('#convert', () => {
       expect(result).toBe('a');
     });
   });
+
+  describe('given math string with mo tag with simple operator', () => {
+    test('convert mo passing it operator as string', () => {
+      const mathml = `
+        <root>
+          <math>
+            <mo>+</mo>
+          </math>
+        </root>
+      `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toMatch('+');
+    });
+  });
 });

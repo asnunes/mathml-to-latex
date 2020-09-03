@@ -1,4 +1,4 @@
-import { Math, MathMLTag, MI } from './mathml-tags';
+import { Math, MathMLTag, MI, MO } from './mathml-tags';
 
 export class Dispatcher {
   private _name: string;
@@ -19,6 +19,8 @@ export class Dispatcher {
         return new Math(this._value, this._attributes, this._children);
       case 'mi':
         return new MI(this._value, this._attributes, this._children);
+      case 'mo':
+        return new MO(this._value, this._attributes, this._children);
       default:
         return new MathMLTag(this._name, this._value, this._attributes, this._children);
     }

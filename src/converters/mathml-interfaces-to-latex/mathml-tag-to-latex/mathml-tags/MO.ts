@@ -9,8 +9,4 @@ export class MO extends MathMLTag {
     const normalizedValue = this._normalizeWhiteSpaces(this._value);
     return normalizedValue.trim();
   }
-
-  private _normalizeWhiteSpaces(str: string): string {
-    return str.replace(/\s+/g, ' ');
-  }
 }

@@ -1,8 +1,8 @@
 import { MathMLTag } from './MathMLTag';
 
-export class MI extends MathMLTag {
+export class MN extends MathMLTag {
   constructor(value: string, attributes: Record<string, string>, children: MathMLTag[]) {
-    super('mi', value, attributes, children);
+    super('mn', value, attributes, children);
   }
 
   convert(): string {

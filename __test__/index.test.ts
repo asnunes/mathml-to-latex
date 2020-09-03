@@ -46,4 +46,24 @@ describe('#convert', () => {
       expect(result).toMatch('+');
     });
   });
+
+  describe('given math string with mrow tag', () => {
+    test('convert mrow just wrapping its content', () => {
+      const mathml = `
+      <root>
+        <math>
+          <mrow>
+            <mn>2</mn>
+            <mo>+</mo>
+            <mn>2</mn>
+          </mrow>
+        </math>
+      </root>
+    `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toMatch('2 + 2');
+    });
+  });
 });

@@ -1,11 +1,11 @@
 import { MathMLTag } from './MathMLTag';
 
-export class Math extends MathMLTag {
+export class MRow extends MathMLTag {
   constructor(value: string, attributes: Record<string, string>, children: MathMLTag[]) {
-    super('math', value, attributes, children);
+    super('mrow', value, attributes, children);
   }
 
   convert(): string {
-    return this._normalizeWhiteSpaces(this._mapChildrenToLaTeX().join(''));
+    return this._mapChildrenToLaTeX().join(' ');
   }
 }

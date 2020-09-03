@@ -18,4 +18,8 @@ export class MathMLTag {
   protected _mapChildrenToLaTeX(): string[] {
     return this._children.map((mathMLTag) => mathMLTag.convert());
   }
+
+  protected _normalizeWhiteSpaces(str: string): string {
+    return str.replace(/\s+/g, ' ');
+  }
 }

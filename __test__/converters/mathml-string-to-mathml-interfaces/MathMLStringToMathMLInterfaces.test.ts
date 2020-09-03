@@ -1,4 +1,4 @@
-import { MathMLStringToMathMLInterfaces } from '../../../src/converters/mathml-string-to-mathml-interfaces';
+import MathMLStringToMathMLInterfaces from '../../../src/converters/mathml-string-to-mathml-interfaces';
 import {
   singleMi,
   singleMiNoRoot,

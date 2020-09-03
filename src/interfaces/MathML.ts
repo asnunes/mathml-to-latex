@@ -1,6 +1,6 @@
 export interface MathML {
   name: string;
-  attributes: Object,
-  value: string,
-  children: MathML[]
+  attributes: Record<string, string>;
+  value: string;
+  children: MathML[];
 }

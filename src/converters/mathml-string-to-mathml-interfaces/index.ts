@@ -1,1 +1,2 @@
-export { MathMLStringToMathMLInterfaces } from './MathMLStringToMathMLInterfaces';
+import { MathMLStringToMathMLInterfaces } from './MathMLStringToMathMLInterfaces';
+export default MathMLStringToMathMLInterfaces;

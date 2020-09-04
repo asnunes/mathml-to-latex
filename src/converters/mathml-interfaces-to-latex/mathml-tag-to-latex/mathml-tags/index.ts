@@ -7,3 +7,4 @@ export { MSqrt } from './MSqrt';
 export { MRow } from './MRow';
 export { MSup } from './MSup';
 export { MFenced } from './MFenced';
+export { MFrac } from './MFrac';

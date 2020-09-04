@@ -395,4 +395,77 @@ describe('#convert', () => {
       });
     });
   });
+
+  describe('given mfrac tag', () => {
+    describe('containing single char contents', () => {
+      test('convert mfrac wrap inside \\frac command', () => {
+        const mathml = `
+          <root>
+            <math>
+              <mfrac>
+                <mi>x</mi>
+                <mn>3</mn>
+              </mfrac>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('\\frac{x}{3}');
+      });
+    });
+  });
+
+  describe('containing multiple char contents', () => {
+    test('convert mfrac wrap inside \\frac command', () => {
+      const mathml = `
+        <root>
+          <math>
+            <mfrac>
+              <mrow>
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>2</mi>
+              </mrow>
+              <mrow>
+                <mi>b</mi>
+                <mo>-</mo>
+                <mi>3</mi>
+              </mrow>
+            </mfrac>
+          </math>
+        </root>
+      `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toMatch('\\frac{a + 2}{b - 3}');
+    });
+  });
+
+  describe('containing two contents with bevelled attribute marked as true', () => {
+    test('convert mfrac joining its two char contents with //', () => {
+      const mathml = `
+        <root>
+          <math>
+            <mfrac bevelled="true">
+              <mn>1</mn>
+              <mrow>
+                <msup>
+                  <mi>x</mi>
+                  <mn>3</mn>
+                </msup>
+                <mo>+</mo>
+                <mn>3</mn>
+              </mrow>
+            </mfrac>
+          </math>
+        </root>
+      `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+      expect(result).toMatch('1/\\left(x^{3} + 3\\right)');
+    });
+  });
 });

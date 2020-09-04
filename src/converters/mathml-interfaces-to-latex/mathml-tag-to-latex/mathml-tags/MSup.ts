@@ -1,5 +1,6 @@
 import { MathMLTag } from './MathMLTag';
 import { BracketWrapper, ParenthesisWrapper } from '../../../../../utils/wrappers';
+import { InvalidNumberOfChild } from '../../../../errors';
 
 export class MSup extends MathMLTag {
   constructor(value: string, attributes: Record<string, string>, children: MathMLTag[]) {
@@ -7,17 +8,11 @@ export class MSup extends MathMLTag {
   }
 
   convert(): string {
-    if (this._children.length !== 2) throw new InvalidNumberOfChild(this._children.length);
+    if (this._children.length !== 2) throw new InvalidNumberOfChild(this._name, 2, this._children.length);
 
     const base = this._children[0].convert();
     const exponent = this._children[1].convert();
 
     return `${new ParenthesisWrapper().wrapIfMoreThanOneChar(base)}^${new BracketWrapper().wrap(exponent)}`;
-  }
-}
-
-class InvalidNumberOfChild extends Error {
-  constructor(numberOfChild: number) {
-    super(`msup tag must have exactly 2 children. It's actually ${numberOfChild}`);
   }
 }

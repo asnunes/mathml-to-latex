@@ -240,75 +240,159 @@ describe('#convert', () => {
     });
   });
 
-  describe('given math string with mfenced with single content and no attr', () => {
-    test('convert mfenced wrapping it content in dots', () => {
-      const mathml = `
-        <root>
-          <math>
-          <mfenced>
-            <mn>3</mn>
-          </mfenced>
-          </math>
-        </root>
-      `;
+  describe('given mfenced tag', () => {
+    describe('with single content and no attr', () => {
+      test('convert mfenced wrapping it content in dots', () => {
+        const mathml = `
+          <root>
+            <math>
+            <mfenced>
+              <mn>3</mn>
+            </mfenced>
+            </math>
+          </root>
+        `;
 
-      const result = MathMLToLaTeX.convert(mathml);
+        const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toMatch('\\left.3\\right.');
+        expect(result).toMatch('\\left(3\\right)');
+      });
     });
-  });
 
-  describe('given math string with mfenced with single content and open attribute in parenthesis char', () => {
-    test('convert mfenced wrapping it content between parenthesis and dot', () => {
-      const mathml = `
-        <root>
-          <math>
-          <mfenced open="(">
-            <mn>3</mn>
-          </mfenced>
-          </math>
-        </root>
-      `;
+    describe('with single content and open attribute in bracket char', () => {
+      test('convert mfenced wrapping it content between bracket and parenthesis', () => {
+        const mathml = `
+          <root>
+            <math>
+            <mfenced open="{">
+              <mn>3</mn>
+            </mfenced>
+            </math>
+          </root>
+        `;
 
-      const result = MathMLToLaTeX.convert(mathml);
+        const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toMatch('\\left(3\\right.');
+        expect(result).toMatch('\\left{3\\right)');
+      });
     });
-  });
 
-  describe('given math string with mfenced with single content and open and closes attributes in parenthesis char', () => {
-    test('convert mfenced wrapping it content between parenthesis', () => {
-      const mathml = `
-        <root>
-          <math>
-          <mfenced open="(" close=")">
-            <mn>3</mn>
-          </mfenced>
-          </math>
-        </root>
-      `;
+    describe('with single content and open and closes attributes in parenthesis char', () => {
+      test('convert mfenced wrapping it content between parenthesis', () => {
+        const mathml = `
+          <root>
+            <math>
+            <mfenced open="(" close=")">
+              <mn>3</mn>
+            </mfenced>
+            </math>
+          </root>
+        `;
 
-      const result = MathMLToLaTeX.convert(mathml);
+        const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toMatch('\\left(3\\right)');
+        expect(result).toMatch('\\left(3\\right)');
+      });
     });
-  });
 
-  describe('given math string with mfenced with single content and open attribute in parenthesis char and close attribute without value', () => {
-    test('convert mfenced wrapping it content between parenthesis', () => {
-      const mathml = `
-        <root>
-          <math>
-          <mfenced open="(" close>
-            <mn>3</mn>
-          </mfenced>
-          </math>
-        </root>
-      `;
+    describe('with single content and open attribute in parenthesis char and close attribute without value', () => {
+      test('convert mfenced wrapping it content between bracket and parenthesis', () => {
+        const mathml = `
+          <root>
+            <math>
+            <mfenced open="{" close>
+              <mn>3</mn>
+            </mfenced>
+            </math>
+          </root>
+        `;
 
-      const result = MathMLToLaTeX.convert(mathml);
+        const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toMatch('\\left(3\\right.');
+        expect(result).toMatch('\\left{3\\right)');
+      });
+    });
+
+    describe('with more than one content and no attr', () => {
+      test('convert mfenced wrapping it content inside parenthesis and joining using commas', () => {
+        const mathml = `
+          <root>
+            <math>
+            <mfenced>
+              <mn>3</mn>
+              <mn>2</mn>
+              <mn>1</mn>
+            </mfenced>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('\\left(3,2,1\\right)');
+      });
+    });
+
+    describe('with four contents with separator attribute as empty string', () => {
+      test('convert mfenced wrapping it content inside parentheses and joining using commas', () => {
+        const mathml = `
+          <root>
+            <math>
+            <mfenced separators=''>
+              <mn>3</mn>
+              <mn>2</mn>
+              <mn>1</mn>
+              <mn>7</mn>
+            </mfenced>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('\\left(3,2,1,7\\right)');
+      });
+    });
+
+    describe("with mfenced with three contents with separator attribute ';;;'", () => {
+      test("parse mfenced wrapping it content inside parentheses and joining using ';'", () => {
+        const mathml = `
+          <root>
+            <math>
+            <mfenced separators=';;;'>
+              <mn>3</mn>
+              <mn>2</mn>
+              <mn>1</mn>
+            </mfenced>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('\\left(3;2;1\\right)');
+      });
+    });
+
+    describe("with four contents with separator attribute ';.'", () => {
+      test("convert mfenced wrapping it content inside parentheses and joining using ';' for the first, '.' for the second and on", () => {
+        const mathml = `
+          <root>
+            <math>
+            <mfenced separators=';.'>
+              <mn>3</mn>
+              <mn>2</mn>
+              <mn>1</mn>
+              <mn>7</mn>
+            </mfenced>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('\\left(3;2.1.7\\right)');
+      });
     });
   });
 });

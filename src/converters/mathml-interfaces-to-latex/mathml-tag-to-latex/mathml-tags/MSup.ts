@@ -1,5 +1,5 @@
 import { MathMLTag } from './MathMLTag';
-import { BracketWrapper, ParenthesisWrapper } from '../../../../wrappers';
+import { BracketWrapper, ParenthesisWrapper } from '../../../../../utils/wrappers';
 
 export class MSup extends MathMLTag {
   constructor(value: string, attributes: Record<string, string>, children: MathMLTag[]) {

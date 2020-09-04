@@ -8,3 +8,4 @@ export { MRow } from './MRow';
 export { MSup } from './MSup';
 export { MFenced } from './MFenced';
 export { MFrac } from './MFrac';
+export { MRoot } from './MRoot';

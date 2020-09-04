@@ -1,4 +1,4 @@
-import { Math, MathMLTag, MI, MO, MN, MSqrt, MRow, MSup, MFenced, MFrac } from './mathml-tags';
+import { Math, MathMLTag, MI, MO, MN, MSqrt, MRow, MSup, MFenced, MFrac, MRoot } from './mathml-tags';
 
 export class Dispatcher {
   private _name: string;
@@ -33,6 +33,8 @@ export class Dispatcher {
         return new MFenced(this._value, this._attributes, this._children);
       case 'mfrac':
         return new MFrac(this._value, this._attributes, this._children);
+      case 'mroot':
+        return new MRoot(this._value, this._attributes, this._children);
       default:
         return new MathMLTag(this._name, this._value, this._attributes, this._children);
     }

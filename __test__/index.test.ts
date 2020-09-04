@@ -468,4 +468,26 @@ describe('#convert', () => {
       expect(result).toMatch('1/\\left(x^{3} + 3\\right)');
     });
   });
+
+  describe('given math string with mroot containing two content', () => {
+    test('convert mroot tag wrapping its contents inside \\sqrt command and root parameter', () => {
+      const mathml = `
+        <root>
+          <math>
+            <mroot>
+              <mrow>
+                <mi>x</mi>
+                <mo>+</mo>
+                <mi>2</mi>
+              </mrow>
+              <mn>3</mn>
+            </mroot> 
+          </math>
+        </root>
+      `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+      expect(result).toMatch('\\sqrt[3]{x + 2}');
+    });
+  });
 });

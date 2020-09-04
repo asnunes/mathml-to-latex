@@ -490,4 +490,24 @@ describe('#convert', () => {
       expect(result).toMatch('\\sqrt[3]{x + 2}');
     });
   });
+
+  describe('given math string with mpadded tag', () => {
+    test('parse mpadded just wrapping its content', () => {
+      const mathml = `
+        <root>
+          <math>
+            <mpadded>
+              <mn>2</mn>
+              <mo>+</mo>
+              <mn>2</mn>
+            </mpadded>
+          </math>
+        </root>
+      `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toMatch('2 + 2');
+    });
+  });
 });

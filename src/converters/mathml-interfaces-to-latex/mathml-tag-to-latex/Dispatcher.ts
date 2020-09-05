@@ -10,6 +10,7 @@ import {
   MFrac,
   MRoot,
   GenericContentWrapperTag,
+  MAction,
 } from './mathml-tags';
 
 export class Dispatcher {
@@ -45,6 +46,8 @@ export class Dispatcher {
         return new MFrac(this._value, this._attributes, this._children);
       case 'mroot':
         return new MRoot(this._value, this._attributes, this._children);
+      case 'maction':
+        return new MAction(this._value, this._attributes, this._children);
       case 'mrow':
       case 'mpadded':
         return new GenericContentWrapperTag(this._name, this._value, this._attributes, this._children);

@@ -510,4 +510,161 @@ describe('#convert', () => {
       expect(result).toMatch('2 + 2');
     });
   });
+
+  describe('given math string with maction tag', () => {
+    describe('without any attribute', () => {
+      test('convert maction just joining its content separating them by =>', () => {
+        const mathml = `
+          <root>
+            <math>
+              <maction>
+                <mrow>
+                  <mi>a</mi>
+                  <mo>+</mo>
+                  <mi>2</mi>
+                </mrow>
+                <mrow>
+                  <mi>b</mi>
+                  <mo>-</mo>
+                  <mi>3</mi>
+                </mrow>
+              </maction>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('a + 2 \\Longrightarrow b - 3');
+      });
+    });
+
+    describe('with toggle attribute', () => {
+      test('convert maction just joining its content separating them by =>', () => {
+        const mathml = `
+          <root>
+            <math>
+              <maction>
+                <mrow>
+                  <mi>a</mi>
+                  <mo>+</mo>
+                  <mi>2</mi>
+                </mrow>
+                <mrow>
+                  <mi>b</mi>
+                  <mo>-</mo>
+                  <mi>3</mi>
+                </mrow>
+                <mrow>
+                  <mi>a</mi>
+                  <mo>+</mo>
+                  <mi>b</mi>
+                </mrow>
+              </maction>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('a + 2 \\Longrightarrow b - 3');
+      });
+    });
+
+    describe('with actiontype attribute as toggle', () => {
+      test('convert maction just joining its content separating them by =>', () => {
+        const mathml = `
+          <root>
+            <math>
+              <maction actiontype="toggle">
+                <mrow>
+                  <mi>a</mi>
+                  <mo>+</mo>
+                  <mi>2</mi>
+                </mrow>
+                <mrow>
+                  <mi>b</mi>
+                  <mo>-</mo>
+                  <mi>3</mi>
+                </mrow>
+                <mrow>
+                  <mi>a</mi>
+                  <mo>+</mo>
+                  <mi>b</mi>
+                </mrow>
+              </maction>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('a + 2 \\Longrightarrow b - 3');
+      });
+    });
+
+    describe('with actiontype attribute as statusline', () => {
+      test('convert maction just taking the first child', () => {
+        const mathml = `
+          <root>
+            <math>
+              <maction actiontype="statusline">
+                <mrow>
+                  <mi>a</mi>
+                  <mo>+</mo>
+                  <mi>2</mi>
+                </mrow>
+                <mrow>
+                  <mi>b</mi>
+                  <mo>-</mo>
+                  <mi>3</mi>
+                </mrow>
+                <mrow>
+                  <mi>a</mi>
+                  <mo>+</mo>
+                  <mi>b</mi>
+                </mrow>
+              </maction>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('a + 2');
+      });
+    });
+
+    describe('with actiontype attribute as tooltip', () => {
+      test('convert maction just taking the first child', () => {
+        const mathml = `
+          <root>
+            <math>
+              <maction actiontype="tooltip">
+                <mrow>
+                  <mi>a</mi>
+                  <mo>+</mo>
+                  <mi>2</mi>
+                </mrow>
+                <mrow>
+                  <mi>b</mi>
+                  <mo>-</mo>
+                  <mi>3</mi>
+                </mrow>
+                <mrow>
+                  <mi>a</mi>
+                  <mo>+</mo>
+                  <mi>b</mi>
+                </mrow>
+              </maction>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('a + 2');
+      });
+    });
+  });
 });

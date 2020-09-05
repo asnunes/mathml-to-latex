@@ -492,7 +492,7 @@ describe('#convert', () => {
   });
 
   describe('given math string with mpadded tag', () => {
-    test('parse mpadded just wrapping its content', () => {
+    test('convert mpadded just wrapping its content', () => {
       const mathml = `
         <root>
           <math>
@@ -664,6 +664,384 @@ describe('#convert', () => {
         const result = MathMLToLaTeX.convert(mathml);
 
         expect(result).toBe('a + 2');
+      });
+    });
+  });
+
+  describe('given math string with menclose tag', () => {
+    describe('without any attribute', () => {
+      test('convert menclose tag just joining its content inside long division latex equivalent commands', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose>
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>2</mi>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\overline{\\left.\\right)a + 2}');
+      });
+    });
+
+    describe('with notation attribute as longdiv', () => {
+      test('convert menclose tag just joining its content inside long division latex equivalent commands', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="longdiv">
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>2</mi>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\overline{\\left.\\right)a + 2}');
+      });
+    });
+
+    describe('with notation attribute as actuarial', () => {
+      test('convert menclose tag just joining its content inside actuarial latex equivalent commands', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="actuarial">
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>2</mi>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\overline{\\left.a + 2\\right|}');
+      });
+    });
+
+    describe('with notation attribute as box', () => {
+      test('convert menclose tag just joining its content inside boxed command', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="box">
+                <mrow>
+                  <mi>E</mi>
+                  <mo>=</mo>
+                  <mi>m</mi>
+                  <msup>
+                    <mi>c</mi>
+                    <mn>2</mn>
+                  </msup>
+                </mrow>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\boxed{E = m c^{2}}');
+      });
+    });
+
+    describe('with notation attribute as roundedbox', () => {
+      test('convert menclose tag just joining its content inside boxed command', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="roundedbox">
+                <mrow>
+                  <mi>E</mi>
+                  <mo>=</mo>
+                  <mi>m</mi>
+                  <msup>
+                    <mi>c</mi>
+                    <mn>2</mn>
+                  </msup>
+                </mrow>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\boxed{E = m c^{2}}');
+      });
+    });
+
+    describe('with notation attribute as circle', () => {
+      test('convert menclose tag just joining its content inside boxed command', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="circle">
+                <mrow>
+                  <mi>E</mi>
+                  <mo>=</mo>
+                  <mi>m</mi>
+                  <msup>
+                    <mi>c</mi>
+                    <mn>2</mn>
+                  </msup>
+                </mrow>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\boxed{E = m c^{2}}');
+      });
+    });
+
+    describe('with notation attribute as left', () => {
+      test('convert menclose tag just joining its content with left bar', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="left">
+                <mrow>
+                  <mi>E</mi>
+                  <mo>=</mo>
+                  <mi>m</mi>
+                  <msup>
+                    <mi>c</mi>
+                    <mn>2</mn>
+                  </msup>
+                </mrow>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\left|E = m c^{2}');
+      });
+    });
+
+    describe('with notation attribute as right', () => {
+      test('convert menclose tag just joining its content with right bar', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="right">
+                <mrow>
+                  <mi>E</mi>
+                  <mo>=</mo>
+                  <mi>m</mi>
+                  <msup>
+                    <mi>c</mi>
+                    <mn>2</mn>
+                  </msup>
+                </mrow>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('E = m c^{2}\\right|');
+      });
+    });
+
+    describe('with notation attribute as top', () => {
+      test('convert menclose tag just joining its content with overline command', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="top">
+                <mrow>
+                  <mi>E</mi>
+                  <mo>=</mo>
+                  <mi>m</mi>
+                  <msup>
+                    <mi>c</mi>
+                    <mn>2</mn>
+                  </msup>
+                </mrow>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\overline{E = m c^{2}}');
+      });
+    });
+
+    describe('with notation attribute as bottom', () => {
+      test('convert menclose tag just joining its content with underline command', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="bottom">
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>2</mi>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\underline{a + 2}');
+      });
+    });
+
+    describe('with notation attribute as updiagonalstrike', () => {
+      test('convert menclose tag just joining its content with left bottom to right top cross', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="updiagonalstrike">
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>2</mi>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\cancel{a + 2}');
+      });
+    });
+
+    describe('with notation attribute as downdiagonalstrike', () => {
+      test('convert menclose tag just joining its content with left top to right bottom cross', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="downdiagonalstrike">
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>2</mi>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\bcancel{a + 2}');
+      });
+    });
+
+    describe('with notation attribute as horizontalstrike', () => {
+      test('convert menclose tag just joining its content with horizontal cross', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="horizontalstrike">
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>2</mi>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\hcancel{a + 2}');
+      });
+    });
+
+    describe('with notation attribute as verticalstrike', () => {
+      test('convert menclose tag just joining its content with horizontal cross', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="verticalstrike">
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>2</mi>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\hcancel{a + 2}');
+      });
+    });
+
+    describe('with notation attribute as updiagonalarrow', () => {
+      test('convert menclose tag just joining its content with underline and right bar', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="updiagonalarrow">
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>2</mi>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\cancelto{}{a + 2}');
+      });
+    });
+
+    describe('with notation attribute as madruwb', () => {
+      test('convert menclose tag just joining its content with underline and right bar', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="madruwb">
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>2</mi>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\underline{a + 2\\right|}');
+      });
+    });
+
+    describe('with notation attribute as phasorangle', () => {
+      test('convert menclose tag just joining its content with underline and right bar', () => {
+        const mathml = `
+          <root>
+            <math>
+              <menclose notation="phasorangle">
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>2</mi>
+              </menclose>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('{\\angle \\underline{a + 2}}');
       });
     });
   });

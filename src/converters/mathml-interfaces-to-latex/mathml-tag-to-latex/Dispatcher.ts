@@ -11,6 +11,7 @@ import {
   MRoot,
   GenericContentWrapperTag,
   MAction,
+  MEnclose,
 } from './mathml-tags';
 
 export class Dispatcher {
@@ -48,6 +49,8 @@ export class Dispatcher {
         return new MRoot(this._value, this._attributes, this._children);
       case 'maction':
         return new MAction(this._value, this._attributes, this._children);
+      case 'menclose':
+        return new MEnclose(this._value, this._attributes, this._children);
       case 'mrow':
       case 'mpadded':
         return new GenericContentWrapperTag(this._name, this._value, this._attributes, this._children);

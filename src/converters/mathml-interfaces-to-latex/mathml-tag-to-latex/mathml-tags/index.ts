@@ -11,3 +11,4 @@ export { MRoot } from './MRoot';
 export { GenericContentWrapperTag } from './GenericContentWrapperTag';
 export { MAction } from './MAction';
 export { MEnclose } from './MEnclose';
+export { MError } from './MError';

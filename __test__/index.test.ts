@@ -1045,4 +1045,24 @@ describe('#convert', () => {
       });
     });
   });
+
+  describe('given math string with merror tag', () => {
+    test('convert merror placing its content inside \\color{red}', () => {
+      const mathml = `
+        <root>
+          <math>
+            <merror>
+              <mi>2</mi>
+              <mo>+</mo>
+              <mi>2</mi>
+            </merror>
+          </math>
+        </root>
+      `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\color{red}{2 + 2}');
+    });
+  });
 });

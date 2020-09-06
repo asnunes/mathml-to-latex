@@ -12,6 +12,7 @@ import {
   GenericContentWrapperTag,
   MAction,
   MEnclose,
+  MError,
 } from './mathml-tags';
 
 export class Dispatcher {
@@ -51,6 +52,8 @@ export class Dispatcher {
         return new MAction(this._value, this._attributes, this._children);
       case 'menclose':
         return new MEnclose(this._value, this._attributes, this._children);
+      case 'merror':
+        return new MError(this._value, this._attributes, this._children);
       case 'mrow':
       case 'mpadded':
         return new GenericContentWrapperTag(this._name, this._value, this._attributes, this._children);

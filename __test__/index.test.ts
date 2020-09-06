@@ -1065,4 +1065,20 @@ describe('#convert', () => {
       expect(result).toBe('\\color{red}{2 + 2}');
     });
   });
+
+  describe('given math string with mglyph tag', () => {
+    test('ignore it', () => {
+      const mathml = `
+        <root>
+          <math>
+            <mi><mglyph src="my-glyph.png" alt="my glyph"/></mi>
+          </math>
+        </root>
+      `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('');
+    });
+  });
 });

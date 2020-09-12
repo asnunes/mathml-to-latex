@@ -1,6 +1,6 @@
 import { MathMLTag } from './MathMLTag';
-import { GenericWrapper } from '../../../../../utils/wrappers';
-import { JoinWithManySeparators } from '../../../../../utils';
+import { GenericWrapper } from '../../../../utils/wrappers';
+import { JoinWithManySeparators } from '../../../../utils';
 
 export class MFenced extends MathMLTag {
   private _wrapper: GenericWrapper;

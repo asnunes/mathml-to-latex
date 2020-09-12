@@ -1081,4 +1081,56 @@ describe('#convert', () => {
       expect(result).toBe('');
     });
   });
+
+  describe('given math string with mover tag', () => {
+    describe('where its first child is a mrow and second is mo containing ⏞', () => {
+      test('wrap it content inside overbrace command', () => {
+        const mathml = `
+          <root>
+            <math>
+              <mover accent="true">
+                <mrow>
+                  <mi> x </mi>
+                  <mo> + </mo>
+                  <mi> y </mi>
+                  <mo> + </mo>
+                  <mi> z </mi>
+                </mrow>
+                <mo>⏞</mo>
+              </mover>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\overbrace{x + y + z}');
+      });
+    });
+
+    describe('where its first child is a mrow and second is mo containing generic char', () => {
+      test('wrap it content inside overset making generic char on top', () => {
+        const mathml = `
+          <root>
+            <math>
+              <mover accent="true">
+                <mrow>
+                  <mi> x </mi>
+                  <mo> + </mo>
+                  <mi> y </mi>
+                  <mo> + </mo>
+                  <mi> z </mi>
+                </mrow>
+                <mo>a + b</mo>
+              </mover>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\overset{a + b}{x + y + z}');
+      });
+    });
+  });
 });

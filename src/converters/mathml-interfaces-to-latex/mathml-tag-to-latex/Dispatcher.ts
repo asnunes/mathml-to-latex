@@ -14,6 +14,7 @@ import {
   MEnclose,
   MError,
   MOver,
+  MPhantom,
 } from './mathml-tags';
 
 export class Dispatcher {
@@ -57,6 +58,8 @@ export class Dispatcher {
         return new MError(this._value, this._attributes, this._children);
       case 'mover':
         return new MOver(this._value, this._attributes, this._children);
+      case 'mphantom':
+        return new MPhantom(this._value, this._attributes, this._children);
       case 'mrow':
       case 'mpadded':
         return new GenericContentWrapperTag(this._name, this._value, this._attributes, this._children);

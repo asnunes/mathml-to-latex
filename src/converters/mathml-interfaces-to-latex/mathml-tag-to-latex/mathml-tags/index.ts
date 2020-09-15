@@ -13,3 +13,4 @@ export { MAction } from './MAction';
 export { MEnclose } from './MEnclose';
 export { MError } from './MError';
 export { MOver } from './MOver';
+export { MPhantom } from './MPhantom';

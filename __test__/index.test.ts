@@ -1320,5 +1320,27 @@ describe('#convert', () => {
 
       expect(result).toBe('\\int_{0}^{1}');
     });
+
+    it('wraps base inside parentheses when there are empty spaces on it', () => {
+      const mathml = `
+        <root>
+          <math>
+            <msubsup>
+              <mrow>
+                <mn>x</mn>
+                <mo>+</mo>
+                <mn>y</mn>
+              </mrow>
+              <mn> 0 </mn>
+              <mn> 1 </mn>
+            </msubsup>
+          </math>
+        </root>
+      `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\left(x + y\\right)_{0}^{1}');
+    });
   });
 });

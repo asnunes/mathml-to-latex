@@ -1207,4 +1207,98 @@ describe('#convert', () => {
       });
     });
   });
+
+  describe('given math string with msub tag', () => {
+    describe('msub tag contains single char contents', () => {
+      test('convert msub joining its two char contents with _ and wrap subscript in brackets', () => {
+        const mathml = `
+          <root>
+            <math>
+              <msub>
+                <mi>x</mi>
+                <mn>2</mn>
+              </msub>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('x_{2}');
+      });
+    });
+
+    describe('msub tag contains base with single char content and subscript with more than one char content', () => {
+      test('convert msub joining its two char contents with _ and wrap exponent in brackets', () => {
+        const mathml = `
+          <root>
+            <math>
+              <msub>
+                <mi>x</mi>
+                <mrow>
+                  <mn>a</mn>
+                  <mo>+</mo>
+                  <mn>b</mn>
+                </mrow>
+              </msub>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('x_{a + b}');
+      });
+    });
+
+    describe('msub tag contains subscript with single char content and base with more than one char content', () => {
+      test('convert msub joining its multi char contents with _ and wrap base in parenthesis', () => {
+        const mathml = `
+          <root>
+            <math>
+              <msub>
+                <mrow>
+                  <mn>x</mn>
+                  <mo>+</mo>
+                  <mn>y</mn>
+                </mrow>
+                <mi>2</mi>
+              </msub>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('\\left(x + y\\right)_{2}');
+      });
+    });
+
+    describe('msub tag contains both base and subscript with more than one char content', () => {
+      test('convert msub joining its multi char contents with _, wrap base in parenthesis and subscript in brackets', () => {
+        const mathml = `
+          <root>
+            <math>
+              <msub>
+                <mrow>
+                  <mn>x</mn>
+                  <mo>+</mo>
+                  <mn>y</mn>
+                </mrow>
+                <mrow>
+                  <mn>2</mn>
+                  <mo>+</mo>
+                  <mn>2</mn>
+                </mrow>
+              </msub>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('\\left(x + y\\right)_{2 + 2}');
+      });
+    });
+  });
 });

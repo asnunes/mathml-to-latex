@@ -1108,6 +1108,56 @@ describe('#convert', () => {
       });
     });
 
+    describe('where its first child is a mrow and second is mo containing hat mo as utf-8', () => {
+      test('wrap it content inside hat command', () => {
+        const mathml = `
+            <root>
+              <math>
+                <mover accent="true">
+                  <mrow>
+                    <mi> x </mi>
+                    <mo> + </mo>
+                    <mi> y </mi>
+                    <mo> + </mo>
+                    <mi> z </mi>
+                  </mrow>
+                  <mo>^</mo>
+                </mover>
+              </math>
+            </root>
+          `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\hat{x + y + z}');
+      });
+    });
+
+    describe('where its first child is a mrow and second is mo containing hat mo as encoded', () => {
+      test('wrap it content inside hat command', () => {
+        const mathml = `
+            <root>
+              <math>
+                <mover accent="true">
+                  <mrow>
+                    <mi> x </mi>
+                    <mo> + </mo>
+                    <mi> y </mi>
+                    <mo> + </mo>
+                    <mi> z </mi>
+                  </mrow>
+                  <mo>&#x2C6;</mo>
+                </mover>
+              </math>
+            </root>
+          `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\hat{x + y + z}');
+      });
+    });
+
     describe('where its first child is a mrow and second is mo containing generic char', () => {
       test('wrap it content inside overset making generic char on top', () => {
         const mathml = `

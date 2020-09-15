@@ -1183,4 +1183,28 @@ describe('#convert', () => {
       });
     });
   });
+
+  describe('given math string with mphantom tag', () => {
+    it('replaces every character inside tag by normalized empty space', () => {
+      const mathml = `
+        <root>
+          <math>
+            <mrow>
+              <mi> x </mi>
+              <mo> + </mo>
+              <mphantom>
+                <mi> y </mi>
+                <mo> + </mo>
+              </mphantom>
+              <mi> z </mi>
+            </mrow>
+          </math>
+        </root>
+      `;
+  
+      const result = MathMLToLaTeX.convert(mathml);
+  
+      expect(result).toBe('x + z');
+    });
+  });
 });

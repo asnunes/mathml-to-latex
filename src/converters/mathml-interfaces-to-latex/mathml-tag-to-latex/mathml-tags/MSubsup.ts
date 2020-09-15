@@ -1,5 +1,5 @@
 import { MathMLTag } from './MathMLTag';
-import { BracketWrapper } from '../../../../utils/wrappers';
+import { BracketWrapper, ParenthesisWrapper } from '../../../../utils/wrappers';
 import { InvalidNumberOfChild } from '../../../../errors';
 
 export class MSubsup extends MathMLTag {
@@ -17,6 +17,11 @@ export class MSubsup extends MathMLTag {
     const wrappedSub = new BracketWrapper().wrap(sub);
     const wrappedSup = new BracketWrapper().wrap(sup);
 
-    return `${base}_${wrappedSub}^${wrappedSup}`;
+    return `${this._wrapInParenthesisIfThereIsSpace(base)}_${wrappedSub}^${wrappedSup}`;
+  }
+
+  private _wrapInParenthesisIfThereIsSpace(str: string): string {
+    if (!str.match(/\s+/g)) return str;
+    return new ParenthesisWrapper().wrap(str);
   }
 }

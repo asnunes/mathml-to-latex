@@ -5,7 +5,6 @@ import {
   MO,
   MN,
   MSqrt,
-  MSup,
   MFenced,
   MFrac,
   MRoot,
@@ -15,6 +14,8 @@ import {
   MError,
   MOver,
   MPhantom,
+  MSup,
+  MSub,
 } from './mathml-tags';
 
 export class Dispatcher {
@@ -42,8 +43,6 @@ export class Dispatcher {
         return new MN(this._value, this._attributes, this._children);
       case 'msqrt':
         return new MSqrt(this._value, this._attributes, this._children);
-      case 'msup':
-        return new MSup(this._value, this._attributes, this._children);
       case 'mfenced':
         return new MFenced(this._value, this._attributes, this._children);
       case 'mfrac':
@@ -60,6 +59,10 @@ export class Dispatcher {
         return new MOver(this._value, this._attributes, this._children);
       case 'mphantom':
         return new MPhantom(this._value, this._attributes, this._children);
+      case 'msup':
+        return new MSup(this._value, this._attributes, this._children);
+      case 'msub':
+        return new MSub(this._value, this._attributes, this._children);
       case 'mrow':
       case 'mpadded':
         return new GenericContentWrapperTag(this._name, this._value, this._attributes, this._children);

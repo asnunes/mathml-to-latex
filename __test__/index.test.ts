@@ -1458,5 +1458,33 @@ describe('#convert', () => {
 
       expect(result).toBe('\\mathfrak{Creepy}');
     });
+
+    describe('mtext with mathvariant attribute setted as "script"', () => {
+      const mathml = `
+        <root>
+          <math xmlns = "http://www.w3.org/1998/Math/MathML">
+            <mtext mathvariant="script">Creepy</mtext>
+          </math>
+        </root>
+        `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\text{Creepy}');
+    });
+
+    describe('mtext with mathvariant attribute setted as "bold-script"', () => {
+      const mathml = `
+        <root>
+          <math xmlns = "http://www.w3.org/1998/Math/MathML">
+            <mtext mathvariant="bold-script">Creepy</mtext>
+          </math>
+        </root>
+        `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\text{Creepy}');
+    });
   });
 });

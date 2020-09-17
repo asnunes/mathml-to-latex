@@ -1430,5 +1430,19 @@ describe('#convert', () => {
 
       expect(result).toBe('\\mathbb{R}');
     });
+
+    describe('mtext with mathvariant attribute setted as "fraktur"', () => {
+      const mathml = `
+        <root>
+          <math xmlns = "http://www.w3.org/1998/Math/MathML">
+            <mtext mathvariant="fraktur">Creepy</mtext>
+          </math>
+        </root>
+        `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\mathfrak{Creepy}');
+    });
   });
 });

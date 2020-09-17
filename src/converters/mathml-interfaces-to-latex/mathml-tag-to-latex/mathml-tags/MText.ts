@@ -36,6 +36,8 @@ class TextCommand {
         return ['\\textit', '\\textbf'];
       case 'double-struck':
         return ['\\mathbb'];
+      case 'monospace':
+        return ['\\mathtt'];
       case 'bold-fraktur':
       case 'fraktur':
         return ['\\mathfrak'];

@@ -36,6 +36,8 @@ class TextCommand {
         return ['\\textit', '\\textbf'];
       case 'double-struck':
         return ['\\mathbb'];
+      case 'fraktur':
+        return ['\\mathfrak'];
       default:
         return ['\\text'];
     }

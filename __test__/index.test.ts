@@ -1402,5 +1402,19 @@ describe('#convert', () => {
 
       expect(result).toBe('\\textit{ Theorem of Pythagoras }');
     });
+
+    describe('mtext with mathvariant attribute setted as "bold-italic"', () => {
+      const mathml = `
+        <root>
+          <math xmlns = "http://www.w3.org/1998/Math/MathML">
+            <mtext mathvariant="bold-italic"> Theorem of Pythagoras </mtext>
+          </math>
+        </root>
+        `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\textbf{\\textit{ Theorem of Pythagoras }}');
+    });
   });
 });

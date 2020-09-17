@@ -1416,5 +1416,19 @@ describe('#convert', () => {
 
       expect(result).toBe('\\textbf{\\textit{ Theorem of Pythagoras }}');
     });
+
+    describe('mtext with mathvariant attribute setted as "double-struck"', () => {
+      const mathml = `
+        <root>
+          <math xmlns = "http://www.w3.org/1998/Math/MathML">
+            <mtext mathvariant="double-struck">R</mtext>
+          </math>
+        </root>
+        `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\mathbb{R}');
+    });
   });
 });

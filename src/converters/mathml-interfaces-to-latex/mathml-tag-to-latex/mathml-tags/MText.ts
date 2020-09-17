@@ -34,6 +34,8 @@ class TextCommand {
         return ['\\textit'];
       case 'bold-italic':
         return ['\\textit', '\\textbf'];
+      case 'double-struck':
+        return ['\\mathbb'];
       default:
         return ['\\text'];
     }

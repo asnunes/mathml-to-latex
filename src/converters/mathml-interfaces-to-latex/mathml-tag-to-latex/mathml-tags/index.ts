@@ -16,3 +16,4 @@ export { MPhantom } from './MPhantom';
 export { MSup } from './MSup';
 export { MSub } from './MSub';
 export { MSubsup } from './MSubsup';
+export { MText } from './MText';

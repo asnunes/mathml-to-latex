@@ -17,6 +17,7 @@ import {
   MSup,
   MSub,
   MSubsup,
+  MText,
 } from './mathml-tags';
 
 export class Dispatcher {
@@ -66,6 +67,8 @@ export class Dispatcher {
         return new MSub(this._value, this._attributes, this._children);
       case 'msubsup':
         return new MSubsup(this._value, this._attributes, this._children);
+      case 'mtext':
+        return new MText(this._value, this._attributes, this._children);
       case 'mrow':
       case 'mpadded':
         return new GenericContentWrapperTag(this._name, this._value, this._attributes, this._children);

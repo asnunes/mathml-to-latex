@@ -1459,6 +1459,20 @@ describe('#convert', () => {
       expect(result).toBe('\\mathfrak{Creepy}');
     });
 
+    describe('mtext with mathvariant attribute setted as "monospace"', () => {
+      const mathml = `
+        <root>
+          <math xmlns = "http://www.w3.org/1998/Math/MathML">
+            <mtext mathvariant="monospace">simple text</mtext>
+          </math>
+        </root>
+        `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\mathtt{simple text}');
+    });
+
     describe('mtext with mathvariant attribute setted as "script"', () => {
       const mathml = `
         <root>

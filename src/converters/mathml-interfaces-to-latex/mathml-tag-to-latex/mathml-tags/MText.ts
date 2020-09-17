@@ -20,17 +20,22 @@ class TextCommand {
   }
 
   apply(value: string) {
-    return `${this._command}{${value}}`;
+    return this._commands.reduce((acc, command, index) => {
+      if (index === 0) return `${command}{${value}}`;
+      return `${command}{${acc}}`;
+    }, '');
   }
 
-  private get _command(): string {
+  private get _commands(): string[] {
     switch (this._mathvariant) {
       case 'bold':
-        return '\\textbf';
+        return ['\\textbf'];
       case 'italic':
-        return '\\textit';
+        return ['\\textit'];
+      case 'bold-italic':
+        return ['\\textit', '\\textbf'];
       default:
-        return '\\text';
+        return ['\\text'];
     }
   }
 }

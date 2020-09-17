@@ -1343,4 +1343,64 @@ describe('#convert', () => {
       expect(result).toBe('\\left(x + y\\right)_{0}^{1}');
     });
   });
+
+  describe('given math string with mtext', () => {
+    describe('mtext without any attribute', () => {
+      it('wrap its content inside text command', () => {
+        const mathml = `
+        <root>
+          <math xmlns = "http://www.w3.org/1998/Math/MathML">
+            <mtext> Theorem of Pythagoras </mtext>
+          </math>
+        </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\text{ Theorem of Pythagoras }');
+      });
+    });
+
+    describe('mtext with mathvariant attribute setted as "normal"', () => {
+      const mathml = `
+        <root>
+          <math xmlns = "http://www.w3.org/1998/Math/MathML">
+            <mtext mathvariant="normal"> Theorem of Pythagoras </mtext>
+          </math>
+        </root>
+        `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\text{ Theorem of Pythagoras }');
+    });
+
+    describe('mtext with mathvariant attribute setted as "normal"', () => {
+      const mathml = `
+        <root>
+          <math xmlns = "http://www.w3.org/1998/Math/MathML">
+            <mtext mathvariant="bold"> Theorem of Pythagoras </mtext>
+          </math>
+        </root>
+        `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\textbf{ Theorem of Pythagoras }');
+    });
+
+    describe('mtext with mathvariant attribute setted as "normal"', () => {
+      const mathml = `
+        <root>
+          <math xmlns = "http://www.w3.org/1998/Math/MathML">
+            <mtext mathvariant="italic"> Theorem of Pythagoras </mtext>
+          </math>
+        </root>
+        `;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\textit{ Theorem of Pythagoras }');
+    });
+  });
 });

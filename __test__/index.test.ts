@@ -1375,7 +1375,7 @@ describe('#convert', () => {
       expect(result).toBe('\\text{ Theorem of Pythagoras }');
     });
 
-    describe('mtext with mathvariant attribute setted as "normal"', () => {
+    describe('mtext with mathvariant attribute setted as "bold"', () => {
       const mathml = `
         <root>
           <math xmlns = "http://www.w3.org/1998/Math/MathML">
@@ -1389,7 +1389,7 @@ describe('#convert', () => {
       expect(result).toBe('\\textbf{ Theorem of Pythagoras }');
     });
 
-    describe('mtext with mathvariant attribute setted as "normal"', () => {
+    describe('mtext with mathvariant attribute setted as "italic"', () => {
       const mathml = `
         <root>
           <math xmlns = "http://www.w3.org/1998/Math/MathML">

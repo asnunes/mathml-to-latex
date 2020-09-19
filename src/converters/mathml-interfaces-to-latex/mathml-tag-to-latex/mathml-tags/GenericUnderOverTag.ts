@@ -2,7 +2,7 @@ import { MathMLTag } from './MathMLTag';
 import { InvalidNumberOfChild } from '../../../../errors';
 import { latexAccents } from '../../../../syntax/latexAccents';
 
-export class UnderOverTag extends MathMLTag {
+export class GenericUnderOverTag extends MathMLTag {
   convert(): string {
     if (this._children.length !== 2) throw new InvalidNumberOfChild(this._name, 2, this._children.length);
 

@@ -481,6 +481,37 @@ describe('#convert', () => {
             expect(result).toBe('A = \\begin{Vmatrix}\n x & y \\\\\n z & w \n\\end{Vmatrix}'.replace(/\n/g, ''));
           });
         });
+
+        describe('without open attribute', () => {
+          it('returns a pmatrix representation in latex', () => {
+            const mathml = `
+            <root>
+              <math xmlns = "http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                  <mi>A</mi>
+                  <mo>=</mo>
+                  <mfenced>
+                    <mtable>
+                      <mtr>
+                        <mtd><mi>x</mi></mtd>
+                        <mtd><mi>y</mi></mtd>
+                      </mtr>
+                      <mtr>
+                        <mtd><mi>z</mi></mtd>
+                        <mtd><mi>w</mi></mtd>
+                      </mtr>
+                    </mtable>
+                  </mfenced>
+                </mrow>
+              </math>
+            </root>
+            `;
+
+            const result = MathMLToLaTeX.convert(mathml);
+
+            expect(result).toBe('A = \\begin{matrix}\n x & y \\\\\n z & w \n\\end{matrix}'.replace(/\n/g, ''));
+          });
+        });
       });
     });
   });

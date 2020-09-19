@@ -60,6 +60,8 @@ class Matrix {
     switch (this._open) {
       case '(':
         return 'pmatrix';
+      case '|':
+        return 'vmatrix';
       default:
         return 'bmatrix';
     }

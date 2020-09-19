@@ -1,4 +1,4 @@
-export const allMathSymbolsByChar: Record<string, string> = {
+export const allMathSymbolsByGlyph: Record<string, string> = {
   ' ': '\\textrm{ }',
   '∃': '\\exists',
   '∀': '\\forall',

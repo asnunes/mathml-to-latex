@@ -8,7 +8,6 @@ import {
   MFenced,
   MFrac,
   MRoot,
-  GenericContentWrapperTag,
   MAction,
   MEnclose,
   MError,
@@ -17,6 +16,8 @@ import {
   MSub,
   MSubsup,
   MText,
+  MUnderover,
+  GenericContentWrapperTag,
   GenericUnderOverTag,
 } from './mathml-tags';
 
@@ -67,6 +68,8 @@ export class Dispatcher {
         return new MSubsup(this._value, this._attributes, this._children);
       case 'mtext':
         return new MText(this._value, this._attributes, this._children);
+      case 'munderover':
+        return new MUnderover(this._value, this._attributes, this._children);
       case 'mover':
       case 'munder':
         return new GenericUnderOverTag(this._name, this._value, this._attributes, this._children);

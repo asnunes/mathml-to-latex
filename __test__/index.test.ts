@@ -1527,5 +1527,30 @@ describe('#convert', () => {
         expect(result).toBe('\\underbrace{x + y + z}');
       });
     });
+
+    describe('where its first child is a mrow and second is mo containing generic char', () => {
+      test('wrap it content inside overset making generic char on top', () => {
+        const mathml = `
+          <root>
+            <math>
+              <munder accent="true">
+                <mrow>
+                  <mi> x </mi>
+                  <mo> + </mo>
+                  <mi> y </mi>
+                  <mo> + </mo>
+                  <mi> z </mi>
+                </mrow>
+                <mo>a + b</mo>
+              </munder>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\underset{a + b}{x + y + z}');
+      });
+    });
   });
 });

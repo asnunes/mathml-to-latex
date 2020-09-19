@@ -53,6 +53,15 @@ class Matrix {
   }
 
   apply(latex: string): string {
-    return '\\begin{bmatrix}\n' + latex + '\n\\end{bmatrix}';
+    return `\\begin{${this._command}}\n` + latex + `\n\\end{${this._command}}`;
+  }
+
+  private get _command(): string {
+    switch (this._open) {
+      case '(':
+        return 'pmatrix';
+      default:
+        return 'bmatrix';
+    }
   }
 }

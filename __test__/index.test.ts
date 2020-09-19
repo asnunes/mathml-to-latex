@@ -21,13 +21,35 @@ describe('#convert', () => {
     });
   });
 
-  describe('given math string with mi tag with space on it', () => {
-    test('should trim empty space', () => {
-      const mathml = '<root><math><mi> a </mi></math></root>';
+  describe('given math string with mi tag', () => {
+    describe('tag with space on it', () => {
+      test('should trim empty space', () => {
+        const mathml = '<root><math><mi> a </mi></math></root>';
 
-      const result = MathMLToLaTeX.convert(mathml);
+        const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toBe('a');
+        expect(result).toBe('a');
+      });
+    });
+
+    describe('with especial operator', () => {
+      test('should convert to latex command', () => {
+        const mathml = '<root><math><mi> &#x221E; </mi></math></root>';
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\infty');
+      });
+    });
+
+    describe('with empty space', () => {
+      test('should keep empty space and convert to mathrm command', () => {
+        const mathml = '<root><math><mi>  </mi></math></root>';
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\textrm{ }');
+      });
     });
   });
 

@@ -1601,23 +1601,45 @@ describe('#convert', () => {
     });
   });
 
-  describe('given math string with munderover tag with three contents and especial operator', () => {
-    test('handle it as it were an subsup tag', () => {
-      const mathml = `
-        <root>
-          <math>
-            <munderover>
-              <mo> &#x222B;</mo>
-              <mn> 0 </mn>
-              <mn> 1 </mn>
-            </munderover>
-          </math>
-        </root>
-      `;
+  describe('given math string with munderover', () => {
+    describe('with three contents', () => {
+      test('handle it as it were an subsup tag', () => {
+        const mathml = `
+          <root>
+            <math>
+              <munderover>
+                <mo> &#x222B;</mo>
+                <mn> 0 </mn>
+                <mn> 1 </mn>
+              </munderover>
+            </math>
+          </root>
+        `;
 
-      const result = MathMLToLaTeX.convert(mathml);
+        const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toBe('\\int_{0}^{1}');
+        expect(result).toBe('\\int_{0}^{1}');
+      });
+    });
+
+    describe('with three contents and especial operator', () => {
+      test('handle it as it were an subsup tag and convert special operator', () => {
+        const mathml = `
+          <root>
+            <math>
+              <munderover>
+                <mo> &#x222B;</mo>
+                <mn> 0 </mn>
+                <mi> &#x221E; </mi>
+              </munderover>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\int_{0}^{\\infty}');
+      });
     });
   });
 });

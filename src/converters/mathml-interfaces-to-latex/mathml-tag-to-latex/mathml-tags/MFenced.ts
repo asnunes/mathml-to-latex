@@ -11,8 +11,8 @@ export class MFenced extends MathMLTag {
   constructor(value: string, attributes: Record<string, string>, children: MathMLTag[]) {
     super('mfenced', value, attributes, children);
 
-    this._open = this._attributes.open || '(';
-    this._close = this._attributes.close || ')';
+    this._open = this._attributes.open || '';
+    this._close = this._attributes.close || '';
     this._separators = Array.from(this._attributes.separators || '');
   }
 
@@ -33,8 +33,8 @@ class Vector {
   private readonly _separators: string[];
 
   constructor(open: string, close: string, separators: string[]) {
-    this._open = open;
-    this._close = close;
+    this._open = open || '(';
+    this._close = close || ')';
     this._separators = separators;
   }
 
@@ -64,10 +64,12 @@ class Matrix {
         return 'vmatrix';
       case '||':
         return 'Vmatrix';
+      case '[':
+        return 'bmatrix';
       case '{':
         return 'Bmatrix';
       default:
-        return 'bmatrix';
+        return 'matrix';
     }
   }
 }

@@ -358,8 +358,8 @@ describe('#convert', () => {
           });
         });
 
-        describe('with open attribute as [', () => {
-          it('returns a bmatrix representation in latex', () => {
+        describe('with open attribute as (', () => {
+          it('returns a pmatrix representation in latex', () => {
             const mathml = `
             <root>
               <math xmlns = "http://www.w3.org/1998/Math/MathML">
@@ -386,6 +386,37 @@ describe('#convert', () => {
             const result = MathMLToLaTeX.convert(mathml);
 
             expect(result).toBe('A = \\begin{pmatrix}\n x & y \\\\\n z & w \n\\end{pmatrix}'.replace(/\n/g, ''));
+          });
+        });
+
+        describe('with open attribute as |', () => {
+          it('returns a pmatrix representation in latex', () => {
+            const mathml = `
+            <root>
+              <math xmlns = "http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                  <mi>A</mi>
+                  <mo>=</mo>
+                  <mfenced open = "|" close="|">
+                    <mtable>
+                      <mtr>
+                        <mtd><mi>x</mi></mtd>
+                        <mtd><mi>y</mi></mtd>
+                      </mtr>
+                      <mtr>
+                        <mtd><mi>z</mi></mtd>
+                        <mtd><mi>w</mi></mtd>
+                      </mtr>
+                    </mtable>
+                  </mfenced>
+                </mrow>
+              </math>
+            </root>
+            `;
+
+            const result = MathMLToLaTeX.convert(mathml);
+
+            expect(result).toBe('A = \\begin{vmatrix}\n x & y \\\\\n z & w \n\\end{vmatrix}'.replace(/\n/g, ''));
           });
         });
       });

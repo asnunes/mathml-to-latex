@@ -9,7 +9,7 @@ export const allMathOperatorsByGlyph: Record<string, string> = {
   '⎵': '\\underbrace',
   '⎴': '\\overbrace',
   '⃜': '\\square',
-  '⃛': '{::}^(...)',
+  '⃛': '\\square',
   '⁤': '',
   '⁗': "''''",
   '‾': '\\bar',

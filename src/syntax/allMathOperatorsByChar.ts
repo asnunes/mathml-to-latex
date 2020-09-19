@@ -9,7 +9,7 @@ export const allMathOperatorsByChar: Record<string, string> = {
   '&#x23B5;': '\\underbrace',
   '&#x23B4;': '\\overbrace',
   '&#x20DC;': '\\square',
-  '&#x20DB;': '{::}^(...)',
+  '&#x20DB;': '\\square',
   '&#x2064;': '',
   '&#x2057;': "''''",
   '&#x203E;': '\\bar',

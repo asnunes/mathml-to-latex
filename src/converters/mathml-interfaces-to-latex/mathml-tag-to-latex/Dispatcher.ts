@@ -1,89 +1,66 @@
-import {
-  Math,
-  MathMLTag,
-  MI,
-  MO,
-  MN,
-  MSqrt,
-  MFenced,
-  MFrac,
-  MRoot,
-  MAction,
-  MEnclose,
-  MError,
-  MPhantom,
-  MSup,
-  MSub,
-  MSubsup,
-  MText,
-  MUnderover,
-  MTable,
-  MTr,
-  GenericContentWrapperTag,
-  GenericUnderOverTag,
-} from './mathml-tags';
+import * as MathMLTags from './mathml-tags';
 
 export class Dispatcher {
   private _name: string;
   private _value: string;
   private _attributes: Record<string, string>;
-  private _children: MathMLTag[];
+  private _children: MathMLTags.MathMLTag[];
 
-  constructor(name: string, value: string, attributes: Record<string, string>, children: MathMLTag[]) {
+  constructor(name: string, value: string, attributes: Record<string, string>, children: MathMLTags.MathMLTag[]) {
     this._name = name;
     this._value = value;
     this._attributes = attributes;
     this._children = children;
   }
 
-  dispatch(): MathMLTag {
+  dispatch(): MathMLTags.MathMLTag {
     switch (this._name) {
       case 'math':
-        return new Math(this._value, this._attributes, this._children);
+        return new MathMLTags.Math(this._value, this._attributes, this._children);
       case 'mi':
-        return new MI(this._value, this._attributes, this._children);
+        return new MathMLTags.MI(this._value, this._attributes, this._children);
       case 'mo':
-        return new MO(this._value, this._attributes, this._children);
+        return new MathMLTags.MO(this._value, this._attributes, this._children);
       case 'mn':
-        return new MN(this._value, this._attributes, this._children);
+        return new MathMLTags.MN(this._value, this._attributes, this._children);
       case 'msqrt':
-        return new MSqrt(this._value, this._attributes, this._children);
+        return new MathMLTags.MSqrt(this._value, this._attributes, this._children);
       case 'mfenced':
-        return new MFenced(this._value, this._attributes, this._children);
+        return new MathMLTags.MFenced(this._value, this._attributes, this._children);
       case 'mfrac':
-        return new MFrac(this._value, this._attributes, this._children);
+        return new MathMLTags.MFrac(this._value, this._attributes, this._children);
       case 'mroot':
-        return new MRoot(this._value, this._attributes, this._children);
+        return new MathMLTags.MRoot(this._value, this._attributes, this._children);
       case 'maction':
-        return new MAction(this._value, this._attributes, this._children);
+        return new MathMLTags.MAction(this._value, this._attributes, this._children);
       case 'menclose':
-        return new MEnclose(this._value, this._attributes, this._children);
+        return new MathMLTags.MEnclose(this._value, this._attributes, this._children);
       case 'merror':
-        return new MError(this._value, this._attributes, this._children);
+        return new MathMLTags.MError(this._value, this._attributes, this._children);
       case 'mphantom':
-        return new MPhantom(this._value, this._attributes, this._children);
+        return new MathMLTags.MPhantom(this._value, this._attributes, this._children);
       case 'msup':
-        return new MSup(this._value, this._attributes, this._children);
+        return new MathMLTags.MSup(this._value, this._attributes, this._children);
       case 'msub':
-        return new MSub(this._value, this._attributes, this._children);
+        return new MathMLTags.MSub(this._value, this._attributes, this._children);
       case 'msubsup':
-        return new MSubsup(this._value, this._attributes, this._children);
+        return new MathMLTags.MSubsup(this._value, this._attributes, this._children);
       case 'mtext':
-        return new MText(this._value, this._attributes, this._children);
+        return new MathMLTags.MText(this._value, this._attributes, this._children);
       case 'munderover':
-        return new MUnderover(this._value, this._attributes, this._children);
+        return new MathMLTags.MUnderover(this._value, this._attributes, this._children);
       case 'mtable':
-        return new MTable(this._value, this._attributes, this._children);
+        return new MathMLTags.MTable(this._value, this._attributes, this._children);
       case 'mtr':
-        return new MTr(this._value, this._attributes, this._children);
+        return new MathMLTags.MTr(this._value, this._attributes, this._children);
       case 'mover':
       case 'munder':
-        return new GenericUnderOverTag(this._name, this._value, this._attributes, this._children);
+        return new MathMLTags.GenericUnderOverTag(this._name, this._value, this._attributes, this._children);
       case 'mrow':
       case 'mpadded':
-        return new GenericContentWrapperTag(this._name, this._value, this._attributes, this._children);
+        return new MathMLTags.GenericContentWrapperTag(this._name, this._value, this._attributes, this._children);
       default:
-        return new MathMLTag(this._name, this._value, this._attributes, this._children);
+        return new MathMLTags.MathMLTag(this._name, this._value, this._attributes, this._children);
     }
   }
 }

@@ -62,6 +62,8 @@ class Matrix {
         return 'pmatrix';
       case '|':
         return 'vmatrix';
+      case '||':
+        return 'Vmatrix';
       case '{':
         return 'Bmatrix';
       default:

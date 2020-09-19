@@ -988,108 +988,6 @@ describe('#convert', () => {
     });
   });
 
-  describe('given math string with mover tag', () => {
-    describe('where its first child is a mrow and second is mo containing ⏞', () => {
-      test('wrap it content inside overbrace command', () => {
-        const mathml = `
-          <root>
-            <math>
-              <mover accent="true">
-                <mrow>
-                  <mi> x </mi>
-                  <mo> + </mo>
-                  <mi> y </mi>
-                  <mo> + </mo>
-                  <mi> z </mi>
-                </mrow>
-                <mo>⏞</mo>
-              </mover>
-            </math>
-          </root>
-        `;
-
-        const result = MathMLToLaTeX.convert(mathml);
-
-        expect(result).toBe('\\overbrace{x + y + z}');
-      });
-    });
-
-    describe('where its first child is a mrow and second is mo containing hat mo as utf-8', () => {
-      test('wrap it content inside hat command', () => {
-        const mathml = `
-            <root>
-              <math>
-                <mover accent="true">
-                  <mrow>
-                    <mi> x </mi>
-                    <mo> + </mo>
-                    <mi> y </mi>
-                    <mo> + </mo>
-                    <mi> z </mi>
-                  </mrow>
-                  <mo>^</mo>
-                </mover>
-              </math>
-            </root>
-          `;
-
-        const result = MathMLToLaTeX.convert(mathml);
-
-        expect(result).toBe('\\hat{x + y + z}');
-      });
-    });
-
-    describe('where its first child is a mrow and second is mo containing hat mo as encoded', () => {
-      test('wrap it content inside hat command', () => {
-        const mathml = `
-            <root>
-              <math>
-                <mover accent="true">
-                  <mrow>
-                    <mi> x </mi>
-                    <mo> + </mo>
-                    <mi> y </mi>
-                    <mo> + </mo>
-                    <mi> z </mi>
-                  </mrow>
-                  <mo>&#x2C6;</mo>
-                </mover>
-              </math>
-            </root>
-          `;
-
-        const result = MathMLToLaTeX.convert(mathml);
-
-        expect(result).toBe('\\hat{x + y + z}');
-      });
-    });
-
-    describe('where its first child is a mrow and second is mo containing generic char', () => {
-      test('wrap it content inside overset making generic char on top', () => {
-        const mathml = `
-          <root>
-            <math>
-              <mover accent="true">
-                <mrow>
-                  <mi> x </mi>
-                  <mo> + </mo>
-                  <mi> y </mi>
-                  <mo> + </mo>
-                  <mi> z </mi>
-                </mrow>
-                <mo>a + b</mo>
-              </mover>
-            </math>
-          </root>
-        `;
-
-        const result = MathMLToLaTeX.convert(mathml);
-
-        expect(result).toBe('\\overset{a + b}{x + y + z}');
-      });
-    });
-  });
-
   describe('given math string with mphantom tag', () => {
     it('replaces every character inside tag by normalized empty space', () => {
       const mathml = `
@@ -1499,6 +1397,108 @@ describe('#convert', () => {
       const result = MathMLToLaTeX.convert(mathml);
 
       expect(result).toBe('\\text{Creepy}');
+    });
+  });
+
+  describe('given math string with mover tag', () => {
+    describe('where its first child is a mrow and second is mo containing ⏞', () => {
+      test('wrap it content inside overbrace command', () => {
+        const mathml = `
+          <root>
+            <math>
+              <mover accent="true">
+                <mrow>
+                  <mi> x </mi>
+                  <mo> + </mo>
+                  <mi> y </mi>
+                  <mo> + </mo>
+                  <mi> z </mi>
+                </mrow>
+                <mo>⏞</mo>
+              </mover>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\overbrace{x + y + z}');
+      });
+    });
+
+    describe('where its first child is a mrow and second is mo containing hat mo as utf-8', () => {
+      test('wrap it content inside hat command', () => {
+        const mathml = `
+            <root>
+              <math>
+                <mover accent="true">
+                  <mrow>
+                    <mi> x </mi>
+                    <mo> + </mo>
+                    <mi> y </mi>
+                    <mo> + </mo>
+                    <mi> z </mi>
+                  </mrow>
+                  <mo>^</mo>
+                </mover>
+              </math>
+            </root>
+          `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\hat{x + y + z}');
+      });
+    });
+
+    describe('where its first child is a mrow and second is mo containing hat mo as encoded', () => {
+      test('wrap it content inside hat command', () => {
+        const mathml = `
+            <root>
+              <math>
+                <mover accent="true">
+                  <mrow>
+                    <mi> x </mi>
+                    <mo> + </mo>
+                    <mi> y </mi>
+                    <mo> + </mo>
+                    <mi> z </mi>
+                  </mrow>
+                  <mo>&#x2C6;</mo>
+                </mover>
+              </math>
+            </root>
+          `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\hat{x + y + z}');
+      });
+    });
+
+    describe('where its first child is a mrow and second is mo containing generic char', () => {
+      test('wrap it content inside overset making generic char on top', () => {
+        const mathml = `
+          <root>
+            <math>
+              <mover accent="true">
+                <mrow>
+                  <mi> x </mi>
+                  <mo> + </mo>
+                  <mi> y </mi>
+                  <mo> + </mo>
+                  <mi> z </mi>
+                </mrow>
+                <mo>a + b</mo>
+              </mover>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\overset{a + b}{x + y + z}');
+      });
     });
   });
 });

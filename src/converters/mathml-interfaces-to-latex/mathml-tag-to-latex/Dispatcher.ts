@@ -17,8 +17,7 @@ import {
   MSub,
   MSubsup,
   MText,
-  MOver,
-  MUnder,
+  UnderOverTag,
 } from './mathml-tags';
 
 export class Dispatcher {
@@ -69,9 +68,8 @@ export class Dispatcher {
       case 'mtext':
         return new MText(this._value, this._attributes, this._children);
       case 'mover':
-        return new MOver(this._value, this._attributes, this._children);
       case 'munder':
-        return new MUnder(this._value, this._attributes, this._children);
+        return new UnderOverTag(this._name, this._value, this._attributes, this._children);
       case 'mrow':
       case 'mpadded':
         return new GenericContentWrapperTag(this._name, this._value, this._attributes, this._children);

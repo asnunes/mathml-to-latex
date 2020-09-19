@@ -16,5 +16,4 @@ export { MSup } from './MSup';
 export { MSub } from './MSub';
 export { MSubsup } from './MSubsup';
 export { MText } from './MText';
-export { MOver } from './MOver';
-export { MUnder } from './MUnder';
+export { UnderOverTag } from './UnderOverTag';

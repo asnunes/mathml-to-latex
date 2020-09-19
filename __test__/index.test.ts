@@ -1501,4 +1501,31 @@ describe('#convert', () => {
       });
     });
   });
+
+  describe('given math string with munder tag', () => {
+    describe('where its first child is a mrow and second is mo containing ⏟', () => {
+      test('wrap it content inside underbrace command', () => {
+        const mathml = `
+          <root>
+            <math>
+              <munder accent="true">
+                <mrow>
+                  <mi> x </mi>
+                  <mo> + </mo>
+                  <mi> y </mi>
+                  <mo> + </mo>
+                  <mi> z </mi>
+                </mrow>
+                <mo>⏟</mo>
+              </munder>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\underbrace{x + y + z}');
+      });
+    });
+  });
 });

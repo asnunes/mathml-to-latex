@@ -1,7 +1,6 @@
 import { MathMLTag } from './MathMLTag';
 import { GenericWrapper } from '../../../../utils/wrappers';
 import { JoinWithManySeparators } from '../../../../utils';
-import { MTable } from './MTable';
 
 export class MFenced extends MathMLTag {
   private readonly _open: string;
@@ -17,13 +16,9 @@ export class MFenced extends MathMLTag {
   }
 
   convert(): string {
-    if (this._isMatrix()) return new Matrix(this._open).apply(this._mapChildrenToLaTeX().join());
+    if (this.isThere('MTable')) return new Matrix(this._open, this._close).apply(this._mapChildrenToLaTeX().join());
 
     return new Vector(this._open, this._close, this._separators).apply(this._mapChildrenToLaTeX());
-  }
-
-  private _isMatrix(): boolean {
-    return this._children.some((child) => child instanceof MTable);
   }
 }
 
@@ -47,16 +42,23 @@ class Vector {
 
 class Matrix {
   private readonly _open: string;
+  private readonly _close: string;
+  private readonly _genericCommand = 'matrix';
 
-  constructor(open: string) {
+  constructor(open: string, close: string) {
     this._open = open;
+    this._close = close;
   }
 
   apply(latex: string): string {
-    return `\\begin{${this._command}}\n` + latex + `\n\\end{${this._command}}`;
+    if (this._close || !this._open)
+      return `\\begin{${this._customCommand}}\n` + latex + `\n\\end{${this._customCommand}}`;
+
+    const matrix = `\\begin{${this._genericCommand}}\n` + latex + `\n\\end{${this._genericCommand}}`;
+    return new GenericWrapper(this._open, this._close).wrap(matrix);
   }
 
-  private get _command(): string {
+  private get _customCommand(): string {
     switch (this._open) {
       case '(':
         return 'pmatrix';
@@ -69,7 +71,7 @@ class Matrix {
       case '{':
         return 'Bmatrix';
       default:
-        return 'matrix';
+        return this._genericCommand;
     }
   }
 }

@@ -22,4 +22,11 @@ export class MathMLTag {
   protected _normalizeWhiteSpaces(str: string): string {
     return str.replace(/\s+/g, ' ');
   }
+
+  isThere(className: string): boolean {
+    const firstChild = this._children[0];
+    if (!firstChild) return false;
+
+    return firstChild.constructor.name === className || firstChild.isThere(className);
+  }
 }

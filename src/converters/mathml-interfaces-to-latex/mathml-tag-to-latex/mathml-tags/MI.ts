@@ -1,6 +1,5 @@
 import { MathMLTag } from './MathMLTag';
-import { allMathSymbolsByChar } from '../../../../syntax/allMathSymbolsByChar';
-import { allMathSymbolsByGlyph } from '../../../../syntax/allMathSymbolsByGlyph';
+import { allMathSymbolsByChar, allMathSymbolsByGlyph } from '../../../../syntax';
 
 export class MI extends MathMLTag {
   constructor(value: string, attributes: Record<string, string>, children: MathMLTag[]) {

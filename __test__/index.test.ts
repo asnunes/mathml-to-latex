@@ -1529,7 +1529,7 @@ describe('#convert', () => {
     });
 
     describe('where its first child is a mrow and second is mo containing generic char', () => {
-      test('wrap it content inside overset making generic char on top', () => {
+      test('wrap it content inside underset making generic char on bottom', () => {
         const mathml = `
           <root>
             <math>

@@ -1,6 +1,7 @@
 import { MathMLTag } from './MathMLTag';
 import { GenericWrapper } from '../../../../utils/wrappers';
 import { JoinWithManySeparators } from '../../../../utils';
+import { MTable } from './MTable';
 
 export class MFenced extends MathMLTag {
   private readonly _open: string;
@@ -16,7 +17,13 @@ export class MFenced extends MathMLTag {
   }
 
   convert(): string {
+    if (this._isMatrix()) return new Matrix(this._open).apply(this._mapChildrenToLaTeX().join());
+
     return new Vector(this._open, this._close, this._separators).apply(this._mapChildrenToLaTeX());
+  }
+
+  private _isMatrix(): boolean {
+    return this._children.some((child) => child instanceof MTable);
   }
 }
 
@@ -35,5 +42,17 @@ class Vector {
     const contentWithoutWrapper = JoinWithManySeparators.join(latexContents, this._separators);
 
     return new GenericWrapper(this._open, this._close).wrap(contentWithoutWrapper);
+  }
+}
+
+class Matrix {
+  private readonly _open: string;
+
+  constructor(open: string) {
+    this._open = open;
+  }
+
+  apply(latex: string): string {
+    return '\\begin{bmatrix}\n' + latex + '\n\\end{bmatrix}';
   }
 }

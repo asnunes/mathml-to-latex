@@ -16,5 +16,7 @@ export { MSub } from './MSub';
 export { MSubsup } from './MSubsup';
 export { MText } from './MText';
 export { MUnderover } from './MUnderover';
+export { MTable } from './MTable';
+export { MTr } from './MTr';
 export { GenericContentWrapperTag } from './GenericContentWrapperTag';
 export { GenericUnderOverTag } from './GenericUnderOverTag';

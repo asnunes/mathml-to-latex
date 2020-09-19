@@ -17,6 +17,8 @@ import {
   MSubsup,
   MText,
   MUnderover,
+  MTable,
+  MTr,
   GenericContentWrapperTag,
   GenericUnderOverTag,
 } from './mathml-tags';
@@ -70,6 +72,10 @@ export class Dispatcher {
         return new MText(this._value, this._attributes, this._children);
       case 'munderover':
         return new MUnderover(this._value, this._attributes, this._children);
+      case 'mtable':
+        return new MTable(this._value, this._attributes, this._children);
+      case 'mtr':
+        return new MTr(this._value, this._attributes, this._children);
       case 'mover':
       case 'munder':
         return new GenericUnderOverTag(this._name, this._value, this._attributes, this._children);

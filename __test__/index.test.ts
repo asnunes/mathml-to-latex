@@ -1552,5 +1552,30 @@ describe('#convert', () => {
         expect(result).toBe('\\underset{a + b}{x + y + z}');
       });
     });
+
+    describe('where its first child is a mrow and second is mo containing &#x23DE;', () => {
+      test('parce wrapping it content inside underbrace command', () => {
+        const mathml = `
+          <root>
+            <math>
+              <munder accent="true">
+                <mrow>
+                  <mi> x </mi>
+                  <mo> + </mo>
+                  <mi> y </mi>
+                  <mo> + </mo>
+                  <mi> z </mi>
+                </mrow>
+                <mo>&#x23DF;</mo>
+              </munder>
+            </math>
+          </root>
+        `;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\underbrace{x + y + z}');
+      });
+    });
   });
 });

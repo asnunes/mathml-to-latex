@@ -1,4 +1,4 @@
-import { MathML } from '../../interfaces/MathML';
+import { MathML } from '../../protocols/MathML';
 import MathmlToLatex from './xml-to-mathml/mathml-to-latex';
 import XmlToMathml from './xml-to-mathml';
 

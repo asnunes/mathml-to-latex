@@ -1,4 +1,4 @@
-import { MathML } from '../../../../interfaces/MathML';
+import { MathML } from '../../../../protocols/MathML';
 import Dispatcher from './mathml-to-latex';
 import { MathMLTag } from './mathml-to-latex/mathml-tags';
 

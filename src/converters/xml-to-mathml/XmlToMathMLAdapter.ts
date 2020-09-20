@@ -2,7 +2,7 @@ import xmldom = require('xmldom');
 
 import { DOMParser } from 'xmldom';
 import { ErrorHandler } from './ErrorHandler';
-import { MathML } from '../../../protocols/MathML';
+import { MathML } from '../../protocols/MathML';
 import { ElementsToMathMLAdapter } from './ElementsToMathMLAdapter';
 
 export class XmlToMathMLAdapter {

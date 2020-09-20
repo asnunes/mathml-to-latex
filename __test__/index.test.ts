@@ -257,7 +257,7 @@ describe('#convert', () => {
 
             const result = MathMLToLaTeX.convert(mathml);
 
-            expect(result).toBe('A = \\begin{matrix}\n x & y \\\\\n z & w \n\\end{matrix}'.replace(/\n/g, ''));
+            expect(result).toBe('A = \\begin{bmatrix}\n x & y \\\\\n z & w \n\\end{bmatrix}'.replace(/\n/g, ''));
           });
         });
       });
@@ -273,6 +273,18 @@ describe('#convert', () => {
               /\n/g,
               '',
             ),
+          );
+        });
+      });
+
+      describe('given math string with nested mtables', () => {
+        test('add matrix to inner table', () => {
+          const mathml = mathmlStrings.mfencedWithNestedMtables;
+
+          const result = MathMLToLaTeX.convert(mathml);
+
+          expect(result).toBe(
+            `\\begin{bmatrix} \\begin{matrix}a_{11} & a_{12}\\end{matrix} & \\begin{matrix}\\hdots & \\hdots\\end{matrix} & a_{1 n} \\\\ \\begin{matrix}a_{21} & a_{22}\\end{matrix} & \\begin{matrix}\\ddots & \\end{matrix} & a_{2 n} \\\\ \\begin{matrix}\\begin{matrix}\\vdots & \\vdots\\end{matrix} \\\\ \\begin{matrix}a_{m 1} & a_{m 2}\\end{matrix}\\end{matrix} & \\begin{matrix}\\begin{matrix} & \\ddots\\end{matrix} \\\\ \\begin{matrix}\\hdots & \\hdots\\end{matrix}\\end{matrix} & \\begin{matrix}\\vdots \\\\ a_{m n}\\end{matrix} \\end{bmatrix}`,
           );
         });
       });

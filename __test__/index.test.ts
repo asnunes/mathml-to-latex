@@ -895,5 +895,15 @@ describe('#convert', () => {
         expect(result).toBe('\\left(N a\\right)_{11}^{+}');
       });
     });
+
+    describe('with subscript only, without preset', () => {
+      it('handler it as it were a subsup tag', () => {
+        const mathml = mathmlStrings.mmultiscriptNoSuper;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\left(N a\\right)_{11}^{}');
+      });
+    });
   });
 });

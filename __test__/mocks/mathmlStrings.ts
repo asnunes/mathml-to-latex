@@ -1486,3 +1486,16 @@ export const mmultiscript = `<math xmlns="http://www.w3.org/1998/Math/MathML" di
   </mrow>
 </mmultiscripts>
 </math>`;
+
+export const mmultiscriptNoSuper = `<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+<mmultiscripts>
+  <mrow>
+    <mi>N</mi>
+    <mi>a</mi>
+  </mrow>
+  <mrow>
+    <mn>11</mn>
+  </mrow>
+  <none/>
+</mmultiscripts>
+</math>`;

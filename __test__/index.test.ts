@@ -935,5 +935,15 @@ describe('#convert', () => {
         expect(result).toBe('\\_{b}^{}X_{}^{c}');
       });
     });
+
+    describe('with preset only', () => {
+      it('add prescript and ignore subsup', () => {
+        const mathml = mathmlStrings.mmultiscriptPresetOnly;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\_{b}^{}X');
+      });
+    });
   });
 });

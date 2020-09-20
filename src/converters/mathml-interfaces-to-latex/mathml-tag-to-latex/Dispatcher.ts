@@ -45,6 +45,8 @@ export class Dispatcher {
         return new MathMLTags.MSub(this._value, this._attributes, this._children);
       case 'msubsup':
         return new MathMLTags.MSubsup(this._value, this._attributes, this._children);
+      case 'mmultiscripts':
+        return new MathMLTags.MMultiscripts(this._value, this._attributes, this._children);
       case 'mtext':
         return new MathMLTags.MText(this._value, this._attributes, this._children);
       case 'munderover':

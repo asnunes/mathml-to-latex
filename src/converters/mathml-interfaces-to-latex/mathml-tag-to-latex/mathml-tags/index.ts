@@ -14,6 +14,7 @@ export { MPhantom } from './MPhantom';
 export { MSup } from './MSup';
 export { MSub } from './MSub';
 export { MSubsup } from './MSubsup';
+export { MMultiscripts } from './MMultiscripts';
 export { MText } from './MText';
 export { MUnderover } from './MUnderover';
 export { MTable } from './MTable';

@@ -865,7 +865,7 @@ describe('#convert', () => {
 
   describe('given math string with munderover', () => {
     describe('with three contents', () => {
-      test('handle it as it were an subsup tag', () => {
+      test('handle it as it were a subsup tag', () => {
         const mathml = mathmlStrings.munderover;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -875,12 +875,24 @@ describe('#convert', () => {
     });
 
     describe('with three contents and especial operator', () => {
-      test('handle it as it were an subsup tag and convert special operator', () => {
+      test('handle it as it were a subsup tag and convert special operator', () => {
         const mathml = mathmlStrings.munderoverEncoded;
 
         const result = MathMLToLaTeX.convert(mathml);
 
         expect(result).toBe('\\int_{0}^{\\infty}');
+      });
+    });
+  });
+
+  describe('given math string with mmultiscript', () => {
+    describe('with subscript and superscript only, without preset', () => {
+      it('handler it as it were a subsup tag', () => {
+        const mathml = mathmlStrings.mmultiscript;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\left(N a\\right)_{11}^{+}');
       });
     });
   });

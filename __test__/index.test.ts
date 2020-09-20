@@ -915,5 +915,15 @@ describe('#convert', () => {
         expect(result).toBe('\\left(N a\\right)_{}^{+}');
       });
     });
+
+    describe('with subscript and superscript and full preset', () => {
+      it('handler it as it were a subsup tag', () => {
+        const mathml = mathmlStrings.mmultiscriptPreset;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\_{b}^{a}X_{d}^{c}');
+      });
+    });
   });
 });

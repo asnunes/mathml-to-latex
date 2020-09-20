@@ -7,7 +7,7 @@ export class MUnderover extends MathMLTag {
   }
 
   convert(): string {
-    if (this._children.length !== 3) throw new InvalidNumberOfChild(this._name, 3, this._children.length);
+    if (this._children.length !== 3) throw new InvalidNumberOfChild(this.name, 3, this._children.length);
 
     const base = this._children[0].convert();
     const underContent = this._children[1].convert();

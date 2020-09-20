@@ -7,7 +7,7 @@ export class MRoot extends MathMLTag {
   }
 
   convert(): string {
-    if (this._children.length !== 2) throw new InvalidNumberOfChild(this._name, 2, this._children.length);
+    if (this._children.length !== 2) throw new InvalidNumberOfChild(this.name, 2, this._children.length);
 
     const content = this._children[0].convert();
     const rootIndex = this._children[1].convert();

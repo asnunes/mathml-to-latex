@@ -8,7 +8,7 @@ export class MSubsup extends MathMLTag {
   }
 
   convert(): string {
-    if (this._children.length !== 3) throw new InvalidNumberOfChild(this._name, 2, this._children.length);
+    if (this._children.length !== 3) throw new InvalidNumberOfChild(this.name, 2, this._children.length);
 
     const base = this._children[0].convert();
     const sub = this._children[1].convert();

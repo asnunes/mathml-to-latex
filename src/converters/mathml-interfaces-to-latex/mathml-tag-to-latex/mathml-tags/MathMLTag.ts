@@ -1,12 +1,12 @@
 export class MathMLTag {
-  protected _name: string;
+  readonly name: string;
   protected _value: string;
   protected _attributes: Record<string, string>;
   protected _children: MathMLTag[];
   protected _flags: string[] = [];
 
   constructor(name: string, value: string, attributes: Record<string, string>, children: MathMLTag[]) {
-    this._name = name;
+    this.name = name;
     this._value = value;
     this._attributes = attributes;
     this._children = children;

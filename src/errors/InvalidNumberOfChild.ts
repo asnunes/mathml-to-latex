@@ -1,5 +1,8 @@
 export class InvalidNumberOfChild extends Error {
-  constructor(tagName: string, expectedNumberOfChild: number, currentNumberOfChild: number) {
-    super(`${tagName} tag must have exactly ${expectedNumberOfChild} children. It's actually ${currentNumberOfChild}`);
+  constructor(tagName: string, expectedNumberOfChild: number, currentNumberOfChild: number, comparison = 'exactly') {
+    super(
+      `${tagName} tag must have ${comparison} ${expectedNumberOfChild} children. It's actually ${currentNumberOfChild}`,
+    );
+    this.name = 'InvalidNumberOfChild';
   }
 }

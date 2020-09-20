@@ -4,7 +4,7 @@ import { latexAccents } from '../../../../syntax/latexAccents';
 
 export class GenericUnderOverTag extends MathMLTag {
   convert(): string {
-    if (this._children.length !== 2) throw new InvalidNumberOfChild(this._name, 2, this._children.length);
+    if (this._children.length !== 2) throw new InvalidNumberOfChild(this.name, 2, this._children.length);
 
     const content = this._children[0].convert();
     const accent = this._children[1].convert();
@@ -13,7 +13,7 @@ export class GenericUnderOverTag extends MathMLTag {
   }
 
   private _applyCommand(content: string, accent: string): string {
-    const type = this._name.match(/under/) ? TagTypes.Under : TagTypes.Over;
+    const type = this.name.match(/under/) ? TagTypes.Under : TagTypes.Over;
     return new UnderOverSetter(type).apply(content, accent);
   }
 }

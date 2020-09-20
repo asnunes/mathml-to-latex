@@ -905,5 +905,15 @@ describe('#convert', () => {
         expect(result).toBe('\\left(N a\\right)_{11}^{}');
       });
     });
+
+    describe('with superscript only, without preset', () => {
+      it('handler it as it were a subsup tag', () => {
+        const mathml = mathmlStrings.mmultiscriptNoSub;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\left(N a\\right)_{}^{+}');
+      });
+    });
   });
 });

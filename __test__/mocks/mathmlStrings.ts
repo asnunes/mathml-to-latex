@@ -1499,3 +1499,16 @@ export const mmultiscriptNoSuper = `<math xmlns="http://www.w3.org/1998/Math/Mat
   <none/>
 </mmultiscripts>
 </math>`;
+
+export const mmultiscriptNoSub = `<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+<mmultiscripts>
+  <mrow>
+    <mi>N</mi>
+    <mi>a</mi>
+  </mrow>
+  <none/>
+  <mrow>
+    <mn>+</mn>
+  </mrow>
+</mmultiscripts>
+</math>`;

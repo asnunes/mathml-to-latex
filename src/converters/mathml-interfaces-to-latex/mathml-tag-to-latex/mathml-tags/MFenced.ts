@@ -41,37 +41,69 @@ class Vector {
 }
 
 class Matrix {
-  private readonly _open: string;
-  private readonly _close: string;
+  private readonly _separators: Separators;
   private readonly _genericCommand = 'matrix';
+
+  constructor(open: string, close: string) {
+    this._separators = new Separators(open, close);
+  }
+
+  apply(latex: string): string {
+    const command = this._command;
+    const matrix = `\\begin{${command}}\n${latex}\n\\end{${command}}`;
+
+    return command === this._genericCommand ? this._separators.wrap(matrix) : matrix;
+  }
+
+  private get _command(): string {
+    if (this._separators.areParentheses()) return 'pmatrix';
+    if (this._separators.areSquareBrackets()) return 'bmatrix';
+    if (this._separators.areBrackets()) return 'Bmatrix';
+    if (this._separators.areDivides()) return 'vmatrix';
+    if (this._separators.areParallels()) return 'Vmatrix';
+    if (this._separators.areNotEqual()) return this._genericCommand;
+    return 'bmatrix';
+  }
+}
+
+class Separators {
+  readonly _open: string;
+  readonly _close: string;
 
   constructor(open: string, close: string) {
     this._open = open;
     this._close = close;
   }
 
-  apply(latex: string): string {
-    if (this._close || !this._open)
-      return `\\begin{${this._customCommand}}\n` + latex + `\n\\end{${this._customCommand}}`;
-
-    const matrix = `\\begin{${this._genericCommand}}\n` + latex + `\n\\end{${this._genericCommand}}`;
-    return new GenericWrapper(this._open, this._close).wrap(matrix);
+  wrap(str: string): string {
+    return new GenericWrapper(this._open, this._close).wrap(str);
   }
 
-  private get _customCommand(): string {
-    switch (this._open) {
-      case '(':
-        return 'pmatrix';
-      case '|':
-        return 'vmatrix';
-      case '||':
-        return 'Vmatrix';
-      case '[':
-        return 'bmatrix';
-      case '{':
-        return 'Bmatrix';
-      default:
-        return this._genericCommand;
-    }
+  areParentheses(): boolean {
+    return this._compare('(', ')');
+  }
+
+  areSquareBrackets(): boolean {
+    return this._compare('[', ']');
+  }
+
+  areBrackets(): boolean {
+    return this._compare('{', '}');
+  }
+
+  areDivides(): boolean {
+    return this._compare('|', '|');
+  }
+
+  areParallels(): boolean {
+    return this._compare('||', '||');
+  }
+
+  areNotEqual(): boolean {
+    return this._open !== this._close;
+  }
+
+  private _compare(openToCompare: string, closeToCompare: string): boolean {
+    return this._open === openToCompare && this._close === closeToCompare;
   }
 }

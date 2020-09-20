@@ -11,23 +11,21 @@ export class MMultiscripts extends MathMLTag {
     if (this._children.length < 3) throw new InvalidNumberOfChild(this.name, 3, this._children.length, 'at least');
 
     const base = this._children[0];
-    const sub = this._children[1];
-    const sup = this._children[2];
-    const prescript = this._children[3];
-    const prescriptSub = this._children[4];
-    const prescriptSup = this._children[5];
-
-    const wrappedSub = new BracketWrapper().wrap(sub.convert());
-    const wrappedSup = new BracketWrapper().wrap(sup.convert());
 
     return this._prescriptLatex() + this._wrapInParenthesisIfThereIsSpace(base.convert()) + this._postscriptLatex();
   }
 
   private _prescriptLatex(): string {
-    if (this._children[3]?.name !== 'mprescripts') return '';
+    let sub;
+    let sup;
 
-    const sub = this._children[4];
-    const sup = this._children[5];
+    if (this._isPrescripts(this._children[1])) {
+      sub = this._children[2];
+      sup = this._children[3];
+    } else if (this._isPrescripts(this._children[3])) {
+      sub = this._children[4];
+      sup = this._children[5];
+    } else return '';
 
     const subLatex = sub ? sub.convert() : '';
     const supLatex = sup ? sup.convert() : '';
@@ -36,6 +34,8 @@ export class MMultiscripts extends MathMLTag {
   }
 
   private _postscriptLatex(): string {
+    if (this._isPrescripts(this._children[1])) return '';
+
     const sub = this._children[1];
     const sup = this._children[2];
 
@@ -48,5 +48,9 @@ export class MMultiscripts extends MathMLTag {
   private _wrapInParenthesisIfThereIsSpace(str: string): string {
     if (!str.match(/\s+/g)) return str;
     return new ParenthesisWrapper().wrap(str);
+  }
+
+  private _isPrescripts(child: MathMLTag): boolean {
+    return child?.name === 'mprescripts';
   }
 }

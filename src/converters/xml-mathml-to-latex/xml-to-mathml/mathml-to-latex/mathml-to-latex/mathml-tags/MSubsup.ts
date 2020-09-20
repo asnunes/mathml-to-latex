@@ -1,6 +1,6 @@
 import { MathMLTag } from './MathMLTag';
-import { BracketWrapper, ParenthesisWrapper } from '../../../../utils/wrappers';
-import { InvalidNumberOfChild } from '../../../../errors';
+import { BracketWrapper, ParenthesisWrapper } from '../../../../../../utils/wrappers';
+import { InvalidNumberOfChild } from '../../../../../../errors';
 
 export class MSubsup extends MathMLTag {
   constructor(value: string, attributes: Record<string, string>, children: MathMLTag[]) {

@@ -2,18 +2,18 @@ import xmldom = require('xmldom');
 
 import { DOMParser } from 'xmldom';
 import { ErrorHandler } from './ErrorHandler';
-import { MathML } from '../../interfaces/MathML';
-import { ElementsToMathMLInterfacesConvertor } from './ElementsToMathMLInterfacesConvertor';
+import { MathML } from '../../../interfaces/MathML';
+import { ElementsToMathMLAdapter } from './ElementsToMathMLAdapter';
 
-export class MathMLStringToMathMLInterfaces {
+export class XmlToMathMLAdapter {
   private _xmlDOM: DOMParser;
   private _errorHandler: ErrorHandler;
-  private _elementsConvertor: ElementsToMathMLInterfacesConvertor;
+  private _elementsConvertor: ElementsToMathMLAdapter;
 
   constructor(private _xml: string) {
     this._xml = this._removeLineBreaks(_xml);
 
-    this._elementsConvertor = new ElementsToMathMLInterfacesConvertor();
+    this._elementsConvertor = new ElementsToMathMLAdapter();
     this._errorHandler = new ErrorHandler();
 
     this._xmlDOM = new xmldom.DOMParser({

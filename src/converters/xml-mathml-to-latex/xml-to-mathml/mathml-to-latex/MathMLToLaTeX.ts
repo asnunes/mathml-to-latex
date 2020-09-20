@@ -1,8 +1,8 @@
-import { MathML } from '../../interfaces/MathML';
-import Dispatcher from './mathml-tag-to-latex';
-import { MathMLTag } from './mathml-tag-to-latex/mathml-tags';
+import { MathML } from '../../../../interfaces/MathML';
+import Dispatcher from './mathml-to-latex';
+import { MathMLTag } from './mathml-to-latex/mathml-tags';
 
-export class MathMLInterfacesToLaTeX {
+export class MathMLToLaTeX {
   constructor(private _mathMLInterfaces: MathML[]) {
     this._mathMLInterfaces = _mathMLInterfaces;
   }

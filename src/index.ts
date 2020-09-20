@@ -1,3 +1,3 @@
-import MathMLToLaTeX from './converters/mathml-string-to-latex';
+import MathMLToLaTeX from './converters/xml-mathml-to-latex';
 
 export default MathMLToLaTeX;

@@ -1,4 +1,4 @@
-import MathMLStringToMathMLInterfaces from '../../../src/converters/mathml-string-to-mathml-interfaces';
+import XmlToMathMLAdapter from '../../../src/converters/xml-mathml-to-latex/xml-to-mathml';
 import {
   singleMi,
   singleMiNoRoot,
@@ -12,7 +12,7 @@ describe('#convert', () => {
     it('return array with single mathml interface of name math and child mi', () => {
       const mathmlString = singleMi;
 
-      const result = new MathMLStringToMathMLInterfaces(mathmlString).convert();
+      const result = new XmlToMathMLAdapter(mathmlString).convert();
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({
@@ -28,7 +28,7 @@ describe('#convert', () => {
     test('return array with single mathml interface of name math and child mi', () => {
       const mathmlString = singleMiNoRoot;
 
-      const result = new MathMLStringToMathMLInterfaces(mathmlString).convert();
+      const result = new XmlToMathMLAdapter(mathmlString).convert();
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({
@@ -44,7 +44,7 @@ describe('#convert', () => {
     test('return content in a three and keep value on each child', () => {
       const mathmlString = mrow;
 
-      const result = new MathMLStringToMathMLInterfaces(mathmlString).convert();
+      const result = new XmlToMathMLAdapter(mathmlString).convert();
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({
@@ -71,7 +71,7 @@ describe('#convert', () => {
     test('add attributes to children related with name mfenced', () => {
       const mathmlString = mfencedWithSeparatorAttribute;
 
-      const result = new MathMLStringToMathMLInterfaces(mathmlString).convert();
+      const result = new XmlToMathMLAdapter(mathmlString).convert();
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({
@@ -98,7 +98,7 @@ describe('#convert', () => {
     test('add attributes to children related with name mfenced', () => {
       const mathmlString = mfencedWithBrokenAttribute;
 
-      const result = new MathMLStringToMathMLInterfaces(mathmlString).convert();
+      const result = new XmlToMathMLAdapter(mathmlString).convert();
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({

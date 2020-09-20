@@ -1,6 +1,6 @@
 import { MathMLTag } from './MathMLTag';
-import { ParenthesisWrapper } from '../../../../utils/wrappers';
-import { InvalidNumberOfChild } from '../../../../errors';
+import { ParenthesisWrapper } from '../../../../../../utils/wrappers';
+import { InvalidNumberOfChild } from '../../../../../../errors';
 
 export class MMultiscripts extends MathMLTag {
   constructor(value: string, attributes: Record<string, string>, children: MathMLTag[]) {

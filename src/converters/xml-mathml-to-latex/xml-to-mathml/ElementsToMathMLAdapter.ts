@@ -1,6 +1,6 @@
-import { MathML } from '../../interfaces/MathML';
+import { MathML } from '../../../interfaces/MathML';
 
-export class ElementsToMathMLInterfacesConvertor {
+export class ElementsToMathMLAdapter {
   convert(els: Element[]): MathML[] {
     return els.filter((el: Element) => el.tagName !== undefined).map((el: Element) => this._convertElement(el));
   }
@@ -16,7 +16,8 @@ export class ElementsToMathMLInterfacesConvertor {
 
   private _convertElementAttributes(attributes: NamedNodeMap): Record<string, string> {
     return Array.from(attributes).reduce(
-      (acc, attr: Attr) => Object.assign({ [attr.nodeName]: attr.nodeValue === attr.nodeName ? '' : attr.nodeValue }, acc),
+      (acc, attr: Attr) =>
+        Object.assign({ [attr.nodeName]: attr.nodeValue === attr.nodeName ? '' : attr.nodeValue }, acc),
       {},
     );
   }
@@ -27,6 +28,6 @@ export class ElementsToMathMLInterfacesConvertor {
   }
 
   private _isThereAnyNoTextNode(children: NodeListOf<ChildNode>): boolean {
-    return Array.from(children).some(child => child.nodeName !== '#text');
+    return Array.from(children).some((child) => child.nodeName !== '#text');
   }
 }

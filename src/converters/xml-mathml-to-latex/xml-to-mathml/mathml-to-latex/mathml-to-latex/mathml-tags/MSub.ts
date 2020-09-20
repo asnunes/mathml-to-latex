@@ -1,10 +1,10 @@
 import { MathMLTag } from './MathMLTag';
-import { BracketWrapper, ParenthesisWrapper } from '../../../../utils/wrappers';
-import { InvalidNumberOfChild } from '../../../../errors';
+import { BracketWrapper, ParenthesisWrapper } from '../../../../../../utils/wrappers';
+import { InvalidNumberOfChild } from '../../../../../../errors';
 
-export class MSup extends MathMLTag {
+export class MSub extends MathMLTag {
   constructor(value: string, attributes: Record<string, string>, children: MathMLTag[]) {
-    super('msup', value, attributes, children);
+    super('msub', value, attributes, children);
   }
 
   convert(): string {
@@ -13,6 +13,6 @@ export class MSup extends MathMLTag {
     const base = this._children[0].convert();
     const exponent = this._children[1].convert();
 
-    return `${new ParenthesisWrapper().wrapIfMoreThanOneChar(base)}^${new BracketWrapper().wrap(exponent)}`;
+    return `${new ParenthesisWrapper().wrapIfMoreThanOneChar(base)}_${new BracketWrapper().wrap(exponent)}`;
   }
 }

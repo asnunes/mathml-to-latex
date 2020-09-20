@@ -1,6 +1,6 @@
 import { MathMLTag } from './MathMLTag';
-import { InvalidNumberOfChild } from '../../../../errors';
-import { latexAccents } from '../../../../syntax/latexAccents';
+import { InvalidNumberOfChild } from '../../../../../../errors';
+import { latexAccents } from '../../../../../../syntax/latexAccents';
 
 export class GenericUnderOverTag extends MathMLTag {
   convert(): string {

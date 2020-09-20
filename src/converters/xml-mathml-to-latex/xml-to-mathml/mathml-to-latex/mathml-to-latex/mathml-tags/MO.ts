@@ -1,5 +1,5 @@
 import { MathMLTag } from './MathMLTag';
-import { allMathOperatorsByChar, allMathOperatorsByGlyph } from '../../../../syntax';
+import { allMathOperatorsByChar, allMathOperatorsByGlyph } from '../../../../../../syntax';
 
 export class MO extends MathMLTag {
   constructor(value: string, attributes: Record<string, string>, children: MathMLTag[]) {

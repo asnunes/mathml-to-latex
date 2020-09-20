@@ -1,5 +1,5 @@
 import { MathMLTag } from './MathMLTag';
-import { InvalidNumberOfChild } from '../../../../errors';
+import { InvalidNumberOfChild } from '../../../../../../errors';
 
 export class MUnderover extends MathMLTag {
   constructor(value: string, attributes: Record<string, string>, children: MathMLTag[]) {

@@ -1527,3 +1527,18 @@ export const mmultiscriptPreset = `<math xmlns="http://www.w3.org/1998/Math/Math
 
 </mmultiscripts>
 </math>`;
+
+export const mmultiscriptPresetWithNone = `<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+<mmultiscripts>
+
+  <mi>X</mi>      <!-- base expression -->
+
+  <none />        <!-- postsubscript -->
+  <mi>c</mi>      <!-- postsuperscript -->
+
+  <mprescripts />
+  <mi>b</mi>      <!-- presubscript -->
+  <none />        <!-- presuperscript -->
+
+</mmultiscripts>
+</math>`;

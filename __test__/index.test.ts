@@ -917,12 +917,22 @@ describe('#convert', () => {
     });
 
     describe('with subscript and superscript and full preset', () => {
-      it('handler it as it were a subsup tag', () => {
+      it('add prescript to latex subsup expression', () => {
         const mathml = mathmlStrings.mmultiscriptPreset;
 
         const result = MathMLToLaTeX.convert(mathml);
 
         expect(result).toBe('\\_{b}^{a}X_{d}^{c}');
+      });
+    });
+
+    describe('with post and preset with empty fields', () => {
+      it('add prescript to latex subsup expression', () => {
+        const mathml = mathmlStrings.mmultiscriptPresetWithNone;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\_{b}^{}X_{}^{c}');
       });
     });
   });

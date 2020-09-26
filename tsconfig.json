@@ -4,9 +4,21 @@
     "module": "commonjs",
     "noEmitOnError": true,
     "declaration": true,
-    "outDir": "./lib",
-    "strict": true
+    "outDir": "lib",
+    "strict": true,
+    "rootDir": "src",
+    "baseUrl": "src",
+    "paths": {
+      "@/*": [
+        "*"
+      ]
+    }
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/__tests__/*"
+  ]
 }

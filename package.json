@@ -45,7 +45,9 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "git-commit-msg-linter": "^2.7.0",
+    "husky": "^4.3.0",
     "jest": "24.9.0",
+    "lint-staged": "^10.4.0",
     "prettier": "^2.1.1",
     "ts-jest": "^26.3.0",
     "typescript": "^4.0.2"

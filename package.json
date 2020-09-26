@@ -7,7 +7,8 @@
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-    "test": "jest"
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:watch": "npm run test -- --watch"
   },
   "husky": {
     "hooks": {

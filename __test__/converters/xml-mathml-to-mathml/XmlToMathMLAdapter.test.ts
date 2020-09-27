@@ -1,4 +1,4 @@
-import XmlToMathMLAdapter from '../../../src/converters/xml-mathml-to-latex/xml-to-mathml';
+import { XmlToMathMLAdapter } from '../../../src/infra/usecases/xmldom-to-mathml-elements';
 import {
   singleMi,
   singleMiNoRoot,

@@ -1,4 +1,4 @@
-import xmldom = require('xmldom');
+import xmldom from 'xmldom';
 
 import { DOMParser } from 'xmldom';
 import { ElementsToMathMLAdapter } from './xmldom-elements-to-mathml-elements-adapter';

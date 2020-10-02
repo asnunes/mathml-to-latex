@@ -1,9 +1,9 @@
 import { MathMLElementToLatexConverterAdapter } from '@/data/usecases/mathml-to-latex-convertion/mathml-element-to-latex-converter-adapter';
-import { XmlToMathMLAdapter } from '@/infra/usecases/xmldom-to-mathml-elements';
+import { makeToMathElementsConverter } from './factories';
 
 export class MathMLToLaTeX {
   static convert(mathml: string): string {
-    const mathmlElements = new XmlToMathMLAdapter(mathml).convert();
+    const mathmlElements = makeToMathElementsConverter().convert(mathml);
     const mathmlElementsToLaTeXConverters = mathmlElements.map((mathMLElement) =>
       new MathMLElementToLatexConverterAdapter(mathMLElement).toLatexConverter(),
     );

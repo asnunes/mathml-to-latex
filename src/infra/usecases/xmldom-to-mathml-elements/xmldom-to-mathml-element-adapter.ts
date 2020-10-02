@@ -6,16 +6,14 @@ import { ErrorHandler } from './error-handler';
 import { MathMLElement } from '@/data/protocols/mathml-element';
 
 export class XmlToMathMLAdapter {
-  private _xml: string;
+  private _xml = '';
   private readonly _xmlDOM: DOMParser;
   private readonly _errorHandler: ErrorHandler;
   private readonly _elementsConvertor: ElementsToMathMLAdapter;
 
-  constructor(xml: string) {
-    this._xml = this._removeLineBreaks(xml);
-
-    this._elementsConvertor = new ElementsToMathMLAdapter();
-    this._errorHandler = new ErrorHandler();
+  constructor(elementsConvertor: ElementsToMathMLAdapter, errorHandler: ErrorHandler) {
+    this._elementsConvertor = elementsConvertor;
+    this._errorHandler = errorHandler;
 
     this._xmlDOM = new xmldom.DOMParser({
       locator: this._errorHandler.errorLocator,
@@ -23,7 +21,8 @@ export class XmlToMathMLAdapter {
     });
   }
 
-  convert(): MathMLElement[] {
+  convert(xml: string): MathMLElement[] {
+    this._xml = this._removeLineBreaks(xml);
     return this._elementsConvertor.convert(this._mathMLElements);
   }
 

@@ -1,4 +1,9 @@
-import { XmlToMathMLAdapter } from '../../../src/infra/usecases/xmldom-to-mathml-elements';
+import {
+  XmlToMathMLAdapter,
+  ElementsToMathMLAdapter,
+  ErrorHandler,
+} from '../../../src/infra/usecases/xmldom-to-mathml-elements';
+
 import {
   singleMi,
   singleMiNoRoot,
@@ -8,11 +13,18 @@ import {
 } from '../../mocks/mathmlStrings';
 
 describe('#convert', () => {
+  const makeSut = (): XmlToMathMLAdapter => {
+    const elementsToMathMLAdapter = new ElementsToMathMLAdapter();
+    const errorHandler = new ErrorHandler();
+
+    return new XmlToMathMLAdapter(elementsToMathMLAdapter, errorHandler);
+  };
+
   describe('given math string with mi tag', () => {
     it('return array with single mathml interface of name math and child mi', () => {
       const mathmlString = singleMi;
 
-      const result = new XmlToMathMLAdapter(mathmlString).convert();
+      const result = makeSut().convert(mathmlString);
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({
@@ -28,7 +40,7 @@ describe('#convert', () => {
     test('return array with single mathml interface of name math and child mi', () => {
       const mathmlString = singleMiNoRoot;
 
-      const result = new XmlToMathMLAdapter(mathmlString).convert();
+      const result = makeSut().convert(mathmlString);
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({
@@ -44,7 +56,7 @@ describe('#convert', () => {
     test('return content in a three and keep value on each child', () => {
       const mathmlString = mrow;
 
-      const result = new XmlToMathMLAdapter(mathmlString).convert();
+      const result = makeSut().convert(mathmlString);
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({
@@ -71,7 +83,7 @@ describe('#convert', () => {
     test('add attributes to children related with name mfenced', () => {
       const mathmlString = mfencedWithSeparatorAttribute;
 
-      const result = new XmlToMathMLAdapter(mathmlString).convert();
+      const result = makeSut().convert(mathmlString);
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({
@@ -98,7 +110,7 @@ describe('#convert', () => {
     test('add attributes to children related with name mfenced', () => {
       const mathmlString = mfencedWithBrokenAttribute;
 
-      const result = new XmlToMathMLAdapter(mathmlString).convert();
+      const result = makeSut().convert(mathmlString);
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({

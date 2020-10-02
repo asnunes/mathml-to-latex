@@ -2,7 +2,7 @@ import { ToLaTeXConverter } from '@/domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { mathMLElementToLaTeXConverter } from '../../../helpers/mathml-element-to-latex-converter';
 import { InvalidNumberOfChild } from '../../../errors';
-import { latexAccents } from '@/syntax/latexAccents';
+import { latexAccents } from '@/syntax/latex-accents';
 
 export class GenericUnderOver implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;

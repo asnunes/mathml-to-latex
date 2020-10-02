@@ -1393,6 +1393,24 @@ export const moverDoubleMrow = `
 </root>
 `;
 
+export const moverThreeChildren = `
+<root>
+  <math>
+    <mover accent="true">
+      <mrow>
+        <mi> x </mi>
+        <mo> + </mo>
+        <mi> y </mi>
+        <mo> + </mo>
+        <mi> z </mi>
+      </mrow>
+      <mo> + </mo>
+      <mi> z </mi>
+    </mover>
+  </math>
+</root>
+`;
+
 export const munder = `
 <root>
   <math>

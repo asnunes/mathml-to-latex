@@ -1,6 +1,6 @@
 import MathMLToLaTeX from '../src';
 import * as mathmlStrings from './mocks/mathmlStrings';
-import { InvalidNumberOfChild } from '../src/data/errors/InvalidNumberOfChild';
+import { InvalidNumberOfChild } from '../src/data/errors/invalid-number-of-children';
 
 describe('#convert', () => {
   describe('given math string with mi tag', () => {
@@ -828,6 +828,16 @@ describe('#convert', () => {
         const result = MathMLToLaTeX.convert(mathml);
 
         expect(result).toBe('\\overset{a + b}{x + y + z}');
+      });
+    });
+
+    describe('where there are three children', () => {
+      it('throws InvalidNumberOfChildrenError', () => {
+        const mathml = mathmlStrings.moverThreeChildren;
+
+        const result = () => MathMLToLaTeX.convert(mathml);
+
+        expect(result).toThrowError(new InvalidNumberOfChild('mover', 2, 3));
       });
     });
   });

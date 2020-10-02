@@ -4,7 +4,7 @@ import { InvalidNumberOfChild } from '../src/data/errors/InvalidNumberOfChild';
 
 describe('#convert', () => {
   describe('given math string with mi tag', () => {
-    test('convert mi to simple a text', () => {
+    it('convert mi to simple a text', () => {
       const mathml = mathmlStrings.mrootWithMi;
 
       const result = MathMLToLaTeX.convert(mathml);
@@ -14,7 +14,7 @@ describe('#convert', () => {
   });
 
   describe('given math tag outside any other tag', () => {
-    test('convert mi to simple b text', () => {
+    it('convert mi to simple b text', () => {
       const mathml = mathmlStrings.mathWithMi;
 
       const result = MathMLToLaTeX.convert(mathml);
@@ -25,7 +25,7 @@ describe('#convert', () => {
 
   describe('given math string with mi tag', () => {
     describe('tag with space on it', () => {
-      test('should trim empty space', () => {
+      it('should trim empty space', () => {
         const mathml = mathmlStrings.mathWithMiAndSpace;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -35,7 +35,7 @@ describe('#convert', () => {
     });
 
     describe('with especial operator', () => {
-      test('should convert to latex command', () => {
+      it('should convert to latex command', () => {
         const mathml = mathmlStrings.miWithEspecialChar;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -45,7 +45,7 @@ describe('#convert', () => {
     });
 
     describe('with empty space', () => {
-      test('should keep empty space and convert to mathrm command', () => {
+      it('should keep empty space and convert to mathrm command', () => {
         const mathml = mathmlStrings.emptyMi;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -56,7 +56,7 @@ describe('#convert', () => {
   });
 
   describe('given math string with mo tag with simple operator', () => {
-    test('convert mo passing it operator as string', () => {
+    it('convert mo passing it operator as string', () => {
       const mathml = mathmlStrings.moWithSimpleOperator;
 
       const result = MathMLToLaTeX.convert(mathml);
@@ -66,7 +66,7 @@ describe('#convert', () => {
   });
 
   describe('given math string with mrow tag', () => {
-    test('convert mrow just wrapping its content', () => {
+    it('convert mrow just wrapping its content', () => {
       const mathml = mathmlStrings.mrowWithMnAndMo;
 
       const result = MathMLToLaTeX.convert(mathml);
@@ -77,7 +77,7 @@ describe('#convert', () => {
 
   describe('given math string with msqrt tag', () => {
     describe('single mn tag is inside', () => {
-      test('convert msqrt wrapping its content inside sqrt LaTeX command', () => {
+      it('convert msqrt wrapping its content inside sqrt LaTeX command', () => {
         const mathml = mathmlStrings.msqrt;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -87,7 +87,7 @@ describe('#convert', () => {
     });
 
     describe('there are many children inside sqrt tag', () => {
-      test('convert msqrt wrapping its content inside sqrt LaTeX command', () => {
+      it('convert msqrt wrapping its content inside sqrt LaTeX command', () => {
         const mathml = mathmlStrings.msqrtWithWrappedContent;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -97,7 +97,7 @@ describe('#convert', () => {
     });
 
     describe('sqrt tag has single mrow child', () => {
-      test('convert msqrt wrapping its content inside sqrt LaTeX command', () => {
+      it('convert msqrt wrapping its content inside sqrt LaTeX command', () => {
         const mathml = mathmlStrings.msqrtWithMrow;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -107,7 +107,7 @@ describe('#convert', () => {
     });
 
     describe('there is no content inside msqrt', () => {
-      test('empty sqrt is given', () => {
+      it('empty sqrt is given', () => {
         const mathml = mathmlStrings.emptyMsqrt;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -120,7 +120,7 @@ describe('#convert', () => {
   describe('given mfenced tag', () => {
     describe('when mfenced represents a vector', () => {
       describe('with single content and no attr', () => {
-        test('convert mfenced wrapping it content in dots', () => {
+        it('convert mfenced wrapping it content in dots', () => {
           const mathml = mathmlStrings.mfencedWithoutAttribute;
 
           const result = MathMLToLaTeX.convert(mathml);
@@ -130,7 +130,7 @@ describe('#convert', () => {
       });
 
       describe('with single content and open attribute in bracket char', () => {
-        test('convert mfenced wrapping it content between bracket and parenthesis', () => {
+        it('convert mfenced wrapping it content between bracket and parenthesis', () => {
           const mathml = mathmlStrings.mfencedWithOpen;
 
           const result = MathMLToLaTeX.convert(mathml);
@@ -140,7 +140,7 @@ describe('#convert', () => {
       });
 
       describe('with single content and open and closes attributes in parenthesis char', () => {
-        test('convert mfenced wrapping it content between parenthesis', () => {
+        it('convert mfenced wrapping it content between parenthesis', () => {
           const mathml = mathmlStrings.mfencedWithOpenAndClose;
 
           const result = MathMLToLaTeX.convert(mathml);
@@ -150,7 +150,7 @@ describe('#convert', () => {
       });
 
       describe('with single content and open attribute in parenthesis char and close attribute without value', () => {
-        test('convert mfenced wrapping it content between bracket and parenthesis', () => {
+        it('convert mfenced wrapping it content between bracket and parenthesis', () => {
           const mathml = mathmlStrings.mfencedWithBrokenClose;
 
           const result = MathMLToLaTeX.convert(mathml);
@@ -160,7 +160,7 @@ describe('#convert', () => {
       });
 
       describe('with more than one content and no attr', () => {
-        test('convert mfenced wrapping it content inside parenthesis and joining using commas', () => {
+        it('convert mfenced wrapping it content inside parenthesis and joining using commas', () => {
           const mathml = mathmlStrings.mfencedWithWrappedContent;
 
           const result = MathMLToLaTeX.convert(mathml);
@@ -170,7 +170,7 @@ describe('#convert', () => {
       });
 
       describe('with four contents with separator attribute as empty string', () => {
-        test('convert mfenced wrapping it content inside parentheses and joining using commas', () => {
+        it('convert mfenced wrapping it content inside parentheses and joining using commas', () => {
           const mathml = mathmlStrings.mfencedWithEmptySeparator;
 
           const result = MathMLToLaTeX.convert(mathml);
@@ -180,7 +180,7 @@ describe('#convert', () => {
       });
 
       describe("with mfenced with three contents with separator attribute ';;;'", () => {
-        test("parse mfenced wrapping it content inside parentheses and joining using ';'", () => {
+        it("parse mfenced wrapping it content inside parentheses and joining using ';'", () => {
           const mathml = mathmlStrings.mfencedWithSeparator;
 
           const result = MathMLToLaTeX.convert(mathml);
@@ -190,7 +190,7 @@ describe('#convert', () => {
       });
 
       describe("with four contents with separator attribute ';.'", () => {
-        test("convert mfenced wrapping it content inside parentheses and joining using ';' for the first, '.' for the second and on", () => {
+        it("convert mfenced wrapping it content inside parentheses and joining using ';' for the first, '.' for the second and on", () => {
           const mathml = mathmlStrings.mfencedWithDiffSeparators;
 
           const result = MathMLToLaTeX.convert(mathml);
@@ -264,7 +264,7 @@ describe('#convert', () => {
       });
 
       describe('given math string with partial function', () => {
-        test('returns latex partial function representation', () => {
+        it('returns latex partial function representation', () => {
           const mathml = mathmlStrings.mfencedAsPartialFunction;
 
           const result = MathMLToLaTeX.convert(mathml);
@@ -279,7 +279,7 @@ describe('#convert', () => {
       });
 
       describe('given math string with nested mtables', () => {
-        test('add matrix to inner table', () => {
+        it('add matrix to inner table', () => {
           const mathml = mathmlStrings.mfencedWithNestedMtables;
 
           const result = MathMLToLaTeX.convert(mathml);
@@ -294,7 +294,7 @@ describe('#convert', () => {
 
   describe('given mfrac tag', () => {
     describe('containing single char contents', () => {
-      test('convert mfrac wrap inside \\frac command', () => {
+      it('convert mfrac wrap inside \\frac command', () => {
         const mathml = mathmlStrings.mfrac;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -305,7 +305,7 @@ describe('#convert', () => {
   });
 
   describe('containing multiple char contents', () => {
-    test('convert mfrac wrap inside \\frac command', () => {
+    it('convert mfrac wrap inside \\frac command', () => {
       const mathml = mathmlStrings.mfracWithMrow;
 
       const result = MathMLToLaTeX.convert(mathml);
@@ -315,7 +315,7 @@ describe('#convert', () => {
   });
 
   describe('containing two contents with bevelled attribute marked as true', () => {
-    test('convert mfrac joining its two char contents with //', () => {
+    it('convert mfrac joining its two char contents with //', () => {
       const mathml = mathmlStrings.shortMFrac;
 
       const result = MathMLToLaTeX.convert(mathml);
@@ -324,7 +324,7 @@ describe('#convert', () => {
   });
 
   describe('given math string with mroot containing two content', () => {
-    test('convert mroot tag wrapping its contents inside \\sqrt command and root parameter', () => {
+    it('convert mroot tag wrapping its contents inside \\sqrt command and root parameter', () => {
       const mathml = mathmlStrings.mroot;
 
       const result = MathMLToLaTeX.convert(mathml);
@@ -333,7 +333,7 @@ describe('#convert', () => {
   });
 
   describe('given math string with mpadded tag', () => {
-    test('convert mpadded just wrapping its content', () => {
+    it('convert mpadded just wrapping its content', () => {
       const mathml = mathmlStrings.mpadded;
 
       const result = MathMLToLaTeX.convert(mathml);
@@ -344,7 +344,7 @@ describe('#convert', () => {
 
   describe('given math string with maction tag', () => {
     describe('without any attribute', () => {
-      test('convert maction just joining its content separating them by =>', () => {
+      it('convert maction just joining its content separating them by =>', () => {
         const mathml = mathmlStrings.maction;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -354,7 +354,7 @@ describe('#convert', () => {
     });
 
     describe('with toggle attribute', () => {
-      test('convert maction just joining its content separating them by =>', () => {
+      it('convert maction just joining its content separating them by =>', () => {
         const mathml = mathmlStrings.mactionWithMrow;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -364,7 +364,7 @@ describe('#convert', () => {
     });
 
     describe('with actiontype attribute as toggle', () => {
-      test('convert maction just joining its content separating them by =>', () => {
+      it('convert maction just joining its content separating them by =>', () => {
         const mathml = mathmlStrings.mactionTypeToggle;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -374,7 +374,7 @@ describe('#convert', () => {
     });
 
     describe('with actiontype attribute as statusline', () => {
-      test('convert maction just taking the first child', () => {
+      it('convert maction just taking the first child', () => {
         const mathml = mathmlStrings.mactionTypeStatusline;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -384,7 +384,7 @@ describe('#convert', () => {
     });
 
     describe('with actiontype attribute as tooltip', () => {
-      test('convert maction just taking the first child', () => {
+      it('convert maction just taking the first child', () => {
         const mathml = mathmlStrings.mactionTypeTooltip;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -396,7 +396,7 @@ describe('#convert', () => {
 
   describe('given math string with menclose tag', () => {
     describe('without any attribute', () => {
-      test('convert menclose tag just joining its content inside long division latex equivalent commands', () => {
+      it('convert menclose tag just joining its content inside long division latex equivalent commands', () => {
         const mathml = mathmlStrings.menclose;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -406,7 +406,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as longdiv', () => {
-      test('convert menclose tag just joining its content inside long division latex equivalent commands', () => {
+      it('convert menclose tag just joining its content inside long division latex equivalent commands', () => {
         const mathml = mathmlStrings.mencloseNotationLongdiv;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -416,7 +416,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as actuarial', () => {
-      test('convert menclose tag just joining its content inside actuarial latex equivalent commands', () => {
+      it('convert menclose tag just joining its content inside actuarial latex equivalent commands', () => {
         const mathml = mathmlStrings.mencloseNotationActuarial;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -426,7 +426,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as box', () => {
-      test('convert menclose tag just joining its content inside boxed command', () => {
+      it('convert menclose tag just joining its content inside boxed command', () => {
         const mathml = mathmlStrings.mencloseNotationBox;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -436,7 +436,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as roundedbox', () => {
-      test('convert menclose tag just joining its content inside boxed command', () => {
+      it('convert menclose tag just joining its content inside boxed command', () => {
         const mathml = mathmlStrings.mencloseNotationRoundedBox;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -446,7 +446,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as circle', () => {
-      test('convert menclose tag just joining its content inside boxed command', () => {
+      it('convert menclose tag just joining its content inside boxed command', () => {
         const mathml = mathmlStrings.mencloseNotationCircle;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -456,7 +456,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as left', () => {
-      test('convert menclose tag just joining its content with left bar', () => {
+      it('convert menclose tag just joining its content with left bar', () => {
         const mathml = mathmlStrings.mencloseNotationLeft;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -466,7 +466,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as right', () => {
-      test('convert menclose tag just joining its content with right bar', () => {
+      it('convert menclose tag just joining its content with right bar', () => {
         const mathml = mathmlStrings.mencloseNotationRight;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -476,7 +476,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as top', () => {
-      test('convert menclose tag just joining its content with overline command', () => {
+      it('convert menclose tag just joining its content with overline command', () => {
         const mathml = mathmlStrings.mencloseNotationTop;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -486,7 +486,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as bottom', () => {
-      test('convert menclose tag just joining its content with underline command', () => {
+      it('convert menclose tag just joining its content with underline command', () => {
         const mathml = mathmlStrings.mencloseNotationBottom;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -496,7 +496,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as updiagonalstrike', () => {
-      test('convert menclose tag just joining its content with left bottom to right top cross', () => {
+      it('convert menclose tag just joining its content with left bottom to right top cross', () => {
         const mathml = mathmlStrings.mencloseNotationUpdiagnonalstrike;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -506,7 +506,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as downdiagonalstrike', () => {
-      test('convert menclose tag just joining its content with left top to right bottom cross', () => {
+      it('convert menclose tag just joining its content with left top to right bottom cross', () => {
         const mathml = mathmlStrings.mencloseNotationDowndiagnonalstrike;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -516,7 +516,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as horizontalstrike', () => {
-      test('convert menclose tag just joining its content with horizontal cross', () => {
+      it('convert menclose tag just joining its content with horizontal cross', () => {
         const mathml = mathmlStrings.mencloseNotationHorizontalstrike;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -526,7 +526,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as verticalstrike', () => {
-      test('convert menclose tag just joining its content with horizontal cross', () => {
+      it('convert menclose tag just joining its content with horizontal cross', () => {
         const mathml = mathmlStrings.mencloseNotationVerticalstike;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -536,7 +536,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as updiagonalarrow', () => {
-      test('convert menclose tag just joining its content with underline and right bar', () => {
+      it('convert menclose tag just joining its content with underline and right bar', () => {
         const mathml = mathmlStrings.mencloseNotationUpdiagnonalarrow;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -546,7 +546,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as madruwb', () => {
-      test('convert menclose tag just joining its content with underline and right bar', () => {
+      it('convert menclose tag just joining its content with underline and right bar', () => {
         const mathml = mathmlStrings.mencloseNotationMadruwb;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -556,7 +556,7 @@ describe('#convert', () => {
     });
 
     describe('with notation attribute as phasorangle', () => {
-      test('convert menclose tag just joining its content with underline and right bar', () => {
+      it('convert menclose tag just joining its content with underline and right bar', () => {
         const mathml = mathmlStrings.mencloseNotationPhasorangle;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -567,7 +567,7 @@ describe('#convert', () => {
   });
 
   describe('given math string with merror tag', () => {
-    test('convert merror placing its content inside \\color{red}', () => {
+    it('convert merror placing its content inside \\color{red}', () => {
       const mathml = mathmlStrings.merror;
 
       const result = MathMLToLaTeX.convert(mathml);
@@ -577,7 +577,7 @@ describe('#convert', () => {
   });
 
   describe('given math string with mglyph tag', () => {
-    test('ignore it', () => {
+    it('ignore it', () => {
       const mathml = mathmlStrings.mglyph;
 
       const result = MathMLToLaTeX.convert(mathml);
@@ -598,7 +598,7 @@ describe('#convert', () => {
 
   describe('given math string with msup tag', () => {
     describe('msup tag contains single char contents', () => {
-      test('convert msup joining its two char contents with ^ and wrap exponent in brackets', () => {
+      it('convert msup joining its two char contents with ^ and wrap exponent in brackets', () => {
         const mathml = mathmlStrings.msup;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -608,7 +608,7 @@ describe('#convert', () => {
     });
 
     describe('msup tag contains base with single char content and exponent with more than one char content', () => {
-      test('convert msup joining its two char contents with ^ and wrap exponent in brackets', () => {
+      it('convert msup joining its two char contents with ^ and wrap exponent in brackets', () => {
         const mathml = mathmlStrings.msupWithMrowOnTop;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -618,7 +618,7 @@ describe('#convert', () => {
     });
 
     describe('msup tag contains exponent with single char content and base with more than one char content', () => {
-      test('convert msup joining its multi char contents with ^ and wrap base in parenthesis', () => {
+      it('convert msup joining its multi char contents with ^ and wrap base in parenthesis', () => {
         const mathml = mathmlStrings.msupWithMrowOnBottom;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -628,7 +628,7 @@ describe('#convert', () => {
     });
 
     describe('msup tag contains both exponent and base with more than one char content', () => {
-      test('convert msup joining its multi char contents with ^, wrap base in parenthesis and exponent in brackets', () => {
+      it('convert msup joining its multi char contents with ^, wrap base in parenthesis and exponent in brackets', () => {
         const mathml = mathmlStrings.msupWithMrowOnTopBottom;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -640,7 +640,7 @@ describe('#convert', () => {
 
   describe('given math string with msub tag', () => {
     describe('msub tag contains single char contents', () => {
-      test('convert msub joining its two char contents with _ and wrap subscript in brackets', () => {
+      it('convert msub joining its two char contents with _ and wrap subscript in brackets', () => {
         const mathml = mathmlStrings.msub;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -650,7 +650,7 @@ describe('#convert', () => {
     });
 
     describe('msub tag contains base with single char content and subscript with more than one char content', () => {
-      test('convert msub joining its two char contents with _ and wrap exponent in brackets', () => {
+      it('convert msub joining its two char contents with _ and wrap exponent in brackets', () => {
         const mathml = mathmlStrings.msubWithMrowOnBottom;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -660,7 +660,7 @@ describe('#convert', () => {
     });
 
     describe('msub tag contains subscript with single char content and base with more than one char content', () => {
-      test('convert msub joining its multi char contents with _ and wrap base in parenthesis', () => {
+      it('convert msub joining its multi char contents with _ and wrap base in parenthesis', () => {
         const mathml = mathmlStrings.msubWithMrowOnTop;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -670,7 +670,7 @@ describe('#convert', () => {
     });
 
     describe('msub tag contains both base and subscript with more than one char content', () => {
-      test('convert msub joining its multi char contents with _, wrap base in parenthesis and subscript in brackets', () => {
+      it('convert msub joining its multi char contents with _, wrap base in parenthesis and subscript in brackets', () => {
         const mathml = mathmlStrings.msubWithMrowOnTopBottom;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -792,7 +792,7 @@ describe('#convert', () => {
 
   describe('given math string with mover tag', () => {
     describe('where its first child is a mrow and second is mo containing ⏞', () => {
-      test('wrap it content inside overbrace command', () => {
+      it('wrap it content inside overbrace command', () => {
         const mathml = mathmlStrings.mtextMover;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -802,7 +802,7 @@ describe('#convert', () => {
     });
 
     describe('where its first child is a mrow and second is mo containing hat mo as utf-8', () => {
-      test('wrap it content inside hat command', () => {
+      it('wrap it content inside hat command', () => {
         const mathml = mathmlStrings.moverMrow;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -812,7 +812,7 @@ describe('#convert', () => {
     });
 
     describe('where its first child is a mrow and second is mo containing hat mo as encoded', () => {
-      test('wrap it content inside hat command', () => {
+      it('wrap it content inside hat command', () => {
         const mathml = mathmlStrings.moverEncodedMo;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -822,7 +822,7 @@ describe('#convert', () => {
     });
 
     describe('where its first child is a mrow and second is mo containing generic char', () => {
-      test('wrap it content inside overset making generic char on top', () => {
+      it('wrap it content inside overset making generic char on top', () => {
         const mathml = mathmlStrings.moverDoubleMrow;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -834,7 +834,7 @@ describe('#convert', () => {
 
   describe('given math string with munder tag', () => {
     describe('where its first child is a mrow and second is mo containing ⏟', () => {
-      test('wrap it content inside underbrace command', () => {
+      it('wrap it content inside underbrace command', () => {
         const mathml = mathmlStrings.munder;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -844,7 +844,7 @@ describe('#convert', () => {
     });
 
     describe('where its first child is a mrow and second is mo containing generic char', () => {
-      test('wrap it content inside underset making generic char on bottom', () => {
+      it('wrap it content inside underset making generic char on bottom', () => {
         const mathml = mathmlStrings.munderDoubleMrow;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -854,7 +854,7 @@ describe('#convert', () => {
     });
 
     describe('where its first child is a mrow and second is mo containing &#x23DE;', () => {
-      test('parce wrapping it content inside underbrace command', () => {
+      it('parce wrapping it content inside underbrace command', () => {
         const mathml = mathmlStrings.munderEncodedMrow;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -866,7 +866,7 @@ describe('#convert', () => {
 
   describe('given math string with munderover', () => {
     describe('with three contents', () => {
-      test('handle it as it were a subsup tag', () => {
+      it('handle it as it were a subsup tag', () => {
         const mathml = mathmlStrings.munderover;
 
         const result = MathMLToLaTeX.convert(mathml);
@@ -876,7 +876,7 @@ describe('#convert', () => {
     });
 
     describe('with three contents and especial operator', () => {
-      test('handle it as it were a subsup tag and convert special operator', () => {
+      it('handle it as it were a subsup tag and convert special operator', () => {
         const mathml = mathmlStrings.munderoverEncoded;
 
         const result = MathMLToLaTeX.convert(mathml);

@@ -1472,6 +1472,19 @@ export const munderoverEncoded = `
 </root>
 `;
 
+export const munderoverWithThreeChildren = `
+<root>
+  <math>
+    <munderover>
+      <mo> &#x222B;</mo>
+      <mn> 0 </mn>
+      <mi> &#x221E; </mi>
+      <mi> 1 </mi>
+    </munderover>
+  </math>
+</root>
+`;
+
 export const mmultiscript = `<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 <mmultiscripts>
   <mrow>

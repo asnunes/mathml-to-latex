@@ -1,5 +1,6 @@
 import MathMLToLaTeX from '../src';
 import * as mathmlStrings from './mocks/mathmlStrings';
+import { InvalidNumberOfChild } from '../src/data/errors/InvalidNumberOfChild';
 
 describe('#convert', () => {
   describe('given math string with mi tag', () => {
@@ -881,6 +882,16 @@ describe('#convert', () => {
         const result = MathMLToLaTeX.convert(mathml);
 
         expect(result).toBe('\\int_{0}^{\\infty}');
+      });
+    });
+
+    describe('with munderover with 4 children', () => {
+      it('should throws InvalidNumberOfChildErrors', () => {
+        const mathml = mathmlStrings.munderoverWithThreeChildren;
+
+        const result = () => MathMLToLaTeX.convert(mathml);
+
+        expect(result).toThrow(new InvalidNumberOfChild('munderover', 3, 4));
       });
     });
   });

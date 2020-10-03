@@ -34,8 +34,8 @@ export class MMultiscripts implements ToLaTeXConverter {
       sup = children[5];
     } else return '';
 
-    const subLatex = sub ? mathMLElementToLaTeXConverter(sub).convert() : '';
-    const supLatex = sup ? mathMLElementToLaTeXConverter(sup).convert() : '';
+    const subLatex = mathMLElementToLaTeXConverter(sub).convert();
+    const supLatex = mathMLElementToLaTeXConverter(sup).convert();
 
     return `\\_{${subLatex}}^{${supLatex}}`;
   }
@@ -47,8 +47,8 @@ export class MMultiscripts implements ToLaTeXConverter {
     const sub = children[1];
     const sup = children[2];
 
-    const subLatex = sub ? mathMLElementToLaTeXConverter(sub).convert() : '';
-    const supLatex = sup ? mathMLElementToLaTeXConverter(sup).convert() : '';
+    const subLatex = mathMLElementToLaTeXConverter(sub).convert();
+    const supLatex = mathMLElementToLaTeXConverter(sup).convert();
 
     return `_{${subLatex}}^{${supLatex}}`;
   }

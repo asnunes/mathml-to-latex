@@ -1261,6 +1261,18 @@ export const msubWithMrowOnTopBottom = `
 </root>
 `;
 
+export const msubWithThreeChildren = `
+<root>
+  <math>
+    <msub>
+      <mi>x</mi>
+      <mn>2</mn>
+      <mn>3</mn>
+    </msub>
+  </math>
+</root>
+`;
+
 export const msubsup = `
 <root>
   <math>

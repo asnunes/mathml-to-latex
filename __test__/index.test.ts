@@ -734,6 +734,16 @@ describe('#convert', () => {
         expect(result).toMatch('\\left(x + y\\right)_{2 + 2}');
       });
     });
+
+    describe('msub tag contains three children', () => {
+      it('throws InvalidNumberOfChildrenError', () => {
+        const mathml = mathmlStrings.msubWithThreeChildren;
+
+        const result = () => MathMLToLaTeX.convert(mathml);
+
+        expect(result).toThrow(new InvalidNumberOfChildrenError('msub', 2, 3));
+      });
+    });
   });
 
   describe('given math string with msubsup tag', () => {

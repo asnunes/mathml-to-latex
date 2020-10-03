@@ -845,6 +845,18 @@ export const mencloseNotationActuarial = `
 </root>
 `;
 
+export const mencloseNotationRadical = `
+<root>
+  <math>
+    <menclose notation="radical">
+      <mi>a</mi>
+      <mo>+</mo>
+      <mi>2</mi>
+    </menclose>
+  </math>
+</root>
+`;
+
 export const mencloseNotationBox = `
 <root>
   <math>

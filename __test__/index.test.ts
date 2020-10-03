@@ -425,6 +425,16 @@ describe('#convert', () => {
       });
     });
 
+    describe('with notation attribute as actuarial', () => {
+      it('convert menclose tag just joining its content inside actuarial latex equivalent commands', () => {
+        const mathml = mathmlStrings.mencloseNotationRadical;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe('\\sqrt{a + 2}');
+      });
+    });
+
     describe('with notation attribute as box', () => {
       it('convert menclose tag just joining its content inside boxed command', () => {
         const mathml = mathmlStrings.mencloseNotationBox;

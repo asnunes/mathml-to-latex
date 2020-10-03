@@ -34,18 +34,3 @@ export class MTable implements ToLaTeXConverter {
     return !!this._mathmlElement.attributes[flag];
   }
 }
-
-export class GenericMathMlElementWrapper implements ToLaTeXConverter {
-  private readonly _mathmlElement: MathMLElement;
-
-  constructor(mathElement: MathMLElement) {
-    this._mathmlElement = mathElement;
-  }
-
-  convert(): string {
-    return this._mathmlElement.children
-      .map((child) => mathMLElementToLaTeXConverter(child))
-      .map((converter) => converter.convert())
-      .join(' ');
-  }
-}

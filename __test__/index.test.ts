@@ -762,6 +762,16 @@ describe('#convert', () => {
 
       expect(result).toBe('\\left(x + y\\right)_{0}^{1}');
     });
+
+    describe('when it have four children', () => {
+      it('throws InvalidNumberOfChildrenError', () => {
+        const mathml = mathmlStrings.msubsupWithFourChildren;
+
+        const result = () => MathMLToLaTeX.convert(mathml);
+
+        expect(result).toThrow(new InvalidNumberOfChildrenError('msubsup', 3, 4));
+      });
+    });
   });
 
   describe('given math string with mtext', () => {

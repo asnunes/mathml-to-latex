@@ -1301,6 +1301,19 @@ export const msubsupWithMrow = `
 </root>
 `;
 
+export const msubsupWithFourChildren = `
+<root>
+  <math>
+    <msubsup>
+      <mo> &#x222B; </mo>
+      <mn> 0 </mn>
+      <mn> 1 </mn>
+      <mn> 5 </mn>
+    </msubsup>
+  </math>
+</root>
+`;
+
 export const mtext = `
 <root>
   <math xmlns = "http://www.w3.org/1998/Math/MathML">

@@ -26,10 +26,20 @@ export const mfencedWithSeparatorAttribute = `
 </root>
 `;
 
-export const mfencedWithBrokenAttribute = `
+export const mfencedWithBrokenAttributeCase1 = `
 <root>
   <math>
-  <mfenced open='{' close >
+  <mfenced open='{' close  >
+    <mn>3</mn>
+  </mfenced>
+  </math>
+</root>
+`;
+
+export const mfencedWithBrokenAttributeCase2 = `
+<root>
+  <math>
+  <mfenced open='{' close= >
     <mn>3</mn>
   </mfenced>
   </math>

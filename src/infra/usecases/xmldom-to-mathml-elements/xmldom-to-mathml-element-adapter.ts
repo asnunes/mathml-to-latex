@@ -23,6 +23,7 @@ export class XmlToMathMLAdapter {
 
   convert(xml: string): MathMLElement[] {
     this._xml = this._removeLineBreaks(xml);
+
     return this._elementsConvertor.convert(this._mathMLElements);
   }
 
@@ -36,7 +37,12 @@ export class XmlToMathMLAdapter {
   }
 
   private get _mathMLElements(): Element[] {
-    const elements = this._xmlDOM.parseFromString(this._xml).getElementsByTagName('math');
+    let elements = this._xmlDOM.parseFromString(this._xml).getElementsByTagName('math');
+    if (this._errorHandler.isThereAnyErrors()) {
+      this._errorHandler.cleanErrors();
+      elements = this._xmlDOM.parseFromString(this._xml).getElementsByTagName('math');
+    }
+
     return Array.from(elements) as Element[];
   }
 }

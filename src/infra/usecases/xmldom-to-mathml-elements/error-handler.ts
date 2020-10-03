@@ -9,16 +9,33 @@ export class ErrorHandler {
     return this._fixMissingAttribute(errorMessage, xml);
   }
 
-  private _fixMissingAttribute(errorMessage: string, xml: string): string {
-    const missingAttribute = errorMessage.split('"')[1];
-    return xml.replace(this._matchAttribute(missingAttribute), `${missingAttribute}='null'`);
+  isThereAnyErrors(): boolean {
+    return this._errors.length > 0;
   }
 
-  private _matchAttribute(attribute: string): RegExp {
-    return new RegExp(`(?<=\<.*)(${attribute}=(?!(\"|\')))|(${attribute}(?!(\"|\')))(?=.*\>)`, 'g');
+  cleanErrors(): void {
+    this._errors = [];
+  }
+
+  private _fixMissingAttribute(errorMessage: string, xml: string): string {
+    const missingAttribute = errorMessage.split('"')[1];
+    if (missingAttribute) return xml.replace(this._matchMissingValueForAttribute(missingAttribute), '');
+
+    return xml.replace(this._mathGenericMissingValue(), '');
+  }
+
+  private _matchMissingValueForAttribute(attribute: string): RegExp {
+    return new RegExp(`(?<=\<.*)(${attribute}=(?!(\"|\')))|(${attribute}(?!(\"|\')))(?=.*\>)`, 'gm');
+  }
+
+  private _mathGenericMissingValue(): RegExp {
+    return /(?<=\<.*)(\w+=(?!(\"|\')))/gm;
   }
 
   private _isMissingAttributeValueError(errorMessage: string): boolean {
-    return !!errorMessage.includes('attribute') && !!errorMessage.includes('missed');
+    return (
+      (!!errorMessage.includes('attribute') && !!errorMessage.includes('missed')) ||
+      errorMessage.includes('attribute value missed')
+    );
   }
 }

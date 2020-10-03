@@ -1,16 +1,13 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
+    "outDir": "dist",
     "target": "es5",
     "module": "commonjs",
     "esModuleInterop": true,
     "declaration": true,
     "strict": true,
-    "rootDir": "src",
-    "baseUrl": "src",
-    "outDir": "dist",
-    "paths": {
-      "@/*": ["*"]
-    }
+    "rootDir": "src"
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/__tests__/*"]

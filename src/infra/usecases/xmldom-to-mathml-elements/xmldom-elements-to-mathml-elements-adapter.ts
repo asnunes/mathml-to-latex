@@ -1,4 +1,4 @@
-import { MathMLElement } from '@/data/protocols/mathml-element';
+import { MathMLElement } from '../../../data/protocols/mathml-element';
 
 export class ElementsToMathMLAdapter {
   convert(els: Element[]): MathMLElement[] {

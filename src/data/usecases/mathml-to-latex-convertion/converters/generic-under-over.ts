@@ -1,8 +1,8 @@
-import { ToLaTeXConverter } from '@/domain/usecases/to-latex-converter';
+import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { mathMLElementToLaTeXConverter } from '../../../helpers/mathml-element-to-latex-converter';
 import { InvalidNumberOfChildrenError } from '../../../errors';
-import { latexAccents } from '@/syntax/latex-accents';
+import { latexAccents } from '../../../../syntax/latex-accents';
 
 export class GenericUnderOver implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;

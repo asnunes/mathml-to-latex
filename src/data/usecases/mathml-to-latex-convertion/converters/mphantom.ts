@@ -1,4 +1,4 @@
-import { ToLaTeXConverter } from '@/domain/usecases/to-latex-converter';
+import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
 
 export class MPhantom implements ToLaTeXConverter {

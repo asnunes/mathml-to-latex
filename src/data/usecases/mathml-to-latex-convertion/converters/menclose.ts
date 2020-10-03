@@ -1,4 +1,4 @@
-import { ToLaTeXConverter } from '@/domain/usecases/to-latex-converter';
+import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { mathMLElementToLaTeXConverter } from '../../../helpers/mathml-element-to-latex-converter';
 

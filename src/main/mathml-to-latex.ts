@@ -1,4 +1,4 @@
-import { MathMLElementToLatexConverterAdapter } from '@/data/usecases/mathml-to-latex-convertion/mathml-element-to-latex-converter-adapter';
+import { MathMLElementToLatexConverterAdapter } from '../data/usecases/mathml-to-latex-convertion/mathml-element-to-latex-converter-adapter';
 import { makeToMathElementsConverter } from './factories';
 
 export class MathMLToLaTeX {

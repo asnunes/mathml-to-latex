@@ -1,6 +1,6 @@
 import * as ToLatexConverters from './converters';
-import { MathMLElement } from '@/data/protocols/mathml-element';
-import { ToLaTeXConverter, ToLaTeXConverterClass } from '@/domain/usecases/to-latex-converter';
+import { MathMLElement } from '../../../data/protocols/mathml-element';
+import { ToLaTeXConverter, ToLaTeXConverterClass } from '../../../domain/usecases/to-latex-converter';
 
 export class MathMLElementToLatexConverterAdapter {
   private readonly _mathMLElement: MathMLElement;

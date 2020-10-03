@@ -3,7 +3,7 @@ import xmldom from 'xmldom';
 import { DOMParser } from 'xmldom';
 import { ElementsToMathMLAdapter } from './xmldom-elements-to-mathml-elements-adapter';
 import { ErrorHandler } from './error-handler';
-import { MathMLElement } from '@/data/protocols/mathml-element';
+import { MathMLElement } from '../../../data/protocols/mathml-element';
 
 export class XmlToMathMLAdapter {
   private _xml = '';

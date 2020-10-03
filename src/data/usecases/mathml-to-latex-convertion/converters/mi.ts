@@ -1,7 +1,7 @@
-import { ToLaTeXConverter } from '@/domain/usecases/to-latex-converter';
+import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { normalizeWhiteSpaces } from '../../../helpers';
-import { allMathSymbolsByChar, allMathSymbolsByGlyph } from '@/syntax';
+import { allMathSymbolsByChar, allMathSymbolsByGlyph } from '../../../../syntax';
 
 export class MI implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;

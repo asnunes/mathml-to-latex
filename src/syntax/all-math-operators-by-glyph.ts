@@ -50,7 +50,6 @@ export const allMathOperatorsByGlyph: Record<string, string> = {
   '--': '--',
   '++': '++',
   '&': '\\&',
-  undefined: '',
   '∜': '\\sqrt[4]{}',
   '∛': '\\sqrt[3]{}',
   '√': '\\sqrt{}',

@@ -9,7 +9,8 @@ import {
   singleMiNoRoot,
   mrow,
   mfencedWithSeparatorAttribute,
-  mfencedWithBrokenAttribute,
+  mfencedWithBrokenAttributeCase1,
+  mfencedWithBrokenAttributeCase2,
 } from '../../mocks/mathmlStrings';
 
 describe('#convert', () => {
@@ -28,10 +29,10 @@ describe('#convert', () => {
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({
-        attributes: {},
-        children: [{ attributes: {}, children: [], name: 'mi', value: 'a' }],
         name: 'math',
         value: '',
+        attributes: {},
+        children: [{ attributes: {}, children: [], name: 'mi', value: 'a' }],
       });
     });
   });
@@ -44,10 +45,10 @@ describe('#convert', () => {
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({
-        attributes: {},
-        children: [{ attributes: {}, children: [], name: 'mi', value: 'b' }],
         name: 'math',
         value: '',
+        attributes: {},
+        children: [{ attributes: {}, children: [], name: 'mi', value: 'b' }],
       });
     });
   });
@@ -60,21 +61,21 @@ describe('#convert', () => {
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({
+        name: 'math',
+        value: '',
         attributes: {},
         children: [
           {
+            name: 'mrow',
+            value: '',
             attributes: {},
             children: [
               { attributes: {}, children: [], name: 'mn', value: '2' },
               { attributes: {}, children: [], name: 'mo', value: '+' },
               { attributes: {}, children: [], name: 'mn', value: '2' },
             ],
-            name: 'mrow',
-            value: '',
           },
         ],
-        name: 'math',
-        value: '',
       });
     });
   });
@@ -87,44 +88,67 @@ describe('#convert', () => {
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({
+        name: 'math',
+        value: '',
         attributes: {},
         children: [
           {
+            name: 'mfenced',
+            value: '',
             attributes: { separators: ';;;' },
             children: [
               { attributes: {}, children: [], name: 'mn', value: '3' },
               { attributes: {}, children: [], name: 'mn', value: '2' },
               { attributes: {}, children: [], name: 'mn', value: '1' },
             ],
-            name: 'mfenced',
-            value: '',
           },
         ],
-        name: 'math',
-        value: '',
       });
     });
   });
 
   describe('given math string with mfenced with single content, open attr settled as { and void close tag', () => {
     test('add attributes to children related with name mfenced', () => {
-      const mathmlString = mfencedWithBrokenAttribute;
+      const mathmlString = mfencedWithBrokenAttributeCase1;
 
       const result = makeSut().convert(mathmlString);
 
       expect(result.length).toBe(1);
       expect(result[0]).toMatchObject({
+        name: 'math',
+        value: '',
         attributes: {},
         children: [
           {
-            attributes: { open: '{', close: '' },
-            children: [{ attributes: {}, children: [], name: 'mn', value: '3' }],
             name: 'mfenced',
             value: '',
+            attributes: { open: '{' },
+            children: [{ name: 'mn', value: '3', attributes: {}, children: [] }],
           },
         ],
+      });
+    });
+  });
+
+  describe('given math string with mfenced with single content, open attr settled as { and close attribute with = only', () => {
+    test('add attributes to children related with name mfenced', () => {
+      const mathmlString = mfencedWithBrokenAttributeCase2;
+
+      const result = makeSut().convert(mathmlString);
+
+      expect(result.length).toBe(1);
+      expect(result[0]).toMatchObject({
         name: 'math',
         value: '',
+        attributes: {},
+        children: [
+          {
+            name: 'mfenced',
+            value: '',
+            attributes: { open: '{' },
+            children: [{ name: 'mn', value: '3', attributes: {}, children: [] }],
+          },
+        ],
       });
     });
   });

@@ -7,7 +7,7 @@
     "strict": true,
     "rootDir": "src",
     "baseUrl": "src",
-    "outDir": "lib",
+    "outDir": "dist",
     "paths": {
       "@/*": ["*"]
     }

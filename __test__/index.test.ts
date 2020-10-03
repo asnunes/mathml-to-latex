@@ -302,24 +302,24 @@ describe('#convert', () => {
         expect(result).toMatch('\\frac{x}{3}');
       });
     });
-  });
 
-  describe('containing multiple char contents', () => {
-    it('convert mfrac wrap inside \\frac command', () => {
-      const mathml = mathmlStrings.mfracWithMrow;
+    describe('containing multiple char contents', () => {
+      it('convert mfrac wrap inside \\frac command', () => {
+        const mathml = mathmlStrings.mfracWithMrow;
 
-      const result = MathMLToLaTeX.convert(mathml);
+        const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toMatch('\\frac{a + 2}{b - 3}');
+        expect(result).toMatch('\\frac{a + 2}{b - 3}');
+      });
     });
-  });
 
-  describe('containing two contents with bevelled attribute marked as true', () => {
-    it('convert mfrac joining its two char contents with //', () => {
-      const mathml = mathmlStrings.shortMFrac;
+    describe('containing two contents with bevelled attribute marked as true', () => {
+      it('convert mfrac joining its two char contents with //', () => {
+        const mathml = mathmlStrings.shortMFrac;
 
-      const result = MathMLToLaTeX.convert(mathml);
-      expect(result).toMatch('1/\\left(x^{3} + 3\\right)');
+        const result = MathMLToLaTeX.convert(mathml);
+        expect(result).toMatch('1/\\left(x^{3} + 3\\right)');
+      });
     });
   });
 

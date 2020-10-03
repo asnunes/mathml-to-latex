@@ -1,0 +1,14 @@
+tsconfig.json
+src
+coverage
+node_modules
+.vscode
+__tests__
+.prettierrc
+.nvmrc
+jest.config.js
+.tool-versions
+.lintstagedrc.json
+.huskyrc.json
+.eslintrc.js
+.gitignore

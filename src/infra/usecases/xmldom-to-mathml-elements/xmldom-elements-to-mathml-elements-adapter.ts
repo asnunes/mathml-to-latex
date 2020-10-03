@@ -8,7 +8,7 @@ export class ElementsToMathMLAdapter {
   private _convertElement(el: Element): MathMLElement {
     return {
       name: el.tagName,
-      attributes: el.attributes ? this._convertElementAttributes(el.attributes) : {},
+      attributes: this._convertElementAttributes(el.attributes),
       value: this._hasElementChild(el) ? '' : el.textContent || '',
       children: this._hasElementChild(el)
         ? this.convert(Array.from(el.childNodes) as Element[])

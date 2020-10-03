@@ -1,6 +1,6 @@
 import MathMLToLaTeX from '../src';
 import * as mathmlStrings from './mocks/mathmlStrings';
-import { InvalidNumberOfChild } from '../src/data/errors/invalid-number-of-children';
+import { InvalidNumberOfChildrenError } from '../src/data/errors/invalid-number-of-children';
 
 describe('#convert', () => {
   describe('given math string with mi tag', () => {
@@ -323,11 +323,11 @@ describe('#convert', () => {
     });
 
     describe('containing three children', () => {
-      it('throws InvalidNumberOfChildren Error', () => {
+      it('throws InvalidNumberOfChildrenError Error', () => {
         const mathml = mathmlStrings.mfracWithThreeChildren;
 
         const result = () => MathMLToLaTeX.convert(mathml);
-        expect(result).toThrow(new InvalidNumberOfChild('mfrac', 2, 3));
+        expect(result).toThrow(new InvalidNumberOfChildrenError('mfrac', 2, 3));
       });
     });
   });
@@ -856,7 +856,7 @@ describe('#convert', () => {
 
         const result = () => MathMLToLaTeX.convert(mathml);
 
-        expect(result).toThrowError(new InvalidNumberOfChild('mover', 2, 3));
+        expect(result).toThrowError(new InvalidNumberOfChildrenError('mover', 2, 3));
       });
     });
   });
@@ -920,7 +920,7 @@ describe('#convert', () => {
 
         const result = () => MathMLToLaTeX.convert(mathml);
 
-        expect(result).toThrow(new InvalidNumberOfChild('munderover', 3, 4));
+        expect(result).toThrow(new InvalidNumberOfChildrenError('munderover', 3, 4));
       });
     });
   });

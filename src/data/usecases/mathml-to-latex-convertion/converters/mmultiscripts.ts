@@ -1,7 +1,7 @@
 import { ToLaTeXConverter } from '@/domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { mathMLElementToLaTeXConverter, ParenthesisWrapper } from '../../../helpers';
-import { InvalidNumberOfChild } from '../../../errors';
+import { InvalidNumberOfChildrenError } from '../../../errors';
 
 export class MMultiscripts implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
@@ -14,7 +14,7 @@ export class MMultiscripts implements ToLaTeXConverter {
     const { name, children } = this._mathmlElement;
     const childrenLength = children.length;
 
-    if (childrenLength < 3) throw new InvalidNumberOfChild(name, 3, childrenLength, 'at least');
+    if (childrenLength < 3) throw new InvalidNumberOfChildrenError(name, 3, childrenLength, 'at least');
 
     const baseContent = mathMLElementToLaTeXConverter(children[0]).convert();
 

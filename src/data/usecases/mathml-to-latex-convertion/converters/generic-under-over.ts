@@ -1,7 +1,7 @@
 import { ToLaTeXConverter } from '@/domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { mathMLElementToLaTeXConverter } from '../../../helpers/mathml-element-to-latex-converter';
-import { InvalidNumberOfChild } from '../../../errors';
+import { InvalidNumberOfChildrenError } from '../../../errors';
 import { latexAccents } from '@/syntax/latex-accents';
 
 export class GenericUnderOver implements ToLaTeXConverter {
@@ -15,7 +15,7 @@ export class GenericUnderOver implements ToLaTeXConverter {
     const { name, children } = this._mathmlElement;
     const childrenLength = children.length;
 
-    if (childrenLength !== 2) throw new InvalidNumberOfChild(name, 2, childrenLength);
+    if (childrenLength !== 2) throw new InvalidNumberOfChildrenError(name, 2, childrenLength);
 
     const content = mathMLElementToLaTeXConverter(children[0]).convert();
     const accent = mathMLElementToLaTeXConverter(children[1]).convert();

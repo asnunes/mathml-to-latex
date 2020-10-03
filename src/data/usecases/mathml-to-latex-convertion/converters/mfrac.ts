@@ -1,6 +1,6 @@
 import { ToLaTeXConverter } from '@/domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
-import { InvalidNumberOfChild } from '../../../errors';
+import { InvalidNumberOfChildrenError } from '../../../errors';
 import { ParenthesisWrapper, mathMLElementToLaTeXConverter } from '../../../helpers';
 
 export class MFrac implements ToLaTeXConverter {
@@ -14,7 +14,7 @@ export class MFrac implements ToLaTeXConverter {
     const { children, name } = this._mathmlElement;
     const childrenLength = children.length;
 
-    if (childrenLength !== 2) throw new InvalidNumberOfChild(name, 2, childrenLength);
+    if (childrenLength !== 2) throw new InvalidNumberOfChildrenError(name, 2, childrenLength);
 
     const num = mathMLElementToLaTeXConverter(children[0]).convert();
     const den = mathMLElementToLaTeXConverter(children[1]).convert();

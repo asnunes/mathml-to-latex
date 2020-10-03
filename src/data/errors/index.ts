@@ -1,1 +1,1 @@
-export { InvalidNumberOfChild } from './invalid-number-of-children';
+export { InvalidNumberOfChildrenError } from './invalid-number-of-children';

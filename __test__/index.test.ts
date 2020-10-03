@@ -321,6 +321,15 @@ describe('#convert', () => {
         expect(result).toMatch('1/\\left(x^{3} + 3\\right)');
       });
     });
+
+    describe('containing three children', () => {
+      it('throws InvalidNumberOfChildren Error', () => {
+        const mathml = mathmlStrings.mfracWithThreeChildren;
+
+        const result = () => MathMLToLaTeX.convert(mathml);
+        expect(result).toThrow(new InvalidNumberOfChild('mfrac', 2, 3));
+      });
+    });
   });
 
   describe('given math string with mroot containing two content', () => {

@@ -667,6 +667,18 @@ export const shortMFrac = `
 </root>
 `;
 
+export const mfracWithThreeChildren = `
+<root>
+  <math>
+    <mfrac>
+      <mi>x</mi>
+      <mn>3</mn>
+      <mi>2</mi>
+    </mfrac>
+  </math>
+</root>
+`;
+
 export const mroot = `
 <root>
   <math>

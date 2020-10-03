@@ -1607,3 +1607,15 @@ export const mmultiscriptPresetOnly = `<math xmlns="http://www.w3.org/1998/Math/
 
 </mmultiscripts>
 </math>`;
+
+export const mmultiscriptWithTwoChildren = `<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+<mmultiscripts>
+  <mrow>
+    <mi>N</mi>
+    <mi>a</mi>
+  </mrow>
+  <mrow>
+    <mn>11</mn>
+  </mrow>
+</mmultiscripts>
+</math>`;

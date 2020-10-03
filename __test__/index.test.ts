@@ -985,5 +985,15 @@ describe('#convert', () => {
         expect(result).toBe('\\_{b}^{}X');
       });
     });
+
+    describe('with less than 3 children', () => {
+      it('throws InvalidNumberOfChildrenError', () => {
+        const mathml = mathmlStrings.mmultiscriptWithTwoChildren;
+
+        const result = () => MathMLToLaTeX.convert(mathml);
+
+        expect(result).toThrow(new InvalidNumberOfChildrenError('mmultiscripts', 3, 2, 'at least'));
+      });
+    });
   });
 });

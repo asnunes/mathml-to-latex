@@ -2,9 +2,10 @@
   "name": "mathml-to-latex",
   "version": "1.0.0",
   "description": "A JavaScript tool to convert mathml string to LaTeX string",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf ./dist && tsc && webpack",
     "watch": "tsc -w",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
@@ -40,9 +41,13 @@
     "husky": "^4.3.0",
     "jest": "24.9.0",
     "lint-staged": "^10.4.0",
+    "prettier": "^2.1.1",
     "ts-jest": "^26.3.0",
+    "ts-loader": "^8.0.4",
     "typescript": "^4.0.2",
-    "prettier": "^2.1.1"
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-node-externals": "^2.5.2"
   },
   "dependencies": {
     "xmldom": "^0.3.0"

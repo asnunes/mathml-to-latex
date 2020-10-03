@@ -340,6 +340,7 @@ describe('#convert', () => {
         const mathml = mathmlStrings.shortMFrac;
 
         const result = MathMLToLaTeX.convert(mathml);
+
         expect(result).toMatch('1/\\left(x^{3} + 3\\right)');
       });
     });
@@ -349,17 +350,31 @@ describe('#convert', () => {
         const mathml = mathmlStrings.mfracWithThreeChildren;
 
         const result = () => MathMLToLaTeX.convert(mathml);
+
         expect(result).toThrow(new InvalidNumberOfChildrenError('mfrac', 2, 3));
       });
     });
   });
 
-  describe('given math string with mroot containing two content', () => {
-    it('convert mroot tag wrapping its contents inside \\sqrt command and root parameter', () => {
-      const mathml = mathmlStrings.mroot;
+  describe('given math string with mroot', () => {
+    describe('containing two content', () => {
+      it('convert mroot tag wrapping its contents inside \\sqrt command and root parameter', () => {
+        const mathml = mathmlStrings.mroot;
 
-      const result = MathMLToLaTeX.convert(mathml);
-      expect(result).toMatch('\\sqrt[3]{x + 2}');
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('\\sqrt[3]{x + 2}');
+      });
+    });
+
+    describe('containing three children', () => {
+      it('throw InvalidNumberOfChildrenError', () => {
+        const mathml = mathmlStrings.mrootWithThreeChildren;
+
+        const result = () => MathMLToLaTeX.convert(mathml);
+
+        expect(result).toThrow(new InvalidNumberOfChildrenError('mroot', 2, 3));
+      });
     });
   });
 

@@ -710,6 +710,22 @@ export const mroot = `
 </root>
 `;
 
+export const mrootWithThreeChildren = `
+<root>
+  <math>
+    <mroot>
+      <mrow>
+        <mi>x</mi>
+        <mo>+</mo>
+        <mi>2</mi>
+      </mrow>
+      <mn>3</mn>
+      <mn>2</mn>
+    </mroot> 
+  </math>
+</root>
+`;
+
 export const mpadded = `
 <root>
   <math>

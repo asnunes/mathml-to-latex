@@ -55,13 +55,35 @@ describe('#convert', () => {
     });
   });
 
-  describe('given math string with mo tag with simple operator', () => {
-    it('convert mo passing it operator as string', () => {
-      const mathml = mathmlStrings.moWithSimpleOperator;
+  describe('given math string with mo', () => {
+    describe('with simple operator', () => {
+      it('convert mo passing its operator as string', () => {
+        const mathml = mathmlStrings.moWithSimpleOperator;
 
-      const result = MathMLToLaTeX.convert(mathml);
+        const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toMatch('+');
+        expect(result).toMatch('+');
+      });
+    });
+
+    describe('with Glyph operator', () => {
+      it('convert mo passing its operator as LaTeX command', () => {
+        const mathml = mathmlStrings.moWithGlyphOperator;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('\\star');
+      });
+    });
+
+    describe('with Char operator', () => {
+      it('convert mo passing its operator ', () => {
+        const mathml = mathmlStrings.moWithCharOperator;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('b');
+      });
     });
   });
 

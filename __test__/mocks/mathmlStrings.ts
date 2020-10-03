@@ -54,6 +54,22 @@ export const moWithSimpleOperator = `
 </root>
 `;
 
+export const moWithGlyphOperator = `
+<root>
+  <math>
+    <mo>*</mo>
+  </math>
+</root>
+`;
+
+export const moWithCharOperator = `
+<root>
+  <math>
+    <mo>b</mo>
+  </math>
+</root>
+`;
+
 export const mrowWithMnAndMo = `
 <root>
   <math>

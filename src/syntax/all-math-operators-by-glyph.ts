@@ -74,7 +74,7 @@ export const allMathOperatorsByGlyph: Record<string, string> = {
   '∡': '\\measuredangle',
   '∠': '\\angle',
   '÷': '\\div',
-  '/': '//',
+  '/': '/',
   '∖': '\\backslash',
   '\\': '\\backslash',
   '%': '\\%',

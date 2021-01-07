@@ -76,7 +76,7 @@ export const allMathOperatorsByChar: Record<string, string> = {
   '&#x2221;': '\\measuredangle',
   '&#x2220;': '\\angle',
   '&#xF7;': '\\div',
-  '/': '//',
+  '/': '/',
   '&#x2216;': '\\backslash',
   '\\': '\\backslash',
   '%': '\\%',

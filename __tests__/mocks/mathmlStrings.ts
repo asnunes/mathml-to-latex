@@ -64,6 +64,18 @@ export const moWithSimpleOperator = `
 </root>
 `;
 
+export const moDividerOperator = `
+<math>
+  <mi>x</mi>
+  <mo>=</mo>
+  <mn>4</mn>
+  <mrow>
+    <mo>/</mo>
+  </mrow>
+  <mn>5</mn>
+</math>
+`;
+
 export const moWithGlyphOperator = `
 <root>
   <math>

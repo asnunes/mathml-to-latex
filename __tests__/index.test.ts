@@ -64,6 +64,14 @@ describe('#convert', () => {
 
         expect(result).toMatch('+');
       });
+
+      it('converts bar divider preserving it', () => {
+        const mathml = mathmlStrings.moDividerOperator;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('x=4/5');
+      });
     });
 
     describe('with Glyph operator', () => {

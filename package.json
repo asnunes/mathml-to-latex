@@ -1,6 +1,6 @@
 {
   "name": "mathml-to-latex",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A JavaScript tool to convert mathml string to LaTeX string",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

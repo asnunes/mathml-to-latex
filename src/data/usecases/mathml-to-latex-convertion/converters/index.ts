@@ -19,5 +19,4 @@ export { MUnderover } from './munderover';
 export { MTable } from './mtable';
 export { MTr } from './mtr';
 export { GenericSpacingWrapper } from './generic-spacing-wrapper';
-export { GenericNoSpacingWrapper } from './generic-no-spacing-wrapper';
 export { GenericUnderOver } from './generic-under-over';

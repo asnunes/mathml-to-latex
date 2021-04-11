@@ -92,6 +92,18 @@ export const moWithCharOperator = `
 </root>
 `;
 
+export const moWithCharOperatorAndMi = `
+<root>
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mstyle displaystyle="true">
+      <mi>a</mi>
+      <mo>&#x21D2;</mo>
+      <mi>b</mi>
+    </mstyle>
+  </math>
+</root>
+`;
+
 export const mrowWithMnAndMo = `
 <root>
   <math>

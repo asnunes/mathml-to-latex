@@ -92,6 +92,14 @@ describe('#convert', () => {
 
         expect(result).toMatch('b');
       });
+
+      it('appends space between command and next tag', () => {
+        const mathml = mathmlStrings.moWithCharOperatorAndMi;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toMatch('a \\Rightarrow b');
+      });
     });
   });
 

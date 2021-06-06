@@ -17,6 +17,6 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         stale-issue-message: 'Closing due to inactivity'
-        stale-pr-message: 'Stale pull request message'
+        stale-pr-message: 'Closing due to inactivity'
         stale-issue-label: 'no-issue-activity'
         stale-pr-label: 'no-pr-activity'

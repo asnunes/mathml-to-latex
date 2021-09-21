@@ -21,15 +21,18 @@ export class ErrorHandler {
     const missingAttribute = errorMessage.split('"')[1];
     if (missingAttribute) return xml.replace(this._matchMissingValueForAttribute(missingAttribute), '');
 
-    return xml.replace(this._mathGenericMissingValue(), '');
+    while (this._mathGenericMissingValue().exec(xml)) {
+      xml = xml.replace(this._mathGenericMissingValue(), '$1$3');
+    }
+    return xml;
   }
 
   private _matchMissingValueForAttribute(attribute: string): RegExp {
-    return new RegExp(`(?<=\<.*)(${attribute}=(?!(\"|\')))|(${attribute}(?!(\"|\')))(?=.*\>)`, 'gm');
+    return new RegExp(`(${attribute}=(?!(\"|\')))|(${attribute}(?!(\"|\')))`, 'gm');
   }
 
   private _mathGenericMissingValue(): RegExp {
-    return /(?<=\<.*)(\w+=(?!(\"|\')))/gm;
+    return /(\<.* )(\w+=(?!\"|\'))(.*\>)/gm;
   }
 
   private _isMissingAttributeValueError(errorMessage: string): boolean {

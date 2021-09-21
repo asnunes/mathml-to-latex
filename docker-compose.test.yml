@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  mathml-to-latex-test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    container_name: mathml-to-latex-test
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '5'
+    working_dir: /usr/src/mathml-to-latex
+    command: |
+      npm run test

@@ -11,6 +11,9 @@ import {
   mfencedWithSeparatorAttribute,
   mfencedWithBrokenAttributeCase1,
   mfencedWithBrokenAttributeCase2,
+  mfencedWithBrokenAttributeCase4,
+  mfencedWithBrokenAttributeCase3,
+  mfencedWithBrokenAttributeCase5,
 } from '../../mocks/mathmlStrings';
 
 describe('#convert', () => {
@@ -130,6 +133,58 @@ describe('#convert', () => {
     });
   });
 
+  describe('given math with two broken mfenced', () => {
+    test('add attributes to children related with name mfenced', () => {
+      const mathmlString = mfencedWithBrokenAttributeCase3;
+
+      const result = makeSut().convert(mathmlString);
+
+      expect(result.length).toBe(1);
+      expect(result[0]).toMatchObject({
+        name: 'math',
+        value: '',
+        attributes: {},
+        children: [
+          {
+            name: 'mfenced',
+            value: '',
+            attributes: { open: '{' },
+            children: [{ name: 'mn', value: '3', attributes: {}, children: [] }],
+          },
+          {
+            name: 'mfenced',
+            value: '',
+            attributes: { open: '{' },
+            children: [{ name: 'mn', value: '5', attributes: {}, children: [] }],
+          },
+        ],
+      });
+    });
+  });
+
+  describe('given math with two broken arguments', () => {
+    test('ignore broken args', () => {
+      const mathmlString = mfencedWithBrokenAttributeCase5;
+
+      const result = makeSut().convert(mathmlString);
+
+      expect(result.length).toBe(1);
+      expect(result[0]).toMatchObject({
+        name: 'math',
+        value: '',
+        attributes: {},
+        children: [
+          {
+            name: 'mfenced',
+            value: '',
+            attributes: {},
+            children: [{ name: 'mn', value: '3', attributes: {}, children: [] }],
+          },
+        ],
+      });
+    });
+  });
+
   describe('given math string with mfenced with single content, open attr settled as { and close attribute with = only', () => {
     test('add attributes to children related with name mfenced', () => {
       const mathmlString = mfencedWithBrokenAttributeCase2;
@@ -147,6 +202,35 @@ describe('#convert', () => {
             value: '',
             attributes: { open: '{' },
             children: [{ name: 'mn', value: '3', attributes: {}, children: [] }],
+          },
+        ],
+      });
+    });
+  });
+
+  describe('given math with two broken mfenced', () => {
+    test('add attributes to children related with name mfenced', () => {
+      const mathmlString = mfencedWithBrokenAttributeCase4;
+
+      const result = makeSut().convert(mathmlString);
+
+      expect(result.length).toBe(1);
+      expect(result[0]).toMatchObject({
+        name: 'math',
+        value: '',
+        attributes: {},
+        children: [
+          {
+            name: 'mfenced',
+            value: '',
+            attributes: { open: '{' },
+            children: [{ name: 'mn', value: '3', attributes: {}, children: [] }],
+          },
+          {
+            name: 'mfenced',
+            value: '',
+            attributes: { open: '{' },
+            children: [{ name: 'mn', value: '5', attributes: {}, children: [] }],
           },
         ],
       });

@@ -13,3 +13,7 @@ tsconfig.json
 .prettierrc.js
 .tool-versions
 .vscode
+Dockerfile*
+docker-compose*
+.github
+makefile

@@ -46,6 +46,42 @@ export const mfencedWithBrokenAttributeCase2 = `
 </root>
 `;
 
+export const mfencedWithBrokenAttributeCase3 = `
+<root>
+<math>
+<mfenced open='{' close >
+  <mn>3</mn>
+</mfenced>
+<mfenced open='{' close >
+  <mn>5</mn>
+</mfenced>
+</math>
+</root>
+`;
+
+export const mfencedWithBrokenAttributeCase4 = `
+<root>
+<math>
+<mfenced open='{' close= >
+  <mn>3</mn>
+</mfenced>
+<mfenced open='{' close= >
+  <mn>5</mn>
+</mfenced>
+</math>
+</root>
+`;
+
+export const mfencedWithBrokenAttributeCase5 = `
+<root>
+<math>
+<mfenced open='' close= >
+  <mn>3</mn>
+</mfenced>
+</math>
+</root>
+`;
+
 export const mrootWithMi = '<root><math><mi>a</mi></math></root>';
 
 export const mathWithMi = '<math><mi>b</mi></math>';

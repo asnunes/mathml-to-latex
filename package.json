@@ -47,6 +47,6 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "xmldom": "^0.4.0"
+    "@xmldom/xmldom": "^0.7.0"
   }
 }

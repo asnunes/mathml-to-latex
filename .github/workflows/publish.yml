@@ -1,21 +1,25 @@
-name: Publish
 on:
-  push:
-    branches: [main, master]
-  workflow_dispatch:
+  release:
+    types: [published]
+
+name: Publish
 jobs:
   publish:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [18.x]
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/setup-node@v2
+
       - name: Dependencies installation
         run: npm install
+      
       - name: Test run
         run: npm test
+      
       - name: Build
         run: npm run build
       - name: Publish

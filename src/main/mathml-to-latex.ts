@@ -7,6 +7,9 @@ export class MathMLToLaTeX {
     const mathmlElementsToLaTeXConverters = mathmlElements.map((mathMLElement) =>
       new MathMLElementToLatexConverterAdapter(mathMLElement).toLatexConverter(),
     );
-    return mathmlElementsToLaTeXConverters.map((toLatexConverters) => toLatexConverters.convert()).join('');
+    return mathmlElementsToLaTeXConverters
+      .map((toLatexConverters) => toLatexConverters.convert())
+      .join('')
+      .trim();
   }
 }

@@ -11,6 +11,14 @@ describe('#convert', () => {
 
       expect(result).toMatch('a');
     });
+
+    it('should add space between mis', () => {
+      const mathml = mathmlStrings.misWithSpace;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toMatch('\\Delta x');
+    });
   });
 
   describe('given math tag outside any other tag', () => {
@@ -70,7 +78,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('x=4/5');
+        expect(result).toMatch('x = 4 / 5');
       });
     });
 
@@ -308,7 +316,7 @@ describe('#convert', () => {
           const result = MathMLToLaTeX.convert(mathml);
 
           expect(result).toBe(
-            `f\\left(x\\right)=\\left{\\begin{matrix}\n x^{2} , x < 0 \\\\ e^{x} , x \\geq 0 \n\\end{matrix}\\right`.replace(
+            `f \\left(x\\right) = \\left{\\begin{matrix}\n x^{2} , x < 0 \\\\ e^{x} , x \\geq 0 \n\\end{matrix}\\right`.replace(
               /\n/g,
               '',
             ),
@@ -1077,6 +1085,14 @@ describe('#convert', () => {
 
         expect(result).toThrow(new InvalidNumberOfChildrenError('mmultiscripts', 3, 2, 'at least'));
       });
+    });
+
+    it('should trim empty spaces at the start and end', () => {
+      const mathml = mathmlStrings.misWithEmptySpace;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('x');
     });
   });
 });

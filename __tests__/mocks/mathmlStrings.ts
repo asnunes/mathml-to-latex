@@ -84,6 +84,20 @@ export const mfencedWithBrokenAttributeCase5 = `
 
 export const mrootWithMi = '<root><math><mi>a</mi></math></root>';
 
+export const misWithSpace = `
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi mathvariant="normal">Δ</mi>
+  <mi>x</mi>
+</math>`;
+
+export const misWithEmptySpace = `
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi></mi>
+  <mi>x</mi>
+  <mi></mi>
+  <mi></mi>
+</math>`;
+
 export const mathWithMi = '<math><mi>b</mi></math>';
 
 export const mathWithMiAndSpace = '<root><math><mi> a </mi></math></root>';

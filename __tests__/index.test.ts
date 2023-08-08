@@ -19,6 +19,14 @@ describe('#convert', () => {
 
       expect(result).toMatch('\\Delta x');
     });
+
+    it('should properly convert mi with double-struck attribute', () => {
+      const mathml = mathmlStrings.miWithDoubleStruck;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toMatch('\\left(\\mathbb{R}\\right)^{n}');
+    });
   });
 
   describe('given math tag outside any other tag', () => {

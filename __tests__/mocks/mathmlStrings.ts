@@ -90,6 +90,19 @@ export const misWithSpace = `
   <mi>x</mi>
 </math>`;
 
+export const miWithDoubleStruck = `
+<math>
+  <msup>
+    <mrow>
+      <mi mathvariant="double-struck">R</mi>
+    </mrow>
+    <mrow>
+      <mi>n</mi>
+    </mrow>
+  </msup>
+</math>
+`;
+
 export const misWithEmptySpace = `
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mi></mi>

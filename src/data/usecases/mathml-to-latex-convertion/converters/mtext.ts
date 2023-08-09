@@ -1,5 +1,6 @@
 import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
+import { MI } from './mi';
 
 export class MText implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
@@ -11,7 +12,46 @@ export class MText implements ToLaTeXConverter {
   convert(): string {
     const { attributes, value } = this._mathmlElement;
 
-    return new TextCommand(attributes.mathvariant).apply(value);
+    return [...value]
+      .map<Char>((char) => {
+        // if is a letter, number or space, return it
+        if (/^[a-zA-Z0-9]$/.test(char) || char === ' ')
+          return {
+            value: char,
+            isAlphanumeric: true,
+          };
+
+        // if is a symbol, set it to mi parser
+        return {
+          value: char,
+          isAlphanumeric: false,
+        };
+      })
+      .reduce<Char[]>((acc, char) => {
+        // merge consecutive alphanumeric characters
+        if (char.isAlphanumeric) {
+          const lastChar = acc[acc.length - 1];
+          if (lastChar && lastChar.isAlphanumeric) {
+            lastChar.value += char.value;
+            return acc;
+          }
+        }
+
+        return [...acc, char];
+      }, [])
+      .map((char) => {
+        if (!char.isAlphanumeric) {
+          return new MI({
+            name: 'mi',
+            attributes: {},
+            children: [],
+            value: char.value,
+          }).convert();
+        }
+
+        return new TextCommand(attributes.mathvariant).apply(char.value);
+      })
+      .join('');
   }
 }
 
@@ -49,3 +89,8 @@ class TextCommand {
     }
   }
 }
+
+type Char = {
+  value: string;
+  isAlphanumeric: boolean;
+};

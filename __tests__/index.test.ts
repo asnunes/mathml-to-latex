@@ -1103,4 +1103,69 @@ describe('#convert', () => {
       expect(result).toBe('x');
     });
   });
+
+  describe('long char and glyph convertion', () => {
+    it('should convert ϵ properly to \\epsilon', () => {
+      const mathml = mathmlStrings.mathWithEpsilonGlyph;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe(
+        'd = \\left(\\left(\\frac{q^{2} L}{2 \\pi \\left(\\epsilon\\right)_{0} m g}\\right)\\right)^{1 / 3}',
+      );
+    });
+
+    it('should convert µ properly to \\mu', () => {
+      const mathml = mathmlStrings.mathWithMuGlyph;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('2 \\mu s');
+    });
+
+    it('should convert ⋅ properly to \\cdot on text', () => {
+      const mathml = mathmlStrings.mathWithCdotGlyph;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\text{kg}\\cdot\\text{m}^{2}');
+    });
+
+    it('should convert alternative ı to \\imath', () => {
+      const mathml = mathmlStrings.mathWithAlternative1;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('E \\left(W_{\\imath}\\right) = \\mu');
+    });
+
+    it('should convert alternative square to \\blacksquare', () => {
+      const mathml = mathmlStrings.mathWithAlternativeSquare;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('2 \\blacksquare s');
+    });
+
+    it('should convert other characters properly', () => {
+      const mathml = mathmlStrings.mathWithOtherCharacters;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe(
+        `\\Omega \\times 1/2 \\mu \\theta \\sqrt{} 〈 ⟨ ⟩ ⟩ 1/4 \\cdots \\hbar \\mathfrak{R} \\theta \\varnothing \\varrho\
+        \\Phi T \\cdot P \\infty \\nabla \\eta \\dot{A} \\lfloor \\pi ^{3} \\epsilon \\mathcal{D} \\mathbb{R} ^{2} \\mathfrak{L}\
+        ^{8} ^{7} \\mathcal{D} \\lceil \\rceil \\ddot{y} \\bullet ) \\square \\omega \\mathfrak{F} \\mathcal{O} x y z j k B \\mathcal{D} \\mathcal{D} m \
+        I T K e r V A P \\mathcal{C} \\mathfrak{n} N \\mathfrak{n} i f x  \\mathfrak{E} p a S s o o \\beta C t R u b \\mathbb{Q} \\hat{y} M c n v g ; \\wp \\mathfrak{F} \
+        o \\mathbb{D} \\mathfrak{R} \\perp \\hat{O} \\times \\theta ^{4} \\mathbb{N} \\beta \\circ _{0} _{1} _{2} _{3} ( ) \\hat{E} - \\to \\| Q f \\bar{I} \\approx \
+        \\mid \\measuredangle \\phi \\oint ^{9} \\mid \\mid \\mid \\mid - \\iota ç ^{6} \\omega \\gg v \\hbar \\measuredangle d \\pi \\measuredangle \\pi \\uparrow \\in ^ , \\hat{e} \\measuredangle \
+        c - F \\downarrow I \\delta \\rightarrow \\leftarrow \\hat{a} ^{5} \\Delta \\ddot{o} { \\hat{I} \\varphi \\sqrt{} ♥ \\theta \\circ \\theta \\rightarrow \\varphi \
+        \\epsilon o^{\\circ} O \\mathbf{m} \\hat{E} Y \\bar{a} \\cdot x \\epsilon \\epsilon q \\mid \\mathcal{X} \\lambda \\varphi \\mathfrak{L} \\measuredangle \\uparrow \
+        \\square E \\neq \\angle \\measuredangle \\bigoplus \\circlearrowleft \\mathfrak{R} \\propto   \\rightarrow \\hat{m} \\Xi J \\square X YH \\Phi \\theta \\tau \\leq _{8} \
+        B / \\\top \\bar{O} \\yen ^{(} \\oslash \\textcircled{1} N Ú v \\Phi \\ss + \\pm v l \\circlearrowright \\lambda _{6} \\ulcorner \\mid \\pho \\hat{u} \\mathbb{P} : \\hbar \
+        \\phi a p x \\ominus \\measuredangle \\measuredangle \\ddots{o} \\nrightarrow \\dagger \\hbar H w O U C \\mathbf{e} \\ddots{u} \\lambda ^{)} \\ll \\gamma \\wp ^{n} \\circ p \\circ \
+        \\checkmark \\xmark`,
+      );
+    });
+  });
 });

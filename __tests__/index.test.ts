@@ -339,7 +339,7 @@ describe('#convert', () => {
           const result = MathMLToLaTeX.convert(mathml);
 
           expect(result).toBe(
-            `\\begin{bmatrix} \\begin{matrix}a_{11} & a_{12}\\end{matrix} & \\begin{matrix}\\hdots & \\hdots\\end{matrix} & a_{1 n} \\\\ \\begin{matrix}a_{21} & a_{22}\\end{matrix} & \\begin{matrix}\\ddots & \\end{matrix} & a_{2 n} \\\\ \\begin{matrix}\\begin{matrix}\\vdots & \\vdots\\end{matrix} \\\\ \\begin{matrix}a_{m 1} & a_{m 2}\\end{matrix}\\end{matrix} & \\begin{matrix}\\begin{matrix} & \\ddots\\end{matrix} \\\\ \\begin{matrix}\\hdots & \\hdots\\end{matrix}\\end{matrix} & \\begin{matrix}\\vdots \\\\ a_{m n}\\end{matrix} \\end{bmatrix}`,
+            `\\begin{bmatrix} \\begin{matrix}a_{11} & a_{12}\\end{matrix} & \\begin{matrix}\\ldots & \\ldots\\end{matrix} & a_{1 n} \\\\ \\begin{matrix}a_{21} & a_{22}\\end{matrix} & \\begin{matrix}\\ddots & \\end{matrix} & a_{2 n} \\\\ \\begin{matrix}\\begin{matrix}\\vdots & \\vdots\\end{matrix} \\\\ \\begin{matrix}a_{m 1} & a_{m 2}\\end{matrix}\\end{matrix} & \\begin{matrix}\\begin{matrix} & \\ddots\\end{matrix} \\\\ \\begin{matrix}\\ldots & \\ldots\\end{matrix}\\end{matrix} & \\begin{matrix}\\vdots \\\\ a_{m n}\\end{matrix} \\end{bmatrix}`,
           );
         });
       });
@@ -1147,25 +1147,16 @@ describe('#convert', () => {
       expect(result).toBe('2 \\blacksquare s');
     });
 
-    it('should convert other characters properly', () => {
-      const mathml = mathmlStrings.mathWithOtherCharacters;
+    for (const inputExpectedPair of mathmlStrings.inputExpectedPairs) {
+      const { input, expected, op } = inputExpectedPair;
 
-      const result = MathMLToLaTeX.convert(mathml);
+      it(`should convert ${input} to ${expected}`, () => {
+        const mathml = `<math xmlns="http://www.w3.org/1998/Math/MathML"><${op}>${input}</${op}></math>`;
 
-      expect(result).toBe(
-        `\\Omega \\times 1/2 \\mu \\theta \\sqrt{} 〈 ⟨ ⟩ ⟩ 1/4 \\cdots \\hbar \\mathfrak{R} \\theta \\varnothing \\varrho\
-        \\Phi T \\cdot P \\infty \\nabla \\eta \\dot{A} \\lfloor \\pi ^{3} \\epsilon \\mathcal{D} \\mathbb{R} ^{2} \\mathfrak{L}\
-        ^{8} ^{7} \\mathcal{D} \\lceil \\rceil \\ddot{y} \\bullet ) \\square \\omega \\mathfrak{F} \\mathcal{O} x y z j k B \\mathcal{D} \\mathcal{D} m \
-        I T K e r V A P \\mathcal{C} \\mathfrak{n} N \\mathfrak{n} i f x  \\mathfrak{E} p a S s o o \\beta C t R u b \\mathbb{Q} \\hat{y} M c n v g ; \\wp \\mathfrak{F} \
-        o \\mathbb{D} \\mathfrak{R} \\perp \\hat{O} \\times \\theta ^{4} \\mathbb{N} \\beta \\circ _{0} _{1} _{2} _{3} ( ) \\hat{E} - \\to \\| Q f \\bar{I} \\approx \
-        \\mid \\measuredangle \\phi \\oint ^{9} \\mid \\mid \\mid \\mid - \\iota ç ^{6} \\omega \\gg v \\hbar \\measuredangle d \\pi \\measuredangle \\pi \\uparrow \\in ^ , \\hat{e} \\measuredangle \
-        c - F \\downarrow I \\delta \\rightarrow \\leftarrow \\hat{a} ^{5} \\Delta \\ddot{o} { \\hat{I} \\varphi \\sqrt{} ♥ \\theta \\circ \\theta \\rightarrow \\varphi \
-        \\epsilon o^{\\circ} O \\mathbf{m} \\hat{E} Y \\bar{a} \\cdot x \\epsilon \\epsilon q \\mid \\mathcal{X} \\lambda \\varphi \\mathfrak{L} \\measuredangle \\uparrow \
-        \\square E \\neq \\angle \\measuredangle \\bigoplus \\circlearrowleft \\mathfrak{R} \\propto   \\rightarrow \\hat{m} \\Xi J \\square X YH \\Phi \\theta \\tau \\leq _{8} \
-        B / \\\top \\bar{O} \\yen ^{(} \\oslash \\textcircled{1} N Ú v \\Phi \\ss + \\pm v l \\circlearrowright \\lambda _{6} \\ulcorner \\mid \\pho \\hat{u} \\mathbb{P} : \\hbar \
-        \\phi a p x \\ominus \\measuredangle \\measuredangle \\ddots{o} \\nrightarrow \\dagger \\hbar H w O U C \\mathbf{e} \\ddots{u} \\lambda ^{)} \\ll \\gamma \\wp ^{n} \\circ p \\circ \
-        \\checkmark \\xmark`,
-      );
-    });
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe(expected);
+      });
+    }
   });
 });

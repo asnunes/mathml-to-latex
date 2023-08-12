@@ -17,3 +17,5 @@ Dockerfile*
 docker-compose*
 .github
 makefile
+webpack.config.js
+*.tgz

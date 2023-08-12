@@ -4,7 +4,6 @@ module.exports = {
   entry: './src/index.ts',
   output: {
     library: 'MathMLToLaTeX',
-    libraryExport: 'MathMLToLaTeX',
     libraryTarget: 'umd',
     filename: 'bundle.min.js',
     path: path.resolve(__dirname, 'dist'),
@@ -17,10 +16,5 @@ module.exports = {
   },
   module: {
     rules: [{ test: /\.ts$/, loader: 'ts-loader', exclude: /node_modules/ }],
-  },
-  resolve: {
-    alias: {
-      MathMLToLaTeX: path.resolve(__dirname, 'dist', 'index.d.ts'),
-    },
   },
 };

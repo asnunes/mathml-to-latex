@@ -18,4 +18,9 @@ module.exports = {
   module: {
     rules: [{ test: /\.ts$/, loader: 'ts-loader', exclude: /node_modules/ }],
   },
+  resolve: {
+    alias: {
+      MathMLToLaTeX: path.resolve(__dirname, 'dist', 'index.d.ts'),
+    },
+  },
 };

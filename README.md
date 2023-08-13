@@ -2,7 +2,7 @@
 
 It converts [MathML](https://en.wikipedia.org/wiki/MathML) to [LaTeX](https://pt.wikipedia.org/wiki/LaTeX).
 
-## Instalation
+## Installation
 
 If you use NPM
 
@@ -19,7 +19,8 @@ yarn add mathml-to-latex
 ## Usage
 
 ```javascript
-const Mathml2latex = require('mathml-to-latex');
+import { Mathml2latex } from 'mathml-to-latex';
+// const { Mathml2latex } = require('mathml-to-latex');
 
 const mathml = `
       <math>
@@ -36,7 +37,8 @@ Mathml2latex.convert(mathml);
 ```
 
 ```javascript
-const Mathml2latex = require('mathml-to-latex');
+import { Mathml2latex } from 'mathml-to-latex';
+// const { Mathml2latex } = require('mathml-to-latex');
 
 const mathml = `
     <math>

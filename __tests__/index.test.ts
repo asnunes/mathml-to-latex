@@ -1,4 +1,4 @@
-import MathMLToLaTeX from '../src';
+import { MathMLToLaTeX } from '../src';
 import * as mathmlStrings from './mocks/mathmlStrings';
 import { InvalidNumberOfChildrenError } from '../src/data/errors/invalid-number-of-children';
 
@@ -10,6 +10,22 @@ describe('#convert', () => {
       const result = MathMLToLaTeX.convert(mathml);
 
       expect(result).toMatch('a');
+    });
+
+    it('should add space between mis', () => {
+      const mathml = mathmlStrings.misWithSpace;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toMatch('\\Delta x');
+    });
+
+    it('should properly convert mi with double-struck attribute', () => {
+      const mathml = mathmlStrings.miWithDoubleStruck;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toMatch('\\left(\\mathbb{R}\\right)^{n}');
     });
   });
 
@@ -70,7 +86,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('x=4/5');
+        expect(result).toMatch('x = 4 / 5');
       });
     });
 
@@ -308,7 +324,7 @@ describe('#convert', () => {
           const result = MathMLToLaTeX.convert(mathml);
 
           expect(result).toBe(
-            `f\\left(x\\right)=\\left{\\begin{matrix}\n x^{2} , x < 0 \\\\ e^{x} , x \\geq 0 \n\\end{matrix}\\right`.replace(
+            `f \\left(x\\right) = \\left{\\begin{matrix}\n x^{2} , x < 0 \\\\ e^{x} , x \\geq 0 \n\\end{matrix}\\right`.replace(
               /\n/g,
               '',
             ),
@@ -323,7 +339,7 @@ describe('#convert', () => {
           const result = MathMLToLaTeX.convert(mathml);
 
           expect(result).toBe(
-            `\\begin{bmatrix} \\begin{matrix}a_{11} & a_{12}\\end{matrix} & \\begin{matrix}\\hdots & \\hdots\\end{matrix} & a_{1 n} \\\\ \\begin{matrix}a_{21} & a_{22}\\end{matrix} & \\begin{matrix}\\ddots & \\end{matrix} & a_{2 n} \\\\ \\begin{matrix}\\begin{matrix}\\vdots & \\vdots\\end{matrix} \\\\ \\begin{matrix}a_{m 1} & a_{m 2}\\end{matrix}\\end{matrix} & \\begin{matrix}\\begin{matrix} & \\ddots\\end{matrix} \\\\ \\begin{matrix}\\hdots & \\hdots\\end{matrix}\\end{matrix} & \\begin{matrix}\\vdots \\\\ a_{m n}\\end{matrix} \\end{bmatrix}`,
+            `\\begin{bmatrix} \\begin{matrix}a_{11} & a_{12}\\end{matrix} & \\begin{matrix}\\ldots & \\ldots\\end{matrix} & a_{1 n} \\\\ \\begin{matrix}a_{21} & a_{22}\\end{matrix} & \\begin{matrix}\\ddots & \\end{matrix} & a_{2 n} \\\\ \\begin{matrix}\\begin{matrix}\\vdots & \\vdots\\end{matrix} \\\\ \\begin{matrix}a_{m 1} & a_{m 2}\\end{matrix}\\end{matrix} & \\begin{matrix}\\begin{matrix} & \\ddots\\end{matrix} \\\\ \\begin{matrix}\\ldots & \\ldots\\end{matrix}\\end{matrix} & \\begin{matrix}\\vdots \\\\ a_{m n}\\end{matrix} \\end{bmatrix}`,
           );
         });
       });
@@ -1078,5 +1094,69 @@ describe('#convert', () => {
         expect(result).toThrow(new InvalidNumberOfChildrenError('mmultiscripts', 3, 2, 'at least'));
       });
     });
+
+    it('should trim empty spaces at the start and end', () => {
+      const mathml = mathmlStrings.misWithEmptySpace;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('x');
+    });
+  });
+
+  describe('long char and glyph convertion', () => {
+    it('should convert ϵ properly to \\epsilon', () => {
+      const mathml = mathmlStrings.mathWithEpsilonGlyph;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe(
+        'd = \\left(\\left(\\frac{q^{2} L}{2 \\pi \\left(\\epsilon\\right)_{0} m g}\\right)\\right)^{1 / 3}',
+      );
+    });
+
+    it('should convert µ properly to \\mu', () => {
+      const mathml = mathmlStrings.mathWithMuGlyph;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('2 \\mu s');
+    });
+
+    it('should convert ⋅ properly to \\cdot on text', () => {
+      const mathml = mathmlStrings.mathWithCdotGlyph;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\text{kg}\\cdot\\text{m}^{2}');
+    });
+
+    it('should convert alternative ı to \\imath', () => {
+      const mathml = mathmlStrings.mathWithAlternative1;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('E \\left(W_{\\imath}\\right) = \\mu');
+    });
+
+    it('should convert alternative square to \\blacksquare', () => {
+      const mathml = mathmlStrings.mathWithAlternativeSquare;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('2 \\blacksquare s');
+    });
+
+    for (const inputExpectedPair of mathmlStrings.inputExpectedPairs) {
+      const { input, expected, op } = inputExpectedPair;
+
+      it(`should convert ${input} to ${expected} for tag ${op}`, () => {
+        const mathml = `<math xmlns="http://www.w3.org/1998/Math/MathML"><${op}>${input}</${op}></math>`;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe(expected);
+      });
+    }
   });
 });

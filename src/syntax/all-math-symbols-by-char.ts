@@ -86,4 +86,6 @@ export const allMathSymbolsByChar: Record<string, string> = {
   '&#x3B2;': '\\beta',
   '&#x3B1;': '\\alpha',
   '&#x221E;': '\\infty',
+  '\u202c': '\\text{\\textdir TRT}',
+  '\u200e': '\\text{\\textdir LTR}',
 };

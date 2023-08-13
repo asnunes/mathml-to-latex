@@ -14,7 +14,7 @@ export class Math implements ToLaTeXConverter {
     const unnormalizedLatex = this._mathmlElement.children
       .map((child) => mathMLElementToLaTeXConverter(child))
       .map((converter) => converter.convert())
-      .join('');
+      .join(' ');
 
     return normalizeWhiteSpaces(unnormalizedLatex);
   }

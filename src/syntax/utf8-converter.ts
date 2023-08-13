@@ -29,7 +29,7 @@ export class HashUTF8ToLtXConverter implements UTF8ToLtXConverter {
   }
 
   private convertAccentCharToLtX(char: AccentChar): string | null {
-    const { vowel, accent } = char;
+    const { char: vowel, accent } = char;
     const cmd = accentToLTXCmd[accent];
     if (!cmd) {
       return null;
@@ -50,11 +50,33 @@ export class HashUTF8ToLtXConverter implements UTF8ToLtXConverter {
 }
 
 type AccentChar = {
-  vowel: Vowel;
+  char: Char;
   accent: Accent;
 };
 
-type Vowel = 'a' | 'e' | 'i' | 'o' | 'u' | 'y' | 'A' | 'E' | 'I' | 'O' | 'U' | 'Y';
+type Char =
+  | 'a'
+  | 'e'
+  | 'i'
+  | 'o'
+  | 'u'
+  | 'y'
+  | 'A'
+  | 'E'
+  | 'I'
+  | 'O'
+  | 'U'
+  | 'Y'
+  | 'n'
+  | 'N'
+  | 'c'
+  | 'C'
+  | 'v'
+  | 'V'
+  | 'j'
+  | 'J'
+  | 'z'
+  | 'Z';
 type Accent = '´' | '`' | '^' | '~' | '¨' | 'ˆ' | '˚' | '˙' | '˘' | '˝' | 'ˇ' | 'ˆ' | '˜' | '-';
 type LTXAccentCMD =
   | 'acute'
@@ -70,127 +92,143 @@ type LTXAccentCMD =
   | 'vec';
 
 const vowelsWithAccents: Record<string, AccentChar> = {
-  á: { vowel: 'a', accent: '´' },
-  à: { vowel: 'a', accent: '`' },
-  â: { vowel: 'a', accent: '^' },
-  ã: { vowel: 'a', accent: '~' },
-  ä: { vowel: 'a', accent: '¨' },
-  å: { vowel: 'a', accent: '˚' },
-  ą: { vowel: 'a', accent: '˙' },
-  ă: { vowel: 'a', accent: '˘' },
-  ǎ: { vowel: 'a', accent: 'ˇ' },
-  ǟ: { vowel: 'a', accent: 'ˆ' },
-  ǻ: { vowel: 'a', accent: '˙' },
-  ǡ: { vowel: 'a', accent: '-' },
-  ā: { vowel: 'a', accent: '-' },
-  é: { vowel: 'e', accent: '´' },
-  è: { vowel: 'e', accent: '`' },
-  ê: { vowel: 'e', accent: '^' },
-  ë: { vowel: 'e', accent: '¨' },
-  ę: { vowel: 'e', accent: '˙' },
-  ě: { vowel: 'e', accent: 'ˇ' },
-  ȇ: { vowel: 'i', accent: '^' },
-  ё: { vowel: 'e', accent: '¨' },
-  ē: { vowel: 'e', accent: '-' },
-  í: { vowel: 'i', accent: '´' },
-  ì: { vowel: 'i', accent: '`' },
-  î: { vowel: 'i', accent: '^' },
-  ï: { vowel: 'i', accent: '¨' },
-  į: { vowel: 'i', accent: '˙' },
-  ǐ: { vowel: 'i', accent: 'ˇ' },
-  ȉ: { vowel: 'i', accent: '`' },
-  ȋ: { vowel: 'i', accent: '¨' },
-  ī: { vowel: 'i', accent: '-' },
-  ó: { vowel: 'o', accent: '´' },
-  ò: { vowel: 'o', accent: '`' },
-  ô: { vowel: 'o', accent: '^' },
-  õ: { vowel: 'o', accent: '~' },
-  ö: { vowel: 'o', accent: '¨' },
-  ő: { vowel: 'o', accent: '˝' },
-  ǒ: { vowel: 'o', accent: 'ˇ' },
-  ȍ: { vowel: 'o', accent: '`' },
-  ȏ: { vowel: 'o', accent: '¨' },
-  ȫ: { vowel: 'o', accent: '˘' },
-  ȭ: { vowel: 'o', accent: '˝' },
-  ȯ: { vowel: 'o', accent: '˙' },
-  ō: { vowel: 'o', accent: '-' },
-  ú: { vowel: 'u', accent: '´' },
-  ù: { vowel: 'u', accent: '`' },
-  û: { vowel: 'u', accent: '^' },
-  ü: { vowel: 'u', accent: '¨' },
-  ű: { vowel: 'u', accent: '˝' },
-  ǔ: { vowel: 'u', accent: 'ˇ' },
-  ǖ: { vowel: 'u', accent: '¨' },
-  ǘ: { vowel: 'u', accent: '¨' },
-  ǚ: { vowel: 'u', accent: '¨' },
-  ǜ: { vowel: 'u', accent: '¨' },
-  ȕ: { vowel: 'u', accent: '`' },
-  ȗ: { vowel: 'u', accent: '¨' },
-  ū: { vowel: 'u', accent: '-' },
-  ý: { vowel: 'y', accent: '´' },
-  ỳ: { vowel: 'y', accent: '`' },
-  ŷ: { vowel: 'y', accent: '^' },
-  ÿ: { vowel: 'y', accent: '¨' },
-  ȳ: { vowel: 'y', accent: '-' },
-  Á: { vowel: 'A', accent: '´' },
-  À: { vowel: 'A', accent: '`' },
-  Â: { vowel: 'A', accent: '^' },
-  Ã: { vowel: 'A', accent: '~' },
-  Ä: { vowel: 'A', accent: '¨' },
-  Å: { vowel: 'A', accent: '˚' },
-  Å: { vowel: 'A', accent: '˚' },
-  Ă: { vowel: 'A', accent: '˘' },
-  Ǎ: { vowel: 'A', accent: 'ˇ' },
-  Ǟ: { vowel: 'A', accent: '˝' },
-  Ǻ: { vowel: 'A', accent: '˚' },
-  Ǡ: { vowel: 'A', accent: '-' },
-  Ā: { vowel: 'A', accent: '-' },
-  É: { vowel: 'E', accent: '´' },
-  È: { vowel: 'E', accent: '`' },
-  Ė: { vowel: 'E', accent: '˙' },
-  Ê: { vowel: 'E', accent: '^' },
-  Ë: { vowel: 'E', accent: '¨' },
-  Ě: { vowel: 'E', accent: 'ˇ' },
-  Ȅ: { vowel: 'E', accent: '`' },
-  Ȇ: { vowel: 'E', accent: '¨' },
-  Ē: { vowel: 'E', accent: '-' },
-  Í: { vowel: 'I', accent: '´' },
-  Ì: { vowel: 'I', accent: '`' },
-  Î: { vowel: 'I', accent: '^' },
-  Ï: { vowel: 'I', accent: '¨' },
-  Ĭ: { vowel: 'I', accent: '˘' },
-  Ǐ: { vowel: 'I', accent: 'ˇ' },
-  Ȉ: { vowel: 'I', accent: '`' },
-  Ȋ: { vowel: 'I', accent: '¨' },
-  Ī: { vowel: 'I', accent: '-' },
-  Ó: { vowel: 'O', accent: '´' },
-  Ò: { vowel: 'O', accent: '`' },
-  Ô: { vowel: 'O', accent: '^' },
-  Õ: { vowel: 'O', accent: '~' },
-  Ö: { vowel: 'O', accent: '¨' },
-  Ő: { vowel: 'O', accent: '˝' },
-  Ǒ: { vowel: 'O', accent: 'ˇ' },
-  Ȍ: { vowel: 'O', accent: '`' },
-  Ȏ: { vowel: 'O', accent: '¨' },
-  Ȫ: { vowel: 'O', accent: '˘' },
-  Ȭ: { vowel: 'O', accent: '˝' },
-  Ȯ: { vowel: 'O', accent: '˙' },
-  Ō: { vowel: 'O', accent: '-' },
-  Ú: { vowel: 'U', accent: '´' },
-  Ù: { vowel: 'U', accent: '`' },
-  Û: { vowel: 'U', accent: '^' },
-  Ü: { vowel: 'U', accent: '¨' },
-  Ű: { vowel: 'U', accent: '˝' },
-  Ǔ: { vowel: 'U', accent: 'ˇ' },
-  Ǖ: { vowel: 'U', accent: '¨' },
-  Ȕ: { vowel: 'U', accent: '`' },
-  Ȗ: { vowel: 'U', accent: '¨' },
-  Ū: { vowel: 'U', accent: '-' },
-  Ý: { vowel: 'Y', accent: '´' },
-  Ỳ: { vowel: 'Y', accent: '`' },
-  Ŷ: { vowel: 'Y', accent: '^' },
-  Ÿ: { vowel: 'Y', accent: '¨' },
-  Ȳ: { vowel: 'Y', accent: '-' },
+  á: { char: 'a', accent: '´' },
+  à: { char: 'a', accent: '`' },
+  â: { char: 'a', accent: '^' },
+  ã: { char: 'a', accent: '~' },
+  ä: { char: 'a', accent: '¨' },
+  å: { char: 'a', accent: '˚' },
+  ą: { char: 'a', accent: '˙' },
+  ă: { char: 'a', accent: '˘' },
+  ǎ: { char: 'a', accent: 'ˇ' },
+  ǟ: { char: 'a', accent: 'ˆ' },
+  ǻ: { char: 'a', accent: '˙' },
+  ǡ: { char: 'a', accent: '-' },
+  ā: { char: 'a', accent: '-' },
+  é: { char: 'e', accent: '´' },
+  è: { char: 'e', accent: '`' },
+  ê: { char: 'e', accent: '^' },
+  ë: { char: 'e', accent: '¨' },
+  ę: { char: 'e', accent: '˙' },
+  ě: { char: 'e', accent: 'ˇ' },
+  ȇ: { char: 'i', accent: '^' },
+  ё: { char: 'e', accent: '¨' },
+  ē: { char: 'e', accent: '-' },
+  í: { char: 'i', accent: '´' },
+  ì: { char: 'i', accent: '`' },
+  î: { char: 'i', accent: '^' },
+  ï: { char: 'i', accent: '¨' },
+  į: { char: 'i', accent: '˙' },
+  ǐ: { char: 'i', accent: 'ˇ' },
+  ȉ: { char: 'i', accent: '`' },
+  ȋ: { char: 'i', accent: '¨' },
+  ī: { char: 'i', accent: '-' },
+  ó: { char: 'o', accent: '´' },
+  ò: { char: 'o', accent: '`' },
+  ô: { char: 'o', accent: '^' },
+  õ: { char: 'o', accent: '~' },
+  ö: { char: 'o', accent: '¨' },
+  ő: { char: 'o', accent: '˝' },
+  ǒ: { char: 'o', accent: 'ˇ' },
+  ȍ: { char: 'o', accent: '`' },
+  ȏ: { char: 'o', accent: '¨' },
+  ȫ: { char: 'o', accent: '˘' },
+  ȭ: { char: 'o', accent: '˝' },
+  ȯ: { char: 'o', accent: '˙' },
+  ō: { char: 'o', accent: '-' },
+  ú: { char: 'u', accent: '´' },
+  ù: { char: 'u', accent: '`' },
+  û: { char: 'u', accent: '^' },
+  ü: { char: 'u', accent: '¨' },
+  ű: { char: 'u', accent: '˝' },
+  ǔ: { char: 'u', accent: 'ˇ' },
+  ǖ: { char: 'u', accent: '¨' },
+  ǘ: { char: 'u', accent: '¨' },
+  ǚ: { char: 'u', accent: '¨' },
+  ǜ: { char: 'u', accent: '¨' },
+  ȕ: { char: 'u', accent: '`' },
+  ȗ: { char: 'u', accent: '¨' },
+  ū: { char: 'u', accent: '-' },
+  ý: { char: 'y', accent: '´' },
+  ỳ: { char: 'y', accent: '`' },
+  ŷ: { char: 'y', accent: '^' },
+  ÿ: { char: 'y', accent: '¨' },
+  ȳ: { char: 'y', accent: '-' },
+  Á: { char: 'A', accent: '´' },
+  À: { char: 'A', accent: '`' },
+  Â: { char: 'A', accent: '^' },
+  Ã: { char: 'A', accent: '~' },
+  Ä: { char: 'A', accent: '¨' },
+  Å: { char: 'A', accent: '˚' },
+  Å: { char: 'A', accent: '˚' },
+  Ȧ: { char: 'A', accent: '˙' },
+  Ă: { char: 'A', accent: '˘' },
+  Ǎ: { char: 'A', accent: 'ˇ' },
+  Ǟ: { char: 'A', accent: '˝' },
+  Ǻ: { char: 'A', accent: '˚' },
+  Ǡ: { char: 'A', accent: '-' },
+  Ā: { char: 'A', accent: '-' },
+  É: { char: 'E', accent: '´' },
+  È: { char: 'E', accent: '`' },
+  Ė: { char: 'E', accent: '˙' },
+  Ê: { char: 'E', accent: '^' },
+  Ë: { char: 'E', accent: '¨' },
+  Ě: { char: 'E', accent: 'ˇ' },
+  Ȅ: { char: 'E', accent: '`' },
+  Ȇ: { char: 'E', accent: '¨' },
+  Ē: { char: 'E', accent: '-' },
+  Í: { char: 'I', accent: '´' },
+  Ì: { char: 'I', accent: '`' },
+  Î: { char: 'I', accent: '^' },
+  Ï: { char: 'I', accent: '¨' },
+  Ĭ: { char: 'I', accent: '˘' },
+  Ǐ: { char: 'I', accent: 'ˇ' },
+  Ȉ: { char: 'I', accent: '`' },
+  Ȋ: { char: 'I', accent: '¨' },
+  Ī: { char: 'I', accent: '-' },
+  Ó: { char: 'O', accent: '´' },
+  Ò: { char: 'O', accent: '`' },
+  Ô: { char: 'O', accent: '^' },
+  Õ: { char: 'O', accent: '~' },
+  Ö: { char: 'O', accent: '¨' },
+  Ő: { char: 'O', accent: '˝' },
+  Ǒ: { char: 'O', accent: 'ˇ' },
+  Ȍ: { char: 'O', accent: '`' },
+  Ȏ: { char: 'O', accent: '¨' },
+  Ȫ: { char: 'O', accent: '˘' },
+  Ȭ: { char: 'O', accent: '˝' },
+  Ȯ: { char: 'O', accent: '˙' },
+  Ō: { char: 'O', accent: '-' },
+  Ú: { char: 'U', accent: '´' },
+  Ù: { char: 'U', accent: '`' },
+  Û: { char: 'U', accent: '^' },
+  Ü: { char: 'U', accent: '¨' },
+  Ű: { char: 'U', accent: '˝' },
+  Ǔ: { char: 'U', accent: 'ˇ' },
+  Ǖ: { char: 'U', accent: '¨' },
+  Ȕ: { char: 'U', accent: '`' },
+  Ȗ: { char: 'U', accent: '¨' },
+  Ū: { char: 'U', accent: '-' },
+  Ý: { char: 'Y', accent: '´' },
+  Ỳ: { char: 'Y', accent: '`' },
+  Ŷ: { char: 'Y', accent: '^' },
+  Ÿ: { char: 'Y', accent: '¨' },
+  Ȳ: { char: 'Y', accent: '-' },
+  ñ: { char: 'n', accent: '~' },
+  Ñ: { char: 'N', accent: '~' },
+  ç: { char: 'c', accent: '˙' },
+  Ç: { char: 'C', accent: '˙' },
+  ṽ: { char: 'v', accent: '~' },
+  Ṽ: { char: 'V', accent: '~' },
+  ĵ: { char: 'j', accent: '^' },
+  Ĵ: { char: 'J', accent: '^' },
+  ź: { char: 'z', accent: '´' },
+  Ź: { char: 'Z', accent: '´' },
+  Ż: { char: 'Z', accent: '^' },
+  ż: { char: 'z', accent: '^' },
+  Ž: { char: 'Z', accent: 'ˇ' },
+  ž: { char: 'z', accent: 'ˇ' },
+  ẑ: { char: 'z', accent: 'ˆ' },
 };
 
 const accentToLTXCmd: Record<Accent, LTXAccentCMD> = {
@@ -248,7 +286,17 @@ type UppercaseLetter =
   | '\\Upsilon'
   | '\\Phi'
   | '\\Psi'
-  | '\\Omega';
+  | '\\Omega'
+  | '0'
+  | '1'
+  | '2'
+  | '3'
+  | '4'
+  | '5'
+  | '6'
+  | '7'
+  | '8'
+  | '9';
 type SpecialFontChar = {
   letter: UppercaseLetter;
   fontCmd: LTXFontCmds;
@@ -284,6 +332,16 @@ const specialFontChars: Record<string, SpecialFontChar> = {
   𝞆: { letter: 'X', fontCmd: 'mathbf' },
   𝐘: { letter: 'Y', fontCmd: 'mathbf' },
   𝐙: { letter: 'Z', fontCmd: 'mathbf' },
+  '𝟎': { letter: '0', fontCmd: 'mathbf' },
+  '𝟏': { letter: '1', fontCmd: 'mathbf' },
+  '𝟐': { letter: '2', fontCmd: 'mathbf' },
+  '𝟑': { letter: '3', fontCmd: 'mathbf' },
+  '𝟒': { letter: '4', fontCmd: 'mathbf' },
+  '𝟓': { letter: '5', fontCmd: 'mathbf' },
+  '𝟔': { letter: '6', fontCmd: 'mathbf' },
+  '𝟕': { letter: '7', fontCmd: 'mathbf' },
+  '𝟖': { letter: '8', fontCmd: 'mathbf' },
+  '𝟗': { letter: '9', fontCmd: 'mathbf' },
   // letter A mathit
   𝐴: { letter: 'A', fontCmd: 'mathit' },
   𝐵: { letter: 'B', fontCmd: 'mathit' },
@@ -339,6 +397,16 @@ const specialFontChars: Record<string, SpecialFontChar> = {
   𝕏: { letter: 'X', fontCmd: 'mathbb' },
   𝕐: { letter: 'Y', fontCmd: 'mathbb' },
   ℤ: { letter: 'Z', fontCmd: 'mathbb' },
+  '𝟘': { letter: '0', fontCmd: 'mathbb' },
+  '𝟙': { letter: '1', fontCmd: 'mathbb' },
+  '𝟚': { letter: '2', fontCmd: 'mathbb' },
+  '𝟛': { letter: '3', fontCmd: 'mathbb' },
+  '𝟜': { letter: '4', fontCmd: 'mathbb' },
+  '𝟝': { letter: '5', fontCmd: 'mathbb' },
+  '𝟞': { letter: '6', fontCmd: 'mathbb' },
+  '𝟟': { letter: '7', fontCmd: 'mathbb' },
+  '𝟠': { letter: '8', fontCmd: 'mathbb' },
+  '𝟡': { letter: '9', fontCmd: 'mathbb' },
   // letter A mathcal
   𝒜: { letter: 'A', fontCmd: 'mathcal' },
   𝓐: { letter: 'A', fontCmd: 'mathcal' },
@@ -355,6 +423,7 @@ const specialFontChars: Record<string, SpecialFontChar> = {
   𝒥: { letter: 'J', fontCmd: 'mathcal' },
   𝒦: { letter: 'K', fontCmd: 'mathcal' },
   ℒ: { letter: 'L', fontCmd: 'mathcal' },
+  𝓛: { letter: 'L', fontCmd: 'mathcal' },
   ℳ: { letter: 'M', fontCmd: 'mathcal' },
   𝒩: { letter: 'N', fontCmd: 'mathcal' },
   𝒪: { letter: 'O', fontCmd: 'mathcal' },
@@ -412,7 +481,9 @@ const specialFontChars: Record<string, SpecialFontChar> = {
   𝖧: { letter: 'H', fontCmd: 'mathsf' },
   𝖨: { letter: 'I', fontCmd: 'mathsf' },
   𝖩: { letter: 'J', fontCmd: 'mathsf' },
+  ȷ: { letter: 'J', fontCmd: 'mathsf' },
   𝖪: { letter: 'K', fontCmd: 'mathsf' },
+  Κ: { letter: 'K', fontCmd: 'mathsf' },
   𝖫: { letter: 'L', fontCmd: 'mathsf' },
   𝖬: { letter: 'M', fontCmd: 'mathsf' },
   𝖭: { letter: 'N', fontCmd: 'mathsf' },
@@ -426,6 +497,7 @@ const specialFontChars: Record<string, SpecialFontChar> = {
   𝖵: { letter: 'V', fontCmd: 'mathsf' },
   𝖶: { letter: 'W', fontCmd: 'mathsf' },
   𝖷: { letter: 'X', fontCmd: 'mathsf' },
+  Χ: { letter: 'X', fontCmd: 'mathsf' },
   𝖸: { letter: 'Y', fontCmd: 'mathsf' },
   𝖹: { letter: 'Z', fontCmd: 'mathsf' },
   // letter A mathtt

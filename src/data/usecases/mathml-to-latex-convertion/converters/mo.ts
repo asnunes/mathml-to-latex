@@ -1,7 +1,12 @@
 import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { normalizeWhiteSpaces } from '../../../helpers';
-import { allMathOperatorsByChar, allMathOperatorsByGlyph } from '../../../../syntax';
+import {
+  HashUTF8ToLtXConverter,
+  allMathOperatorsByChar,
+  allMathOperatorsByGlyph,
+  mathNumberByGlyph,
+} from '../../../../syntax';
 
 export class MO implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
@@ -30,7 +35,12 @@ class Operator {
   }
 
   private _operate(): string {
-    return this._findByCharacter() || this._findByGlyph() || this._value;
+    return (
+      this._findByCharacter() ||
+      this._findByGlyph() ||
+      this._findByNumber() ||
+      new HashUTF8ToLtXConverter().convert(this._value)
+    );
   }
 
   private _findByCharacter(): string | undefined {
@@ -39,5 +49,9 @@ class Operator {
 
   private _findByGlyph(): string | undefined {
     return allMathOperatorsByGlyph[this._value];
+  }
+
+  private _findByNumber(): string | undefined {
+    return mathNumberByGlyph[this._value];
   }
 }

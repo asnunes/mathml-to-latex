@@ -2099,7 +2099,7 @@ export const inputExpectedPairs = [
   },
   {
     input: '〗',
-    expected: '\\rangle',
+    expected: '\\)|',
     op: 'mo',
   },
   {
@@ -2464,12 +2464,12 @@ export const inputExpectedPairs = [
   },
   {
     input: '⟦',
-    expected: '\\llbracket',
+    expected: '\\(|',
     op: 'mo',
   },
   {
     input: '⟧',
-    expected: '\\rrbracket',
+    expected: '\\)|',
     op: 'mo',
   },
   {
@@ -2479,7 +2479,7 @@ export const inputExpectedPairs = [
   },
   {
     input: '‾',
-    expected: '\\bar',
+    expected: '\\overline',
     op: 'mo',
   },
   {
@@ -2589,7 +2589,7 @@ export const inputExpectedPairs = [
   },
   {
     input: '⎻',
-    expected: '\\overline',
+    expected: '-',
     op: 'mo',
   },
   {
@@ -2703,7 +2703,7 @@ export const inputExpectedPairs = [
   },
   {
     input: '¸',
-    expected: '.',
+    expected: ',',
     op: 'mo',
   },
   {
@@ -2713,7 +2713,7 @@ export const inputExpectedPairs = [
   },
   {
     input: '⦪',
-    expected: '\\llbracket',
+    expected: '\\measuredangle',
     op: 'mo',
   },
   {
@@ -2953,17 +2953,17 @@ export const inputExpectedPairs = [
   },
   {
     input: '⦫',
-    expected: '\\blacklozenge',
+    expected: '\\measuredangle',
     op: 'mo',
   },
   {
     input: '⦪',
-    expected: '\\llbracket',
+    expected: '\\measuredangle',
     op: 'mo',
   },
   {
     input: '⦩',
-    expected: '\\rrbracket',
+    expected: '\\measuredangle',
     op: 'mo',
   },
   {
@@ -3048,7 +3048,7 @@ export const inputExpectedPairs = [
   },
   {
     input: '⦩',
-    expected: '\\rrbracket',
+    expected: '\\measuredangle',
     op: 'mo',
   },
   {
@@ -3518,7 +3518,7 @@ export const inputExpectedPairs = [
   },
   {
     input: '⦁',
-    expected: '\\circ',
+    expected: '\\cdot',
     op: 'mo',
   },
   {
@@ -3531,4 +3531,601 @@ export const inputExpectedPairs = [
     expected: '\\times',
     op: 'mo',
   },
+  {
+    input: '&',
+    expected: '\\&',
+    op: 'mo',
+  },
+  {
+    input: '&',
+    expected: '\\&',
+    op: 'mi',
+  },
+  {
+    input: '‖',
+    expected: '\\parallel',
+    op: 'mo',
+  },
+  {
+    input: '‖',
+    expected: '\\parallel',
+    op: 'mi',
+  },
+  {
+    input: '│',
+    expected: '\\mid',
+    op: 'mo',
+  },
+  {
+    input: '│',
+    expected: '\\mid',
+    op: 'mi',
+  },
+  {
+    input: '%',
+    expected: '\\%',
+    op: 'mo',
+  },
+  {
+    input: '%',
+    expected: '\\%',
+    op: 'mi',
+  },
+  {
+    input: '“',
+    expected: '\\text{``}',
+    op: 'mo',
+  },
+  {
+    input: '“',
+    expected: '\\text{``}',
+    op: 'mi',
+  },
+  {
+    input: '”',
+    expected: '\\"',
+    op: 'mo',
+  },
+  {
+    input: '”',
+    expected: '\\"',
+    op: 'mi',
+  },
+  {
+    input: 'ñ',
+    expected: '\\tilde{n}',
+    op: 'mi',
+  },
+  {
+    input: '〈',
+    expected: '\\langle',
+    op: 'mo',
+  },
+  {
+    input: '〈',
+    expected: '\\langle',
+    op: 'mi',
+  },
+  {
+    input: '〉',
+    expected: '\\rangle',
+    op: 'mo',
+  },
+  {
+    input: '〉',
+    expected: '\\rangle',
+    op: 'mi',
+  },
+  {
+    input: '$',
+    expected: '\\$',
+    op: 'mo',
+  },
+  {
+    input: '$',
+    expected: '\\$',
+    op: 'mi',
+  },
+  {
+    input: '#',
+    expected: '\\#',
+    op: 'mo',
+  },
+  {
+    input: '#',
+    expected: '\\#',
+    op: 'mi',
+  },
+  {
+    input: '℃',
+    expected: '\\text{\\textdegree C}',
+    op: 'mo',
+  },
+  {
+    input: '℉',
+    expected: '\\text{\\textdegree F}',
+    op: 'mo',
+  },
+  {
+    input: '℃',
+    expected: '\\text{\\textdegree C}',
+    op: 'mi',
+  },
+  {
+    input: '℉',
+    expected: '\\text{\\textdegree F}',
+    op: 'mi',
+  },
+  {
+    input: '⟨',
+    expected: '\\langle',
+    op: 'mo',
+  },
+  {
+    input: '⟩',
+    expected: '\\rangle',
+    op: 'mo',
+  },
+  {
+    input: 'ṽ',
+    expected: '\\tilde{v}',
+    op: 'mi',
+  },
+  {
+    input: '⌊',
+    expected: '\\lfloor',
+    op: 'mo',
+  },
+  {
+    input: 'π',
+    expected: '\\pi',
+    op: 'mi',
+  },
+  {
+    input: '³',
+    expected: '^{3}',
+    op: 'mn',
+  },
+  {
+    input: '⁰',
+    expected: '^{0}',
+    op: 'mo',
+  },
+  {
+    input: '⁴',
+    expected: '^{4}',
+    op: 'mn',
+  },
+  {
+    input: '⁶',
+    expected: '^{6}',
+    op: 'mn',
+  },
+  {
+    input: '〗',
+    expected: '\\)|',
+    op: 'mo',
+  },
+  {
+    input: '⌋',
+    expected: '\\rfloor',
+    op: 'mo',
+  },
+  {
+    input: '█',
+    expected: '\\blacksquare',
+    op: 'mo',
+  },
+  {
+    input: 'ĵ',
+    expected: '\\hat{j}',
+    op: 'mi',
+  },
+  {
+    input: '¾',
+    expected: '\\dfrac{3}{4}',
+    op: 'mo',
+  },
+  {
+    input: '𝓛',
+    expected: '\\mathcal{L}',
+    op: 'mi',
+  },
+  {
+    input: '⟦',
+    expected: '\\(|',
+    op: 'mo',
+  },
+  {
+    input: '⟧',
+    expected: '\\)|',
+    op: 'mo',
+  },
+  {
+    input: '●',
+    expected: '\\circle',
+    op: 'mo',
+  },
+  {
+    input: '●',
+    expected: '\\circle',
+    op: 'mi',
+  },
+  {
+    input: '▫',
+    expected: '\\square',
+    op: 'mo',
+  },
+  {
+    input: '▫',
+    expected: '\\square',
+    op: 'mi',
+  },
+  {
+    input: '℧',
+    expected: '\\mho',
+    op: 'mo',
+  },
+  {
+    input: '℧',
+    expected: '\\mho',
+    op: 'mi',
+  },
+  {
+    input: 'ȷ',
+    expected: '\\mathsf{J}',
+    op: 'mi',
+  },
+  {
+    input: '⌈',
+    expected: '\\lceil',
+    op: 'mo',
+  },
+  {
+    input: '⌉',
+    expected: '\\rceil',
+    op: 'mi',
+  },
+  {
+    input: '⌉',
+    expected: '\\rceil',
+    op: 'mo',
+  },
+  {
+    input: 'ℇ',
+    expected: '\\varepsilon',
+    op: 'mi',
+  },
+  {
+    input: '⁸',
+    expected: '^{8}',
+    op: 'mn',
+  },
+  {
+    input: '⁷',
+    expected: '^{7}',
+    op: 'mn',
+  },
+  {
+    input: '⁴',
+    expected: '^{4}',
+    op: 'mn',
+  },
+  {
+    input: '𝟙',
+    expected: '\\mathbb{1}',
+    op: 'mi',
+  },
+  {
+    input: 'θ',
+    expected: '\\theta',
+    op: 'mi',
+  },
+  {
+    input: 'ẑ',
+    expected: '\\hat{z}',
+    op: 'mi',
+  },
+  {
+    input: 'ⅇ',
+    expected: '\\text{e}',
+    op: 'mi',
+  },
+  {
+    input: '∞',
+    expected: '\\infty',
+    op: 'mo',
+  },
+  {
+    input: 'Κ',
+    expected: '\\mathsf{K}',
+    op: 'mi',
+  },
+  {
+    input: 'ɼ',
+    expected: 'r',
+    op: 'mi',
+  },
+  {
+    input: '₁',
+    expected: '_{1}',
+    op: 'mn',
+  },
+  {
+    input: '₂',
+    expected: '_{2}',
+    op: 'mn',
+  },
+  {
+    input: '₃',
+    expected: '_{3}',
+    op: 'mn',
+  },
+  {
+    input: 'ω',
+    expected: '\\omega',
+    op: 'mi',
+  },
+  {
+    input: '↛',
+    expected: '\\nrightarrow',
+    op: 'mo',
+  },
+  {
+    input: '↛',
+    expected: '\\nrightarrow',
+    op: 'mi',
+  },
+  {
+    input: '∣',
+    expected: '\\mid',
+    op: 'mo',
+  },
+  {
+    input: '∣',
+    expected: '\\mid',
+    op: 'mi',
+  },
+  {
+    input: 'ˆ',
+    expected: '\\hat',
+    op: 'mo',
+  },
+  {
+    input: 'ˆ',
+    expected: '\\hat{}',
+    op: 'mi',
+  },
+  {
+    input: '‾',
+    expected: '\\overline',
+    op: 'mo',
+  },
+  {
+    input: '→',
+    expected: '\\rightarrow',
+    op: 'mo',
+  },
+  {
+    input: '→',
+    expected: '\\rightarrow',
+    op: 'mi',
+  },
+  {
+    input: '₀',
+    expected: '_{0}',
+    op: 'mn',
+  },
+  {
+    input: '‡',
+    expected: '\\ddagger',
+    op: 'mo',
+  },
+  {
+    input: '‡',
+    expected: '\\ddagger',
+    op: 'mi',
+  },
+  {
+    input: '・',
+    expected: '\\cdot',
+    op: 'mo',
+  },
+  {
+    input: '・',
+    expected: '\\cdot',
+    op: 'mi',
+  },
+  {
+    input: '⁵',
+    expected: '^{5}',
+    op: 'mn',
+  },
+  {
+    input: '▱',
+    expected: '\\square',
+    op: 'mo',
+  },
+  {
+    input: '▱',
+    expected: '\\square',
+    op: 'mi',
+  },
+  {
+    input: '∆',
+    expected: '\\Delta',
+    op: 'mo',
+  },
+  {
+    input: '∆',
+    expected: '\\Delta',
+    op: 'mi',
+  },
+  {
+    input: 'ἱ',
+    expected: 'i',
+    op: 'mi',
+  },
+  {
+    input: '∡',
+    expected: '\\measuredangle',
+    op: 'mo',
+  },
+  { input: 'ϒ', expected: '\\Upsilon', op: 'mi' },
+  { input: '↓', expected: '\\downarrow', op: 'mo' },
+  { input: '↓', expected: '\\downarrow', op: 'mi' },
+  { input: '↑', expected: '\\uparrow', op: 'mo' },
+  { input: '↑', expected: '\\uparrow', op: 'mi' },
+  { input: '»', expected: '\\gg', op: 'mo' },
+  { input: '⊤', expected: '\\top', op: 'mo' },
+  { input: '⊤', expected: '\\top', op: 'mi' },
+  { input: '⧸', expected: '/', op: 'mo' },
+  { input: '⧸', expected: '/', op: 'mi' },
+  { input: '𝛿', expected: '\\delta', op: 'mi' },
+  { input: '˳', expected: '\\cdot', op: 'mo' },
+  { input: '˳', expected: '\\cdot', op: 'mi' },
+  //ₙ
+  { input: 'ₙ', expected: '_{n}', op: 'mn' },
+  { input: 'ₙ', expected: '_{n}', op: 'mi' },
+  { input: 'ₙ', expected: '_{n}', op: 'mo' },
+  //β
+  { input: 'β', expected: '\\beta', op: 'mi' },
+  { input: 'β', expected: '\\beta', op: 'mo' },
+  //։
+  { input: '։', expected: ':', op: 'mo' },
+  { input: '։', expected: ':', op: 'mi' },
+  //⦪
+  { input: '⦪', expected: '\\measuredangle', op: 'mo' },
+  { input: '⦪', expected: '\\measuredangle', op: 'mi' },
+  //⦩
+  { input: '⦩', expected: '\\measuredangle', op: 'mo' },
+  { input: '⦩', expected: '\\measuredangle', op: 'mi' },
+  //⦫
+  { input: '⦫', expected: '\\measuredangle', op: 'mo' },
+  { input: '⦫', expected: '\\measuredangle', op: 'mi' },
+  //⦁
+  { input: '⦁', expected: '\\cdot', op: 'mo' },
+  { input: '⦁', expected: '\\cdot', op: 'mi' },
+  //ѳ
+  { input: 'ѳ', expected: '\\theta', op: 'mi' },
+  { input: 'ѳ', expected: '\\theta', op: 'mo' },
+  //⦢
+  { input: '⦢', expected: '\\measuredangle', op: 'mo' },
+  { input: '⦢', expected: '\\measuredangle', op: 'mi' },
+  //¸
+  { input: '¸', expected: ',', op: 'mo' },
+  { input: '¸', expected: ',', op: 'mi' },
+  //𝜙
+  { input: '𝜙', expected: '\\phi', op: 'mi' },
+  { input: '𝜙', expected: '\\phi', op: 'mo' },
+  //П
+  { input: 'П', expected: '\\prod', op: 'mi' },
+  { input: 'П', expected: '\\prod', op: 'mo' },
+  //α
+  { input: 'α', expected: '\\alpha', op: 'mi' },
+  { input: 'α', expected: '\\alpha', op: 'mo' },
+  //₆
+  { input: '₆', expected: '_{6}', op: 'mn' },
+  { input: '₆', expected: '_{6}', op: 'mi' },
+  { input: '₆', expected: '_{6}', op: 'mo' },
+  //о
+  { input: 'о', expected: 'o', op: 'mi' },
+  { input: 'о', expected: 'o', op: 'mo' },
+  //≈
+  { input: '≈', expected: '\\approx', op: 'mo' },
+  { input: '≈', expected: '\\approx', op: 'mi' },
+  //≤
+  { input: '≤', expected: '\\leq', op: 'mo' },
+  { input: '≤', expected: '\\leq', op: 'mi' },
+  //ђ
+  { input: 'ђ', expected: '\\hbar', op: 'mi' },
+  { input: 'ђ', expected: '\\hbar', op: 'mo' },
+  //Ʌ
+  { input: 'Ʌ', expected: '\\Lambda', op: 'mi' },
+  { input: 'Ʌ', expected: '\\Lambda', op: 'mo' },
+  //土
+  { input: '土', expected: '\\pm', op: 'mo' },
+  { input: '土', expected: '\\pm', op: 'mi' },
+  //⎼
+  { input: '⎼', expected: '-', op: 'mo' },
+  { input: '⎼', expected: '-', op: 'mi' },
+  //十
+  { input: '十', expected: '+', op: 'mo' },
+  { input: '十', expected: '+', op: 'mi' },
+  //γ
+  { input: 'γ', expected: '\\gamma', op: 'mi' },
+  { input: 'γ', expected: '\\gamma', op: 'mo' },
+  //≠
+  { input: '≠', expected: '\\neq', op: 'mo' },
+  { input: '≠', expected: '\\neq', op: 'mi' },
+  //←
+  { input: '←', expected: '\\leftarrow', op: 'mo' },
+  { input: '←', expected: '\\leftarrow', op: 'mi' },
+  //।
+  { input: '।', expected: '\\mid', op: 'mo' },
+  { input: '।', expected: '\\mid', op: 'mi' },
+  //€
+  { input: '€', expected: '\\euro', op: 'mo' },
+  { input: '€', expected: '\\euro', op: 'mi' },
+  //˘
+  { input: '˘', expected: '', op: 'mo' },
+  { input: '˘', expected: '', op: 'mi' },
+  //ρ
+  { input: 'ρ', expected: '\\rho', op: 'mi' },
+  { input: 'ρ', expected: '\\rho', op: 'mo' },
+  //ῡ
+  { input: 'ῡ', expected: '\\bar{u}', op: 'mi' },
+  { input: 'ῡ', expected: '\\bar{u}', op: 'mo' },
+  //∥
+  { input: '∥', expected: '\\parallel', op: 'mo' },
+  { input: '∥', expected: '\\parallel', op: 'mi' },
+  //↔
+  { input: '↔', expected: '\\leftrightarrow', op: 'mo' },
+  { input: '↔', expected: '\\leftrightarrow', op: 'mi' },
+  //√
+  { input: '√', expected: '\\sqrt{}', op: 'mo' },
+  { input: '√', expected: '\\sqrt{}', op: 'mi' },
+  //φ
+  { input: 'φ', expected: '\\varphi', op: 'mi' },
+  { input: 'φ', expected: '\\varphi', op: 'mo' },
+  //ȼ
+  { input: 'ȼ', expected: 'c', op: 'mi' },
+  { input: 'ȼ', expected: 'c', op: 'mo' },
+  //𝞮
+  { input: '𝞮', expected: '\\epsilon', op: 'mi' },
+  { input: '𝞮', expected: '\\epsilon', op: 'mo' },
+  //Δ
+  { input: 'Δ', expected: '\\Delta', op: 'mi' },
+  { input: 'Δ', expected: '\\Delta', op: 'mo' },
+  //·
+  { input: '·', expected: '\\cdot', op: 'mo' },
+  { input: '·', expected: '\\cdot', op: 'mi' },
+  //∅
+  { input: '∅', expected: '\\emptyset', op: 'mo' },
+  { input: '∅', expected: '\\emptyset', op: 'mi' },
+  //⦬
+  { input: '⦬', expected: '\\measuredangle', op: 'mo' },
+  { input: '⦬', expected: '\\measuredangle', op: 'mi' },
+  //⦮
+  { input: '⦮', expected: '\\measuredangle', op: 'mo' },
+  { input: '⦮', expected: '\\measuredangle', op: 'mi' },
+  //⦭
+  { input: '⦭', expected: '\\measuredangle', op: 'mo' },
+  { input: '⦭', expected: '\\measuredangle', op: 'mi' },
+  //«
+  { input: '«', expected: '\\ll', op: 'mo' },
+  { input: '«', expected: '\\ll', op: 'mi' },
+  //₈
+  { input: '₈', expected: '_{8}', op: 'mn' },
+  { input: '₈', expected: '_{8}', op: 'mi' },
+  { input: '₈', expected: '_{8}', op: 'mo' },
+  //Ȧ
+  { input: 'Ȧ', expected: '\\dot{A}', op: 'mi' },
+  { input: 'Ȧ', expected: '\\dot{A}', op: 'mo' },
+  //λ
+  { input: 'λ', expected: '\\lambda', op: 'mi' },
+  { input: 'λ', expected: '\\lambda', op: 'mo' },
+  //Χ
+  { input: 'Χ', expected: '\\mathsf{X}', op: 'mi' },
+  { input: 'Χ', expected: '\\mathsf{X}', op: 'mo' },
 ] as InputExpectedPair[];

@@ -1,7 +1,7 @@
 import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { normalizeWhiteSpaces } from '../../../helpers';
-import { allMathSymbolsByChar, allMathSymbolsByGlyph } from '../../../../syntax';
+import { allMathSymbolsByChar, allMathSymbolsByGlyph, mathNumberByGlyph } from '../../../../syntax';
 import { UTF8ToLtXConverter } from 'data/protocols';
 import { HashUTF8ToLtXConverter } from '../../../../syntax/utf8-converter';
 
@@ -78,7 +78,12 @@ class Character {
   }
 
   private _apply(): string {
-    return this._findByCharacter() || this._findByGlyph() || this._value;
+    return (
+      this._findByCharacter() ||
+      this._findByGlyph() ||
+      this._findByNumber() ||
+      new HashUTF8ToLtXConverter().convert(this._value)
+    );
   }
 
   private _findByCharacter(): string | undefined {
@@ -87,5 +92,9 @@ class Character {
 
   private _findByGlyph(): string | undefined {
     return allMathSymbolsByGlyph[this._value];
+  }
+
+  private _findByNumber(): string | undefined {
+    return mathNumberByGlyph[this._value];
   }
 }

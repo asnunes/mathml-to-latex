@@ -1,4 +1,4 @@
-import MathMLToLaTeX from '../src';
+import { MathMLToLaTeX } from '../src';
 import * as mathmlStrings from './mocks/mathmlStrings';
 import { InvalidNumberOfChildrenError } from '../src/data/errors/invalid-number-of-children';
 
@@ -1150,7 +1150,7 @@ describe('#convert', () => {
     for (const inputExpectedPair of mathmlStrings.inputExpectedPairs) {
       const { input, expected, op } = inputExpectedPair;
 
-      it(`should convert ${input} to ${expected}`, () => {
+      it(`should convert ${input} to ${expected} for tag ${op}`, () => {
         const mathml = `<math xmlns="http://www.w3.org/1998/Math/MathML"><${op}>${input}</${op}></math>`;
 
         const result = MathMLToLaTeX.convert(mathml);

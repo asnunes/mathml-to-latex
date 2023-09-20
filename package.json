@@ -1,7 +1,7 @@
 {
-  "name": "mathml-to-latex",
-  "version": "1.3.0",
-  "description": "A JavaScript tool to convert mathml string to LaTeX string",
+  "name": "pie-framework/mathml-to-latex",
+  "version": "1.3.1",
+  "description": "A JavaScript tool to convert mathml string to LaTeX string. This is a forked repo.",
   "main": "dist/bundle.min.js",
   "types": "dist/index.d.ts",
   "scripts": {

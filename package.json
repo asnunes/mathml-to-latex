@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/asnunes/mathml-to-latex.git"
+    "url": "git+https://github.com/pie-framework/mathml-to-latex.git"
   },
   "keywords": [
     "mathml",
@@ -27,9 +27,9 @@
   "author": "Alexandre Nunes",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/asnunes/mathml-to-latex/issues"
+    "url": "https://github.com/pie-framework/mathml-to-latex/issues"
   },
-  "homepage": "https://github.com/asnunes/mathml-to-latex#readme",
+  "homepage": "https://github.com/pie-framework/mathml-to-latex#readme",
   "devDependencies": {
     "@types/jest": "26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.12.0",

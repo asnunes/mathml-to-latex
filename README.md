@@ -19,8 +19,8 @@ yarn add mathml-to-latex
 ## Usage
 
 ```javascript
-import { Mathml2latex } from 'mathml-to-latex';
-// const { Mathml2latex } = require('mathml-to-latex');
+import { MathMLToLaTeX } from 'mathml-to-latex';
+// const { MathMLToLaTeX } = require('mathml-to-latex');
 
 const mathml = `
       <math>
@@ -32,13 +32,13 @@ const mathml = `
       </math>
       `;
 
-Mathml2latex.convert(mathml);
+MathMLToLaTeX.convert(mathml);
 // => a + b
 ```
 
 ```javascript
-import { Mathml2latex } from 'mathml-to-latex';
-// const { Mathml2latex } = require('mathml-to-latex');
+import { MathMLToLaTeX } from 'mathml-to-latex';
+// const { MathMLToLaTeX } = require('mathml-to-latex');
 
 const mathml = `
     <math>
@@ -61,7 +61,7 @@ const mathml = `
     </math>
     `;
 
-Mathml2latex.convert(mathml);
+MathMLToLaTeX.convert(mathml);
 // => A = \begin{bmatrix} x & y \\ z & w \end{bmatrix}
 ```
 

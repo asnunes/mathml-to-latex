@@ -1,7 +1,7 @@
 import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { normalizeWhiteSpaces } from '../../../helpers';
-import { mathNumberByGlyph } from '../../../../syntax';
+import { mathNumberByGlyph, mathNumberByGlyphSpecial } from '../../../../syntax';
 
 export class MN implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
@@ -12,7 +12,8 @@ export class MN implements ToLaTeXConverter {
 
   convert(): string {
     const normalizedValue = normalizeWhiteSpaces(this._mathmlElement.value).trim();
-    const convertedValue = mathNumberByGlyph[normalizedValue];
+    const mathOperator = mathNumberByGlyphSpecial[`"${normalizedValue}"`];
+    const convertedValue = mathOperator || mathNumberByGlyph[normalizedValue];
 
     return convertedValue || normalizedValue;
   }

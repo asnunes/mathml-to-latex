@@ -1,7 +1,13 @@
 import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { normalizeWhiteSpaces } from '../../../helpers';
-import { allMathSymbolsByChar, allMathSymbolsByGlyph, mathNumberByGlyph } from '../../../../syntax';
+import {
+  allMathSymbolsByChar,
+  allMathSymbolsByGlyph,
+  allMathSymbolsByGlyphSpecial,
+  mathNumberByGlyph,
+  mathNumberByGlyphSpecial,
+} from '../../../../syntax';
 import { UTF8ToLtXConverter } from 'data/protocols';
 import { HashUTF8ToLtXConverter } from '../../../../syntax/utf8-converter';
 
@@ -91,10 +97,14 @@ class Character {
   }
 
   private _findByGlyph(): string | undefined {
-    return allMathSymbolsByGlyph[this._value];
+    const mathOperator = allMathSymbolsByGlyphSpecial[`"${this._value}"`];
+
+    return mathOperator || allMathSymbolsByGlyph[this._value];
   }
 
   private _findByNumber(): string | undefined {
-    return mathNumberByGlyph[this._value];
+    const mathOperator = mathNumberByGlyphSpecial[`"${this._value}"`];
+
+    return mathOperator || mathNumberByGlyph[this._value];
   }
 }

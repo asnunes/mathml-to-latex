@@ -5,7 +5,7 @@ import {
   HashUTF8ToLtXConverter,
   allMathOperatorsByChar,
   allMathOperatorsByGlyph,
-  mathNumberByGlyph,
+  mathNumberByGlyph, allMathOperatorsByGlyphSpecial, mathNumberByGlyphSpecial,
 } from '../../../../syntax';
 
 export class MO implements ToLaTeXConverter {
@@ -48,10 +48,14 @@ class Operator {
   }
 
   private _findByGlyph(): string | undefined {
-    return allMathOperatorsByGlyph[this._value];
+    const mathOperator = allMathOperatorsByGlyphSpecial[`"${this._value}"`];
+
+    return mathOperator || allMathOperatorsByGlyph[this._value];
   }
 
   private _findByNumber(): string | undefined {
-    return mathNumberByGlyph[this._value];
+    const mathOperator = mathNumberByGlyphSpecial[`"${this._value}"`];
+
+    return mathOperator || mathNumberByGlyph[this._value];
   }
 }

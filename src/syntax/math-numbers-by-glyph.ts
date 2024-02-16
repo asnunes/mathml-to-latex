@@ -1,3 +1,8 @@
+export const mathNumberByGlyphSpecial: Record<string, string> = {
+  '"ⁿ"': '^{n}',
+  '"ₙ"': '_{n}',
+};
+
 export const mathNumberByGlyph: Record<string, string> = {
   '₀': '_{0}',
   '₁': '_{1}',
@@ -19,8 +24,6 @@ export const mathNumberByGlyph: Record<string, string> = {
   '⁷': '^{7}',
   '⁸': '^{8}',
   '⁹': '^{9}',
-  ⁿ: '^{n}',
-  ₙ: '_{n}',
   '⓪': '\\textcircled{0}',
   '①': '\\textcircled{1}',
   '②': '\\textcircled{2}',

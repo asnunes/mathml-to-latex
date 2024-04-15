@@ -23,6 +23,7 @@ export class XmlToMathMLAdapter {
 
   convert(xml: string): MathMLElement[] {
     this._xml = this._removeLineBreaks(xml);
+    this._xml = this._removeMsWordPrefixes(this._xml);
 
     return this._elementsConvertor.convert(this._mathMLElements);
   }
@@ -34,6 +35,11 @@ export class XmlToMathMLAdapter {
   private _removeLineBreaks(xml: string): string {
     const LINE_BREAK = /\n|\r\n|\r/g;
     return xml.replace(LINE_BREAK, '');
+  }
+
+  private _removeMsWordPrefixes(xml: string): string {
+    const MS_WORD_PREFIX = /mml:/g;
+    return xml.replace(MS_WORD_PREFIX, '');
   }
 
   private get _mathMLElements(): Element[] {

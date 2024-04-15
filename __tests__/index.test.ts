@@ -1159,4 +1159,12 @@ describe('#convert', () => {
       });
     }
   });
+
+  it('should remove ms word prefixes and convert tags as expected', () => {
+    const result = MathMLToLaTeX.convert(mathmlStrings.msWordInput);
+
+    expect(result).toBe(
+      'V_{i} \\frac{\\Delta C_{A , i}^{t}}{\\Delta t} = \\sum_{j = k}^{N} G_{i , j}^{D} \\left(C_{A , j} - C_{A , i}\\right)',
+    );
+  });
 });

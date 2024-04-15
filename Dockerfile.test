@@ -1,4 +1,4 @@
-FROM node:14.17
+FROM node:20.12.2
 WORKDIR /usr/src/mathml-to-latex
 RUN npm -g i npm
 COPY ./package*.json ./

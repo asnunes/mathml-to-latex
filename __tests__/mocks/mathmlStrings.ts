@@ -742,6 +742,51 @@ export const mfrac = `
   </math>
 </root>
 `;
+export const mtable = `
+<root>
+  <math>
+    <mrow>
+        <mo>(</mo>
+        <mtable>
+            <mtr>
+                <mtd>
+                    <mn>1</mn>
+                </mtd>
+                <mtd>
+                    <mn>2</mn>
+                </mtd>
+                <mtd>
+                    <mn>3</mn>
+                </mtd>
+            </mtr>
+            <mtr>
+                <mtd>
+                    <mn>4</mn>
+                </mtd>
+                <mtd>
+                    <mn>5</mn>
+                </mtd>
+                <mtd>
+                    <mn>6</mn>
+                </mtd>
+            </mtr>
+            <mtr>
+                <mtd>
+                    <mn>7</mn>
+                </mtd>
+                <mtd>
+                    <mn>8</mn>
+                </mtd>
+                <mtd>
+                    <mn>9</mn>
+                </mtd>
+            </mtr>
+        </mtable>
+        <mo>)</mo>
+    </mrow>
+  </math>
+</root>
+`;
 
 export const mfracWithMrow = `
 <root>

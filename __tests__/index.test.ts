@@ -1167,4 +1167,23 @@ describe('#convert', () => {
       'V_{i} \\frac{\\Delta C_{A , i}^{t}}{\\Delta t} = \\sum_{j = k}^{N} G_{i , j}^{D} \\left(C_{A , j} - C_{A , i}\\right)',
     );
   });
+  describe('A mtable convertion example', () => {
+    it('Mtable with many attributes', () => {
+      const mathml =
+        '<math xmlns="http://www.w3.org/1998/Math/MathML"><mtable columnwidth="3em 0.05em 3em 3em 3em 3em" columnspacing="0.0em" rowspacing="0.05ex" rowlines="solid" columnlines="solid" frame="solid" framespacing="0.0em 0ex"><mtr><mtd><mi>x</mi></mtd><mtd><mspace width="0.0em" height="2.5ex" depth="1.0ex"/></mtd><mtd><mo>&#x2212;</mo><mn>1</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mi>g</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mtd><mtd><mspace width="0.0em" height="2.5ex" depth="1.0ex"/></mtd><mtd><mn>6</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>2</mn></mtd><mtd><mo>&#x2212;</mo><mn>1</mn></mtd></mtr><mtr><mtd><msup><mi>g</mi><mo></mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mtd><mtd><mspace width="0.0em" height="2.5ex" depth="1.0ex"/></mtd><mtd><mo>&#x2212;</mo><mn>1</mn></mtd><mtd><mo>&#x2212;</mo><mn>7</mn></mtd><mtd><mo>&#x2212;</mo><mn>2</mn></mtd><mtd><mo>&#x2212;</mo><mn>3</mn></mtd></mtr></mtable></math>';
+      const result = MathMLToLaTeX.convert(mathml);
+      //console.log('result', result)
+      expect(result).toMatch(
+        '\\begin{array}{|c|c|c|c|c|c|}\\hline\\hspace{1.269cm}{x }&\\hspace{0.021150000000000002cm}{ }&\\hspace{1.269cm}{ - 1 }&\\hspace{1.269cm}{ 0 }&\\hspace{1.269cm}{ 1 }&\\hspace{1.269cm}{ 2 } \\rule{0pt}{0.5pt}\\\\ \\hline \\\\\\hspace{1.269cm}{ g \\left(\\right. x \\left.\\right) }&\\hspace{0.021150000000000002cm}{ }&\\hspace{1.269cm}{ 6 }&\\hspace{1.269cm}{ 4 }&\\hspace{1.269cm}{ 2 }&\\hspace{1.269cm}{ - 1 } \\rule{0pt}{0.5pt}\\\\ \\hline \\\\\\hspace{1.269cm}{ g^{} \\left(\\right. x \\left.\\right) }&\\hspace{0.021150000000000002cm}{ }&\\hspace{1.269cm}{ - 1 }&\\hspace{1.269cm}{ - 7 }&\\hspace{1.269cm}{ - 2 }&\\hspace{1.269cm}{ - 3} \\rule{0pt}{0.5pt}\\\\ \\hline\\end{array}',
+      );
+    });
+  });
+  it('add begin array at the front', () => {
+    const mathml = mathmlStrings.mtable;
+    const result = MathMLToLaTeX.convert(mathml);
+    console.log(result);
+    expect(result).toMatch(
+      '\\left(\\right. \\begin{array}{ccc}{1 }&{ 2 }&{ 3 } \\\\{ 4 }&{ 5 }&{ 6 } \\\\{ 7 }&{ 8 }&{ 9}\\end{array} \\left.\\right)',
+    );
+  });
 });

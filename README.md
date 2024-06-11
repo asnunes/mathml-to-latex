@@ -123,6 +123,6 @@ Package is also available directly in the browser through CDN:
 </html>
 ```
 
-Will output:
+Output:
 
 ![Browser DEMO](./docs/browser-demo.gif)

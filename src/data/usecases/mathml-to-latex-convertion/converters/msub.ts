@@ -26,7 +26,7 @@ export class MSub implements ToLaTeXConverter {
     const baseChildren = base.children;
     const baseStr = mathMLElementToLaTeXConverter(base).convert();
 
-    if (baseChildren.length === 1) {
+    if (baseChildren.length <= 1) {
       return baseStr;
     }
 

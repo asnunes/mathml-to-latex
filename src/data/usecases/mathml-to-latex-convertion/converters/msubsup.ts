@@ -16,18 +16,33 @@ export class MSubsup implements ToLaTeXConverter {
 
     if (childrenLength !== 3) throw new InvalidNumberOfChildrenError(name, 3, childrenLength);
 
-    const base = mathMLElementToLaTeXConverter(children[0]).convert();
-    const sub = mathMLElementToLaTeXConverter(children[1]).convert();
-    const sup = mathMLElementToLaTeXConverter(children[2]).convert();
+    const baseChild = children[0];
+    const subscriptChild = children[1];
+    const superscriptChild = children[2];
 
-    const wrappedSub = new BracketWrapper().wrap(sub);
-    const wrappedSup = new BracketWrapper().wrap(sup);
-
-    return `${this._wrapInParenthesisIfThereIsSpace(base)}_${wrappedSub}^${wrappedSup}`;
+    return `${this._handleBaseChild(baseChild)}_${this._handleSubscriptChild(subscriptChild)}^${this._handleSuperscriptChild(superscriptChild)}`;
   }
 
-  private _wrapInParenthesisIfThereIsSpace(str: string): string {
-    if (!str.match(/\s+/g)) return str;
-    return new ParenthesisWrapper().wrap(str);
+  private _handleBaseChild(base: MathMLElement): string {
+    const baseChildren = base.children;
+    const baseStr = mathMLElementToLaTeXConverter(base).convert();
+
+    if (baseChildren.length <= 1) {
+      return baseStr;
+    }
+
+    return new ParenthesisWrapper().wrapIfMoreThanOneChar(baseStr);
+  }
+
+  private _handleSubscriptChild(subscript: MathMLElement): string {
+    const subscriptStr = mathMLElementToLaTeXConverter(subscript).convert();
+
+    return new BracketWrapper().wrap(subscriptStr);
+  }
+
+  private _handleSuperscriptChild(superscript: MathMLElement): string {
+    const superscriptStr = mathMLElementToLaTeXConverter(superscript).convert();
+
+    return new BracketWrapper().wrap(superscriptStr);
   }
 }

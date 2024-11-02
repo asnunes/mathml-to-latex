@@ -1,5 +1,5 @@
 # TEST
-test_compose = docker-compose -f docker-compose.test.yml
+test_compose = docker compose -f docker-compose.test.yml
 
 .PRONY: test-build
 test-build:

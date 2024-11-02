@@ -25,7 +25,7 @@ describe('#convert', () => {
 
       const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toMatch('\\left(\\mathbb{R}\\right)^{n}');
+      expect(result).toMatch('\\mathbb{R}^{n}');
     });
   });
 
@@ -1110,7 +1110,7 @@ describe('#convert', () => {
 
       const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toBe('d = \\left(\\left(\\frac{q^{2} L}{2 \\pi \\epsilon_{0} m g}\\right)\\right)^{1 / 3}');
+      expect(result).toBe('d = \\left(\\frac{q^{2} L}{2 \\pi \\epsilon_{0} m g}\\right)^{1 / 3}');
     });
 
     it('should convert µ properly to \\mu', () => {

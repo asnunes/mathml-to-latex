@@ -1222,4 +1222,20 @@ describe('#convert', () => {
 
     expect(result).toBe(expectedLatex);
   });
+
+  it('should correctly convert mmultiscripts with empty mprescripts', () => {
+    const mathml = `
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mmultiscripts>
+          <mi mathvariant="normal">U</mi>
+          <mprescripts></mprescripts>
+          <mn>238</mn>
+        </mmultiscripts>
+      </math>
+    `;
+
+    const result = MathMLToLaTeX.convert(mathml);
+
+    expect(result).toBe('\\_{238}^{}U');
+  });
 });

@@ -4,3 +4,10 @@ export interface MathMLElement {
   readonly children: MathMLElement[];
   attributes: Record<string, string>;
 }
+
+export class VoidMathMLElement implements MathMLElement {
+  readonly name = 'void';
+  readonly value = '';
+  readonly children = [];
+  attributes = {};
+}

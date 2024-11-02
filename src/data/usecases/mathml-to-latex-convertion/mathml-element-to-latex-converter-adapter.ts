@@ -1,12 +1,12 @@
 import * as ToLatexConverters from './converters';
-import { MathMLElement } from '../../../data/protocols/mathml-element';
+import { MathMLElement, VoidMathMLElement } from '../../../data/protocols/mathml-element';
 import { ToLaTeXConverter, ToLaTeXConverterClass } from '../../../domain/usecases/to-latex-converter';
 
 export class MathMLElementToLatexConverterAdapter {
   private readonly _mathMLElement: MathMLElement;
 
   constructor(mathMLElement: MathMLElement) {
-    this._mathMLElement = mathMLElement;
+    this._mathMLElement = mathMLElement ?? new VoidMathMLElement();
   }
 
   toLatexConverter(): ToLaTeXConverter {
@@ -42,4 +42,5 @@ const fromMathMLElementToLatexConverter: Record<string, ToLaTeXConverterClass> =
   munder: ToLatexConverters.GenericUnderOver,
   mrow: ToLatexConverters.GenericSpacingWrapper,
   mpadded: ToLatexConverters.GenericSpacingWrapper,
+  void: ToLatexConverters.Void,
 };

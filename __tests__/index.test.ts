@@ -1165,4 +1165,61 @@ describe('#convert', () => {
       'V_{i} \\frac{\\Delta C_{A , i}^{t}}{\\Delta t} = \\sum_{j = k}^{N} G_{i , j}^{D} \\left(C_{A , j} - C_{A , i}\\right)',
     );
   });
+
+  it('should convert MathML without unnecessary delimiters and handle mtext spacing correctly', () => {
+    const mathml = `
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <msub>
+            <mtext>Required Value</mtext>
+            <mtext>other</mtext>
+          </msub>
+          <mo>≥</mo>
+          <mfrac>
+            <mrow>
+              <mn>21</mn>
+              <mi>f</mi>
+              <msup>
+                <mi>t</mi>
+                <mn>3</mn>
+              </msup>
+            </mrow>
+            <mrow>
+              <mi>A</mi>
+              <mi>C</mi>
+              <mi>H</mi>
+            </mrow>
+          </mfrac>
+          <mo>⋅</mo>
+          <mo fence="true">(</mo>
+          <mfrac>
+            <msub>
+              <mi>I</mi>
+              <mi>o</mi>
+            </msub>
+            <mrow>
+              <mn>1000</mn>
+              <msub>
+                <mi>B</mi>
+                <mrow>
+                  <mtext>Btu</mtext>
+                  <mi mathvariant="normal">/</mi>
+                  <mtext>h</mtext>
+                </mrow>
+              </msub>
+            </mrow>
+          </mfrac>
+          <mo fence="true">)</mo>
+        </mrow>
+      </semantics>
+    </math>
+    `;
+
+    const expectedLatex = `\\text{Required Value}_{\\text{other}} \\geq \\frac{21 f t^{3}}{A C H} \\cdot \\left(\\right. \\frac{I_{o}}{1000 B_{\\text{Btu} / \\text{h}}} \\left.\\right)`;
+
+    const result = MathMLToLaTeX.convert(mathml);
+
+    expect(result).toBe(expectedLatex);
+  });
 });

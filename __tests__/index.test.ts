@@ -1110,9 +1110,7 @@ describe('#convert', () => {
 
       const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toBe(
-        'd = \\left(\\left(\\frac{q^{2} L}{2 \\pi \\left(\\epsilon\\right)_{0} m g}\\right)\\right)^{1 / 3}',
-      );
+      expect(result).toBe('d = \\left(\\left(\\frac{q^{2} L}{2 \\pi \\epsilon_{0} m g}\\right)\\right)^{1 / 3}');
     });
 
     it('should convert µ properly to \\mu', () => {

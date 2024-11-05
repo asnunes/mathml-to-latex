@@ -1,4 +1,6 @@
-import { UTF8ToLtXConverter } from 'data/protocols';
+export interface UTF8ToLtXConverter {
+  convert(char: string): string;
+}
 
 /**
  * This class is used to convert some accents and special characters from utf-8 to latex math commands

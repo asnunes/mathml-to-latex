@@ -427,7 +427,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('a + 2 \\Longrightarrow b - 3');
+        expect(result).toBe('a + 2 \\Longrightarrow b - 3');
       });
     });
 
@@ -437,7 +437,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('a + 2 \\Longrightarrow b - 3');
+        expect(result).toBe('a + 2 \\Longrightarrow b - 3 \\Longrightarrow a + b');
       });
     });
 
@@ -447,7 +447,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('a + 2 \\Longrightarrow b - 3');
+        expect(result).toBe('a + 2 \\Longrightarrow b - 3 \\Longrightarrow a + b');
       });
     });
 

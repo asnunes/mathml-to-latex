@@ -2811,7 +2811,7 @@ export const inputExpectedPairs = [
   },
   {
     input: 'ő',
-    expected: '\\ddot{o}',
+    expected: '\\H{o}',
     op: 'mi',
   },
   {
@@ -3311,7 +3311,7 @@ export const inputExpectedPairs = [
   },
   {
     input: 'Ú',
-    expected: '\\grave{U}',
+    expected: '\\acute{U}',
     op: 'mi',
   },
   {

@@ -261,6 +261,14 @@ describe('#convert', () => {
 
           expect(result).toMatch('\\left(3217\\right)');
         });
+
+        it('should not add comma to pmatrix based on mfenced', () => {
+          const mathml = mathmlStrings.mfencedWithEmptySeparatorAndPmatrix;
+
+          const result = MathMLToLaTeX.convert(mathml);
+
+          expect(result).toMatch('\\begin{pmatrix} x_{1} & A \\\\ x_{2} & B \\end{pmatrix}');
+        });
       });
     });
 

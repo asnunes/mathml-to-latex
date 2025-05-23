@@ -302,6 +302,23 @@ export const mfencedWithEmptySeparator = `
 </root>
 `;
 
+export const mfencedWithEmptySeparatorAndPmatrix = `
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mfenced open="(" close=")" separators="">
+    <mtable>
+      <mtr>
+        <mtd><msub><mi>x</mi><mn>1</mn></msub></mtd>
+        <mtd><mi>A</mi></mtd>
+      </mtr>
+      <mtr>
+        <mtd><msub><mi>x</mi><mn>2</mn></msub></mtd>
+        <mtd><mi>B</mi></mtd>
+      </mtr>
+    </mtable>
+  </mfenced>
+</math>
+`;
+
 export const mfencedWithSeparator = `
 <root>
   <math>

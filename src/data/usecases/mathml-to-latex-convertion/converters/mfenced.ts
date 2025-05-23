@@ -46,7 +46,7 @@ class Vector {
   }
 
   apply(latexContents: string[]): string {
-    const contentWithoutWrapper = JoinWithManySeparators.join(latexContents, this._separators);
+    const contentWithoutWrapper = JoinWithManySeparators.join(latexContents, this._separators, ',');
 
     return new GenericWrapper(this._open, this._close).wrap(contentWithoutWrapper);
   }

@@ -276,6 +276,19 @@ export const mfencedWithWrappedContent = `
 </root>
 `;
 
+export const mfencedWithNoSeparator = `
+<root>
+  <math>
+  <mfenced>
+    <mn>3</mn>
+    <mn>2</mn>
+    <mn>1</mn>
+    <mn>7</mn>
+  </mfenced>
+  </math>
+</root>
+`;
+
 export const mfencedWithEmptySeparator = `
 <root>
   <math>

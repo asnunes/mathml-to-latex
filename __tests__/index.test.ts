@@ -223,9 +223,9 @@ describe('#convert', () => {
         });
       });
 
-      describe('with four contents with separator attribute as empty string', () => {
+      describe('with four contents with no separator attribute', () => {
         it('converts mfenced wrapping it content inside parentheses and joining using commas', () => {
-          const mathml = mathmlStrings.mfencedWithEmptySeparator;
+          const mathml = mathmlStrings.mfencedWithNoSeparator;
 
           const result = MathMLToLaTeX.convert(mathml);
 
@@ -250,6 +250,16 @@ describe('#convert', () => {
           const result = MathMLToLaTeX.convert(mathml);
 
           expect(result).toMatch('\\left(3;2.1.7\\right)');
+        });
+      });
+
+      describe('with explicity empty separator', () => {
+        it('converts mfenced wrapping it content inside parentheses and joining using empty string', () => {
+          const mathml = mathmlStrings.mfencedWithEmptySeparator;
+
+          const result = MathMLToLaTeX.convert(mathml);
+
+          expect(result).toMatch('\\left(3217\\right)');
         });
       });
     });

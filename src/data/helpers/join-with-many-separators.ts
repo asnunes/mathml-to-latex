@@ -6,7 +6,8 @@ export class JoinWithManySeparators {
   }
 
   static join(arr: string[], separators: string[], defaultSeparator: string = ''): string {
-    const effectiveSeparators = separators.length > 0 ? separators : defaultSeparator ? [defaultSeparator] : [];
+    const effectiveSeparators =
+      separators.length > 0 ? separators : defaultSeparator !== undefined ? [defaultSeparator] : [];
     return new JoinWithManySeparators(effectiveSeparators)._join(arr);
   }
 

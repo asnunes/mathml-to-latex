@@ -253,7 +253,7 @@ describe('#convert', () => {
         });
       });
 
-      describe('with explicity empty separator', () => {
+      describe('with explicitly empty separator', () => {
         it('converts mfenced wrapping it content inside parentheses and joining using empty string', () => {
           const mathml = mathmlStrings.mfencedWithEmptySeparator;
 

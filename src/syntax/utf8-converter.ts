@@ -91,7 +91,8 @@ type LTXAccentCMD =
   | 'dot'
   | 'mathring'
   | 'bar'
-  | 'vec';
+  | 'vec'
+  | 'H';
 
 const vowelsWithAccents: Record<string, AccentChar> = {
   á: { char: 'a', accent: '´' },
@@ -234,15 +235,15 @@ const vowelsWithAccents: Record<string, AccentChar> = {
 };
 
 const accentToLTXCmd: Record<Accent, LTXAccentCMD> = {
-  '´': 'grave',
-  '`': 'acute',
+  '´': 'acute',
+  '`': 'grave',
   '^': 'hat',
   '~': 'tilde',
   '¨': 'ddot',
   '˚': 'mathring',
   '˘': 'breve',
   ˇ: 'check',
-  '˝': 'ddot',
+  '˝': 'H',
   '˙': 'dot',
   '-': 'bar',
   ˆ: 'hat',

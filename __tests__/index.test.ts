@@ -404,7 +404,7 @@ describe('#convert', () => {
     });
 
     describe('containing three children', () => {
-      it('throws InvalidNumberOfChildrenError Error', () => {
+      it('throws InvalidNumberOfChildrenError', () => {
         const mathml = mathmlStrings.mfracWithThreeChildren;
 
         const result = () => MathMLToLaTeX.convert(mathml);
@@ -1127,6 +1127,32 @@ describe('#convert', () => {
       const result = MathMLToLaTeX.convert(mathml);
 
       expect(result).toBe('x');
+    });
+  });
+
+  describe('given math string with mspace tag', () => {
+    it('should convert mspace with linebreak="newline" to LaTeX line break', () => {
+      const mathml = `<math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mfrac><mn>1</mn><mn>2</mn></mfrac>
+        <mspace linebreak="newline"/>
+        <msqrt><mn>10</mn></msqrt>
+      </math>`;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\frac{1}{2} \\\\ \\sqrt{10}');
+    });
+
+    it('should convert mspace without linebreak attribute to regular space', () => {
+      const mathml = `<math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>a</mi>
+        <mspace/>
+        <mi>b</mi>
+      </math>`;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('a b');
     });
   });
 

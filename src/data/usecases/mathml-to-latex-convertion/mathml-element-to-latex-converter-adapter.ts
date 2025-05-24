@@ -41,6 +41,7 @@ const fromMathMLElementToLatexConverter: Record<string, ToLaTeXConverterClass> =
   mover: ToLatexConverters.GenericUnderOver,
   munder: ToLatexConverters.GenericUnderOver,
   mrow: ToLatexConverters.MRow,
+  mspace: ToLatexConverters.MSpace,
   mpadded: ToLatexConverters.GenericSpacingWrapper,
   void: ToLatexConverters.Void,
 };

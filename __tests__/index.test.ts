@@ -223,9 +223,9 @@ describe('#convert', () => {
         });
       });
 
-      describe('with four contents with separator attribute as empty string', () => {
+      describe('with four contents with no separator attribute', () => {
         it('converts mfenced wrapping it content inside parentheses and joining using commas', () => {
-          const mathml = mathmlStrings.mfencedWithEmptySeparator;
+          const mathml = mathmlStrings.mfencedWithNoSeparator;
 
           const result = MathMLToLaTeX.convert(mathml);
 
@@ -250,6 +250,32 @@ describe('#convert', () => {
           const result = MathMLToLaTeX.convert(mathml);
 
           expect(result).toMatch('\\left(3;2.1.7\\right)');
+        });
+      });
+
+      describe('with explicitly empty separator', () => {
+        it('converts mfenced wrapping it content inside parentheses and joining using empty string', () => {
+          const mathml = mathmlStrings.mfencedWithEmptySeparator;
+
+          const result = MathMLToLaTeX.convert(mathml);
+
+          expect(result).toMatch('\\left(3217\\right)');
+        });
+
+        it('should not add comma to pmatrix based on mfenced', () => {
+          const mathml = mathmlStrings.mfencedWithEmptySeparatorAndPmatrix;
+
+          const result = MathMLToLaTeX.convert(mathml);
+
+          expect(result).toMatch('\\begin{pmatrix} x_{1} & A \\\\ x_{2} & B \\end{pmatrix}');
+        });
+
+        it('should not add comma to linear system based on mfenced', () => {
+          const mathml = mathmlStrings.mtableWithEmptySeparatorAndLinearSystem;
+
+          const result = MathMLToLaTeX.convert(mathml);
+
+          expect(result).toMatch('\\begin{cases} x + y = 1 \\\\ x - y = 3 \\end{cases}');
         });
       });
     });

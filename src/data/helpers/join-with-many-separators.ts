@@ -5,8 +5,10 @@ export class JoinWithManySeparators {
     this._separators = separators;
   }
 
-  static join(arr: string[], separators: string[]): string {
-    return new JoinWithManySeparators(separators)._join(arr);
+  static join(arr: string[], separators: string[], defaultSeparator: string = ''): string {
+    const effectiveSeparators =
+      separators.length > 0 ? separators : defaultSeparator !== undefined ? [defaultSeparator] : [];
+    return new JoinWithManySeparators(effectiveSeparators)._join(arr);
   }
 
   private _join(arr: string[]): string {
@@ -17,7 +19,7 @@ export class JoinWithManySeparators {
   }
 
   private _get(index: number) {
-    if (this._separators[index]) return this._separators[index];
-    return this._separators.length > 0 ? this._separators[this._separators.length - 1] : ',';
+    if (!this._separators[index]) return this._separators[this._separators.length - 1];
+    return this._separators[index];
   }
 }

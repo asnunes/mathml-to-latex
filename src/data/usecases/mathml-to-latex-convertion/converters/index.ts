@@ -20,4 +20,5 @@ export { MTable } from './mtable';
 export { MTr } from './mtr';
 export { GenericSpacingWrapper } from './generic-spacing-wrapper';
 export { GenericUnderOver } from './generic-under-over';
+export { MRow } from './mrow';
 export { Void } from './void';

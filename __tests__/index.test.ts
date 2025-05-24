@@ -269,6 +269,14 @@ describe('#convert', () => {
 
           expect(result).toMatch('\\begin{pmatrix} x_{1} & A \\\\ x_{2} & B \\end{pmatrix}');
         });
+
+        it('should not add comma to linear system based on mfenced', () => {
+          const mathml = mathmlStrings.mtableWithEmptySeparatorAndLinearSystem;
+
+          const result = MathMLToLaTeX.convert(mathml);
+
+          expect(result).toMatch('\\begin{cases} x + y = 1 \\\\ x - y = 3 \\end{cases}');
+        });
       });
     });
 

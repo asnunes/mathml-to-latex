@@ -319,6 +319,35 @@ export const mfencedWithEmptySeparatorAndPmatrix = `
 </math>
 `;
 
+export const mtableWithEmptySeparatorAndLinearSystem = `
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow data-mjx-texclass="INNER">
+    <mo data-mjx-texclass="OPEN">{</mo>
+    <mtable columnalign="left left" columnspacing="1em" rowspacing=".2em">
+      <mtr>
+        <mtd>
+          <mi>x</mi>
+          <mo>+</mo>
+          <mi>y</mi>
+          <mo>=</mo>
+          <mn>1</mn>
+        </mtd>
+      </mtr>
+      <mtr>
+        <mtd>
+          <mi>x</mi>
+          <mo>−</mo>
+          <mi>y</mi>
+          <mo>=</mo>
+          <mn>3</mn>
+        </mtd>
+      </mtr>
+    </mtable>
+    <mo data-mjx-texclass="CLOSE" fence="true" stretchy="true" symmetric="true"></mo>
+  </mrow>
+</math>
+`;
+
 export const mfencedWithSeparator = `
 <root>
   <math>

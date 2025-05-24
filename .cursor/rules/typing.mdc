@@ -4,5 +4,5 @@ globs:
 alwaysApply: true
 ---
 - Always place type/interface definition at the bottom of the file
-- Always place private methods bellow public ones
-- Unless necessary, place not exported code bellow the exported ones
+- Always place private methods below public ones
+- Unless necessary, place not exported code below the exported ones

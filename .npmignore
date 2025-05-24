@@ -3,6 +3,7 @@ coverage
 node_modules
 src
 jest.config.js
+docs
 tsconfig.json
 .eslintignore
 .eslintrc.js
@@ -13,6 +14,7 @@ tsconfig.json
 .prettierrc.js
 .tool-versions
 .vscode
+.cursor
 Dockerfile*
 docker-compose*
 .github

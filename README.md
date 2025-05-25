@@ -79,7 +79,7 @@ Package is also available directly in the browser through CDN:
     <!-- Including Tailwind CSS just for styling -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet" />
     <!-- Including mathml-to-latex library -->
-    <script src="https://cdn.jsdelivr.net/npm/mathml-to-latex@1.3.0/dist/bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathml-to-latex@1.5.0/dist/bundle.min.js"></script>
   </head>
   <body class="bg-blue-50 h-screen flex flex-col items-center justify-center">
     <h1 class="text-2xl font-bold mb-4">MathML to LaTeX Converter</h1>

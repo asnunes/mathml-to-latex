@@ -342,6 +342,68 @@ describe('#convert', () => {
           });
         });
       });
+    });
+
+    describe('given math string with mo delimiter matrix patterns', () => {
+      describe('with | delimiters directly in math element', () => {
+        it('returns a vmatrix representation in latex', () => {
+          const mathml = mathmlStrings.moVmatrixPattern;
+
+          const result = MathMLToLaTeX.convert(mathml);
+
+          expect(result).toBe('\\begin{vmatrix} 2 & & \\\\ & 3 & \\\\ & 3 & \\end{vmatrix}');
+        });
+      });
+
+      describe('with | delimiters in mrow wrapper', () => {
+        it('returns a vmatrix representation in latex', () => {
+          const mathml = mathmlStrings.mrowVmatrixPattern;
+
+          const result = MathMLToLaTeX.convert(mathml);
+
+          expect(result).toBe('\\begin{vmatrix} 1 & 2 \\\\ 3 & 4 \\end{vmatrix}');
+        });
+      });
+
+      describe('with ( ) delimiters directly in math element', () => {
+        it('returns a pmatrix representation in latex', () => {
+          const mathml = mathmlStrings.moPmatrixPattern;
+
+          const result = MathMLToLaTeX.convert(mathml);
+
+          expect(result).toBe('\\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}');
+        });
+      });
+
+      describe('with [ ] delimiters directly in math element', () => {
+        it('returns a bmatrix representation in latex', () => {
+          const mathml = mathmlStrings.moBmatrixPattern;
+
+          const result = MathMLToLaTeX.convert(mathml);
+
+          expect(result).toBe('\\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix}');
+        });
+      });
+
+      describe('with { } delimiters directly in math element', () => {
+        it('returns a Bmatrix representation in latex', () => {
+          const mathml = mathmlStrings.moBigBmatrixPattern;
+
+          const result = MathMLToLaTeX.convert(mathml);
+
+          expect(result).toBe('\\begin{Bmatrix} 1 & 2 \\\\ 3 & 4 \\end{Bmatrix}');
+        });
+      });
+
+      describe('with | delimiters in mpadded wrapper', () => {
+        it('returns a vmatrix representation in latex', () => {
+          const mathml = mathmlStrings.mpaddedVmatrixPattern;
+
+          const result = MathMLToLaTeX.convert(mathml);
+
+          expect(result).toBe('\\begin{vmatrix} 5 & 6 \\end{vmatrix}');
+        });
+      });
 
       describe('given math string with partial function', () => {
         it('returns latex partial function representation', () => {

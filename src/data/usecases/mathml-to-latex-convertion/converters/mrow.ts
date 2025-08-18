@@ -1,6 +1,6 @@
 import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
-import { mathMLElementToLaTeXConverter } from '../../../helpers';
+import { mathMLElementToLaTeXConverter, MatrixPatternDetector } from '../../../helpers';
 
 export class MRow implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
@@ -13,6 +13,12 @@ export class MRow implements ToLaTeXConverter {
     // Check if this is a linear system pattern: { + mtable + empty closing operator
     if (this._isLinearSystemPattern()) {
       return this._convertAsLinearSystem();
+    }
+
+    // Check if this is a matrix pattern: delimiter + mtable + delimiter
+    const matrixDetector = new MatrixPatternDetector(this._mathmlElement);
+    if (matrixDetector.isMatrixPattern()) {
+      return matrixDetector.convertAsMatrix();
     }
 
     return this._mathmlElement.children
@@ -50,4 +56,5 @@ export class MRow implements ToLaTeXConverter {
 
     return `\\begin{cases} ${tableContent} \\end{cases}`;
   }
+
 }

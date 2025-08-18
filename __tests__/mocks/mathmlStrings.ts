@@ -511,6 +511,123 @@ export const mfencedAsMatrix = `
 </root>
 `;
 
+// Matrix patterns with mo delimiters (GitHub issue #41)
+export const moVmatrixPattern = `
+<root>
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mo>|</mo>
+    <mtable>
+      <mtr>
+        <mtd><mn>2</mn></mtd>
+        <mtd/><mtd/>
+      </mtr>
+      <mtr>
+        <mtd/><mtd><mn>3</mn></mtd><mtd/>
+      </mtr>
+      <mtr>
+        <mtd/><mtd><mn>3</mn></mtd><mtd/>
+      </mtr>
+    </mtable>
+    <mo>|</mo>
+  </math>
+</root>
+`;
+
+export const mrowVmatrixPattern = `
+<root>
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mrow>
+      <mo>|</mo>
+      <mtable>
+        <mtr>
+          <mtd><mn>1</mn></mtd>
+          <mtd><mn>2</mn></mtd>
+        </mtr>
+        <mtr>
+          <mtd><mn>3</mn></mtd>
+          <mtd><mn>4</mn></mtd>
+        </mtr>
+      </mtable>
+      <mo>|</mo>
+    </mrow>
+  </math>
+</root>
+`;
+
+export const moPmatrixPattern = `
+<root>
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mo>(</mo>
+    <mtable>
+      <mtr>
+        <mtd><mn>1</mn></mtd>
+        <mtd><mn>2</mn></mtd>
+      </mtr>
+      <mtr>
+        <mtd><mn>3</mn></mtd>
+        <mtd><mn>4</mn></mtd>
+      </mtr>
+    </mtable>
+    <mo>)</mo>
+  </math>
+</root>
+`;
+
+export const moBmatrixPattern = `
+<root>
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mo>[</mo>
+    <mtable>
+      <mtr>
+        <mtd><mn>1</mn></mtd>
+        <mtd><mn>2</mn></mtd>
+      </mtr>
+      <mtr>
+        <mtd><mn>3</mn></mtd>
+        <mtd><mn>4</mn></mtd>
+      </mtr>
+    </mtable>
+    <mo>]</mo>
+  </math>
+</root>
+`;
+
+export const moBigBmatrixPattern = `
+<root>
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mo>{</mo>
+    <mtable>
+      <mtr>
+        <mtd><mn>1</mn></mtd>
+        <mtd><mn>2</mn></mtd>
+      </mtr>
+      <mtr>
+        <mtd><mn>3</mn></mtd>
+        <mtd><mn>4</mn></mtd>
+      </mtr>
+    </mtable>
+    <mo>}</mo>
+  </math>
+</root>
+`;
+
+export const mpaddedVmatrixPattern = `
+<root>
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mpadded>
+      <mo>|</mo>
+      <mtable>
+        <mtr>
+          <mtd><mn>5</mn></mtd>
+          <mtd><mn>6</mn></mtd>
+        </mtr>
+      </mtable>
+      <mo>|</mo>
+    </mpadded>
+  </math>
+</root>
+`;
+
 export const mfencedAsPartialFunction = `
 <root>
   <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">

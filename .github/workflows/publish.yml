@@ -1,11 +1,15 @@
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 name: Publish
 jobs:
   publish:
     runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      contents: read
     strategy:
       matrix:
         node-version: [24.x]
@@ -15,6 +19,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
+
+      # Trusted Publishing (OIDC) requires npm >= 11.5.1
+      - name: Update npm
+        run: npm install -g npm@latest
 
       - name: Dependencies installation
         run: npm install
@@ -24,8 +33,6 @@ jobs:
 
       - name: Build
         run: npm run build
+
       - name: Publish
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          access: public
+        run: npm publish --access public

@@ -1,6 +1,6 @@
 import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
-import { normalizeWhiteSpaces } from '../../../helpers';
+import { normalizeWhiteSpaces, ownLookup } from '../../../helpers';
 import { allMathSymbolsByChar, allMathSymbolsByGlyph, mathNumberByGlyph } from '../../../../syntax';
 import { UTF8ToLtXConverter } from 'data/protocols';
 import { HashUTF8ToLtXConverter } from '../../../../syntax/utf8-converter';
@@ -102,14 +102,14 @@ class Character {
   }
 
   private _findByCharacter(): string | undefined {
-    return allMathSymbolsByChar[this._value];
+    return ownLookup(allMathSymbolsByChar, this._value);
   }
 
   private _findByGlyph(): string | undefined {
-    return allMathSymbolsByGlyph[this._value];
+    return ownLookup(allMathSymbolsByGlyph, this._value);
   }
 
   private _findByNumber(): string | undefined {
-    return mathNumberByGlyph[this._value];
+    return ownLookup(mathNumberByGlyph, this._value);
   }
 }

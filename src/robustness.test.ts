@@ -90,4 +90,14 @@ describe('#convert security and robustness', () => {
       expect(MathMLToLaTeX.convert(`<math><mi>${token}</mi></math>`)).toBe(token);
     });
   });
+
+  describe('given input with no recoverable math', () => {
+    it.each([
+      ['unparseable garbage', 'garbage <<< not xml'],
+      ['markup without a math element', '<div><span>no math here</span></div>'],
+    ])('returns an empty string for %s', (_name, input) => {
+      expect(() => MathMLToLaTeX.convert(input)).not.toThrow();
+      expect(MathMLToLaTeX.convert(input)).toBe('');
+    });
+  });
 });

@@ -47,4 +47,28 @@ describe('mi (integration)', () => {
   ])('converts $name', ({ mathml, latex }) => {
     expect(MathMLToLaTeX.convert(mathml)).toBe(latex);
   });
+
+  it.each([
+    { variant: 'bold', latex: '\\mathbf{x}' },
+    { variant: 'italic', latex: '\\mathit{x}' },
+    { variant: 'bold-italic', latex: '\\mathbf{\\mathit{x}}' },
+    { variant: 'bold-fraktur', latex: '\\mathbf{\\mathfrak{x}}' },
+    { variant: 'script', latex: '\\mathcal{x}' },
+    { variant: 'bold-script', latex: '\\mathbf{\\mathcal{x}}' },
+    { variant: 'fraktur', latex: '\\mathfrak{x}' },
+    { variant: 'sans-serif', latex: '\\mathsf{x}' },
+    { variant: 'bold-sans-serif', latex: '\\mathbf{\\mathsf{x}}' },
+    { variant: 'sans-serif-italic', latex: '\\mathsf{\\mathit{x}}' },
+    { variant: 'sans-serif-bold-italic', latex: '\\mathbf{\\mathsf{\\mathit{x}}}' },
+    { variant: 'monospace', latex: '\\mathtt{x}' },
+  ])('applies the $variant mathvariant', ({ variant, latex }) => {
+    expect(MathMLToLaTeX.convert(`<math><mi mathvariant="${variant}">x</mi></math>`)).toBe(latex);
+  });
+
+  it.each([
+    { name: 'an accented character', mathml: '<math><mi>á</mi></math>', latex: '\\acute{a}' },
+    { name: 'a unicode math-alphanumeric character', mathml: '<math><mi>𝐀</mi></math>', latex: '\\mathbf{A}' },
+  ])('converts $name to its LaTeX command', ({ mathml, latex }) => {
+    expect(MathMLToLaTeX.convert(mathml)).toBe(latex);
+  });
 });

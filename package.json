@@ -24,6 +24,7 @@
     "watch": "tsc --noEmit -w",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "test": "jest --passWithNoTests --noStackTrace --runInBand",
+    "test:coverage": "jest --coverage --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:watch": "npm run test -- --watch"
   },

@@ -981,7 +981,7 @@ describe('#convert', () => {
 
         const result = () => MathMLToLaTeX.convert(mathml);
 
-        expect(result).toThrowError(new InvalidNumberOfChildrenError('mover', 2, 3));
+        expect(result).toThrow(new InvalidNumberOfChildrenError('mover', 2, 3));
       });
     });
   });

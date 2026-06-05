@@ -343,4 +343,18 @@ describe('mfenced (integration)', () => {
   ])('$name', ({ mathml, latex }) => {
     expect(MathMLToLaTeX.convert(mathml)).toBe(latex);
   });
+
+  it.each([
+    { name: 'curly fences as a Bmatrix', open: '{', close: '}', env: 'Bmatrix' },
+    { name: 'pipe fences as a vmatrix', open: '|', close: '|', env: 'vmatrix' },
+    { name: 'double-pipe fences as a Vmatrix', open: '||', close: '||', env: 'Vmatrix' },
+  ])('renders an mtable with $name', ({ open, close, env }) => {
+    const mathml = `<math><mfenced open="${open}" close="${close}"><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable></mfenced></math>`;
+    expect(MathMLToLaTeX.convert(mathml)).toBe(`\\begin{${env}} 1 & 2 \\\\ 3 & 4 \\end{${env}}`);
+  });
+
+  it('renders an mtable with mismatched fences as a wrapped generic matrix', () => {
+    const mathml = `<math><mfenced open="[" close="}"><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable></mfenced></math>`;
+    expect(MathMLToLaTeX.convert(mathml)).toBe('\\left[\\begin{matrix} 1 & 2 \\\\ 3 & 4 \\end{matrix}\\right}');
+  });
 });

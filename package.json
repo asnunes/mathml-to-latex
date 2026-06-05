@@ -2,11 +2,25 @@
   "name": "mathml-to-latex",
   "version": "1.5.0",
   "description": "A JavaScript tool to convert mathml string to LaTeX string",
-  "main": "dist/bundle.min.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "unpkg": "dist/bundle.min.js",
+  "jsdelivr": "dist/bundle.min.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*"
+  },
+  "sideEffects": false,
   "scripts": {
     "prebuild": "rm -rf ./dist",
-    "build": "webpack --devtool source-map --mode production",
+    "build": "rollup -c",
     "watch": "tsc -w",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "test": "jest --passWithNoTests --noStackTrace --runInBand",
@@ -31,6 +45,10 @@
   },
   "homepage": "https://github.com/asnunes/mathml-to-latex#readme",
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^1.0.0",
+    "@rollup/plugin-typescript": "^12.3.0",
     "@types/jest": "30.0.0",
     "@typescript-eslint/eslint-plugin": "^8.60.1",
     "@typescript-eslint/parser": "^8.60.1",
@@ -41,12 +59,12 @@
     "jest": "30.4.2",
     "lint-staged": "^17.0.7",
     "prettier": "3.8.3",
+    "rollup": "^4.61.1",
+    "rollup-plugin-dts": "^6.4.1",
     "ts-jest": "^29.4.11",
-    "ts-loader": "^9.6.0",
+    "tslib": "^2.8.1",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.60.1",
-    "webpack": "^5.107.2",
-    "webpack-cli": "^7.0.3"
+    "typescript-eslint": "^8.60.1"
   },
   "dependencies": {
     "@xmldom/xmldom": "^0.9.10"

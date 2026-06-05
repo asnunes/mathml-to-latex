@@ -1,14 +1,11 @@
-import { MathMLElementToLatexConverterAdapter } from '../data/usecases/mathml-to-latex-convertion/mathml-element-to-latex-converter-adapter';
+import { convertTreeToLatex } from '../data/usecases/mathml-to-latex-convertion/tree-to-latex';
 import { makeToMathElementsConverter } from './factories';
 
 export class MathMLToLaTeX {
   static convert(mathml: string): string {
     const mathmlElements = makeToMathElementsConverter().convert(mathml);
-    const mathmlElementsToLaTeXConverters = mathmlElements.map((mathMLElement) =>
-      new MathMLElementToLatexConverterAdapter(mathMLElement).toLatexConverter(),
-    );
-    return mathmlElementsToLaTeXConverters
-      .map((toLatexConverters) => toLatexConverters.convert())
+    return mathmlElements
+      .map((mathMLElement) => convertTreeToLatex(mathMLElement))
       .join('')
       .trim();
   }

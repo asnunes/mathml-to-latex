@@ -1,6 +1,6 @@
-import { MathMLToLaTeX } from '../src';
-import * as mathmlStrings from './mocks/mathmlStrings';
-import { InvalidNumberOfChildrenError } from '../src/data/errors/invalid-number-of-children';
+import { MathMLToLaTeX } from '.';
+import * as mathmlStrings from './__fixtures__/mathmlStrings';
+import { InvalidNumberOfChildrenError } from './data/errors/invalid-number-of-children';
 
 describe('#convert', () => {
   describe('given math string with mi tag', () => {

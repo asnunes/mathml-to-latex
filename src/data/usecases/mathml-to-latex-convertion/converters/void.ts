@@ -1,4 +1,5 @@
 import { ToLaTeXConverter } from 'domain/usecases/to-latex-converter';
+import { MathMLElement } from '../../../protocols/mathml-element';
 
 /**
  * No-op converter for MathML elements that have no LaTeX representation.

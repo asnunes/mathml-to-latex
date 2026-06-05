@@ -1,4 +1,5 @@
 import { MathMLToLaTeX } from '../../src';
+import { MaxDepthExceededError } from '../../src/data/errors';
 
 /**
  * Security/robustness tests derived from issue #44 (vulnerable @xmldom/xmldom).
@@ -59,18 +60,24 @@ describe('#convert security and robustness', () => {
   });
 
   describe('given deeply nested input (denial of service)', () => {
-    // Skipped: the converter still recurses over the element tree (and again on
-    // the LaTeX side), so deep input overflows the call stack. Tracked as a
-    // follow-up (depth guard or iterative traversal); unskip once fixed.
-    it.skip('does not blow the stack on deeply nested mrow elements', () => {
+    it('rejects deeply nested input with a domain error instead of crashing', () => {
       const depth = 20000;
       const inner = '<mrow>'.repeat(depth) + '<mn>1</mn>' + '</mrow>'.repeat(depth);
       const mathml = `<math>${inner}</math>`;
 
-      // The contract is "no uncontrolled crash": it may convert successfully or
-      // reject with a domain error, but it must never throw a raw RangeError
-      // (Maximum call stack size exceeded).
+      // The depth guard must trip before the recursion can overflow the call
+      // stack, so a controlled MaxDepthExceededError is raised, never a raw
+      // RangeError (Maximum call stack size exceeded).
+      expect(() => MathMLToLaTeX.convert(mathml)).toThrow(MaxDepthExceededError);
       expect(() => MathMLToLaTeX.convert(mathml)).not.toThrow(RangeError);
+    });
+
+    it('still converts input nested within the supported depth', () => {
+      const depth = 100;
+      const inner = '<mrow>'.repeat(depth) + '<mn>1</mn>' + '</mrow>'.repeat(depth);
+      const mathml = `<math>${inner}</math>`;
+
+      expect(() => MathMLToLaTeX.convert(mathml)).not.toThrow();
     });
   });
 });

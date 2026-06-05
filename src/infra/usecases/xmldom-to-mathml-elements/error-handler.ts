@@ -1,6 +1,5 @@
 export class ErrorHandler {
   private _errors: string[] = [];
-  errorLocator = {};
 
   fixError(xml: string, errorMessage: string): string {
     if (!this._isMissingAttributeValueError(errorMessage)) return xml;
@@ -18,13 +17,20 @@ export class ErrorHandler {
   }
 
   private _fixMissingAttribute(errorMessage: string, xml: string): string {
-    const missingAttribute = errorMessage.split('"')[1];
+    const missingAttribute = this._attributeNameFromError(errorMessage);
     if (missingAttribute) return xml.replace(this._matchMissingValueForAttribute(missingAttribute), '');
 
     while (this._mathGenericMissingValue().exec(xml)) {
       xml = xml.replace(this._mathGenericMissingValue(), '$1$3');
     }
     return xml;
+  }
+
+  // Only the "missed value" warning carries the offending attribute name. The
+  // "AttValue: ' or \" expected" fatalError does not, so it falls back to the
+  // generic strip above.
+  private _attributeNameFromError(errorMessage: string): string | undefined {
+    return errorMessage.match(/attribute "([^"]+)" missed value/)?.[1];
   }
 
   private _matchMissingValueForAttribute(attribute: string): RegExp {
@@ -38,7 +44,10 @@ export class ErrorHandler {
   private _isMissingAttributeValueError(errorMessage: string): boolean {
     return (
       (!!errorMessage.includes('attribute') && !!errorMessage.includes('missed')) ||
-      errorMessage.includes('attribute value missed')
+      errorMessage.includes('attribute value missed') ||
+      // Since xmldom 0.9 a value-less attribute written as `attr=` is reported
+      // as this fatalError instead of a recoverable warning.
+      errorMessage.includes("AttValue: ' or \" expected")
     );
   }
 }

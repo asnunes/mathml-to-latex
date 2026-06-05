@@ -1,6 +1,6 @@
 import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
-import { normalizeWhiteSpaces } from '../../../helpers';
+import { normalizeWhiteSpaces, ownLookup } from '../../../helpers';
 import {
   HashUTF8ToLtXConverter,
   allMathOperatorsByChar,
@@ -57,14 +57,14 @@ class Operator {
   }
 
   private _findByCharacter(): string | undefined {
-    return allMathOperatorsByChar[this._value];
+    return ownLookup(allMathOperatorsByChar, this._value);
   }
 
   private _findByGlyph(): string | undefined {
-    return allMathOperatorsByGlyph[this._value];
+    return ownLookup(allMathOperatorsByGlyph, this._value);
   }
 
   private _findByNumber(): string | undefined {
-    return mathNumberByGlyph[this._value];
+    return ownLookup(mathNumberByGlyph, this._value);
   }
 }

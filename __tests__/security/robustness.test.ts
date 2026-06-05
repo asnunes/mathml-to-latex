@@ -70,4 +70,24 @@ describe('#convert security and robustness', () => {
       expect(MathMLToLaTeX.convert(mathml)).toBe('1');
     });
   });
+
+  describe('given element text that collides with Object.prototype keys', () => {
+    // The symbol/operator lookup tables are plain object literals, so a token
+    // such as "constructor" or "toString" resolves through the prototype chain
+    // instead of missing. An unknown token must instead fall through to its
+    // literal text, exactly like any other unrecognized token (e.g. "foo").
+    const prototypeKeys = ['constructor', 'hasOwnProperty', 'toString', 'valueOf', '__proto__'];
+
+    it.each(prototypeKeys)('converts <mo>%s</mo> to its literal text', (token) => {
+      const result = MathMLToLaTeX.convert(`<math><mo>${token}</mo></math>`);
+
+      expect(result).toBe(token);
+      expect(result).not.toContain('[native code]');
+    });
+
+    it.each(prototypeKeys)('converts <mi>%s</mi> to its literal text', (token) => {
+      expect(() => MathMLToLaTeX.convert(`<math><mi>${token}</mi></math>`)).not.toThrow();
+      expect(MathMLToLaTeX.convert(`<math><mi>${token}</mi></math>`)).toBe(token);
+    });
+  });
 });

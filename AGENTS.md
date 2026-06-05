@@ -123,7 +123,9 @@ DOM nodes, only this internal tree.
 ## Conventions
 
 - **All code and comments in English**, even in non-English conversations.
-- **Public/main functions first, private helpers at the bottom** of each file.
+- **File layout:** exported/public code first, then private and non-exported
+  code; private methods go below public ones, and type/interface definitions go
+  at the bottom of the file.
 - **Prefer early returns** over deep `if` nesting.
 - **Commits:** semantic style — `type(scope): short message` in English
   (`feat`, `fix`, `refactor`, `test`, `chore`, `docs`). Keep messages short.

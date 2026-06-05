@@ -24,8 +24,8 @@ export default [
     external: ['@xmldom/xmldom'],
     plugins: [ts()],
     output: [
-      { file: 'dist/index.mjs', format: 'es', sourcemap: true },
-      { file: 'dist/index.cjs', format: 'cjs', exports: 'named', sourcemap: true },
+      { file: 'dist/index.mjs', format: 'es' },
+      { file: 'dist/index.cjs', format: 'cjs', exports: 'named' },
     ],
   },
   // Self-contained, minified UMD for the browser/CDN — bundles the dependency
@@ -38,7 +38,6 @@ export default [
       format: 'umd',
       name: 'MathMLToLaTeX',
       exports: 'named',
-      sourcemap: true,
     },
   },
   // Bundled type declarations.

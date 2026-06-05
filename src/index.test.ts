@@ -9,7 +9,7 @@ describe('#convert', () => {
 
       const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toMatch('a');
+      expect(result).toBe('a');
     });
 
     it('should add space between mis', () => {
@@ -17,7 +17,7 @@ describe('#convert', () => {
 
       const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toMatch('\\Delta x');
+      expect(result).toBe('\\Delta x');
     });
 
     it('should properly convert mi with double-struck attribute', () => {
@@ -25,7 +25,7 @@ describe('#convert', () => {
 
       const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toMatch('\\mathbb{R}^{n}');
+      expect(result).toBe('\\mathbb{R}^{n}');
     });
   });
 
@@ -35,7 +35,7 @@ describe('#convert', () => {
 
       const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toMatch('b');
+      expect(result).toBe('b');
     });
   });
 
@@ -78,7 +78,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('+');
+        expect(result).toBe('+');
       });
 
       it('converts bar divider preserving it', () => {
@@ -86,7 +86,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('x = 4 / 5');
+        expect(result).toBe('x = 4 / 5');
       });
     });
 
@@ -96,7 +96,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('\\star');
+        expect(result).toBe('\\star');
       });
     });
 
@@ -106,7 +106,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('b');
+        expect(result).toBe('b');
       });
 
       it('appends space between command and next tag', () => {
@@ -114,7 +114,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('a \\Rightarrow b');
+        expect(result).toBe('a \\Rightarrow b');
       });
     });
   });
@@ -125,7 +125,7 @@ describe('#convert', () => {
 
       const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toMatch('2 + 2');
+      expect(result).toBe('2 + 2');
     });
   });
 
@@ -136,7 +136,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('\\sqrt{2}');
+        expect(result).toBe('\\sqrt{2}');
       });
     });
 
@@ -146,7 +146,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('\\sqrt{2 + 2}');
+        expect(result).toBe('\\sqrt{2 + 2}');
       });
     });
 
@@ -156,7 +156,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('\\sqrt{2 + 2}');
+        expect(result).toBe('\\sqrt{2 + 2}');
       });
     });
 
@@ -166,7 +166,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('\\sqrt{}');
+        expect(result).toBe('\\sqrt{}');
       });
     });
   });
@@ -179,7 +179,7 @@ describe('#convert', () => {
 
           const result = MathMLToLaTeX.convert(mathml);
 
-          expect(result).toMatch('\\left(3\\right)');
+          expect(result).toBe('\\left(3\\right)');
         });
       });
 
@@ -189,7 +189,7 @@ describe('#convert', () => {
 
           const result = MathMLToLaTeX.convert(mathml);
 
-          expect(result).toMatch('\\left{3\\right)');
+          expect(result).toBe('\\left{3\\right)');
         });
       });
 
@@ -199,7 +199,7 @@ describe('#convert', () => {
 
           const result = MathMLToLaTeX.convert(mathml);
 
-          expect(result).toMatch('\\left(3\\right)');
+          expect(result).toBe('\\left(3\\right)');
         });
       });
 
@@ -209,7 +209,7 @@ describe('#convert', () => {
 
           const result = MathMLToLaTeX.convert(mathml);
 
-          expect(result).toMatch('\\left{3\\right)');
+          expect(result).toBe('\\left{3\\right)');
         });
       });
 
@@ -219,7 +219,7 @@ describe('#convert', () => {
 
           const result = MathMLToLaTeX.convert(mathml);
 
-          expect(result).toMatch('\\left(3,2,1\\right)');
+          expect(result).toBe('\\left(3,2,1\\right)');
         });
       });
 
@@ -229,7 +229,7 @@ describe('#convert', () => {
 
           const result = MathMLToLaTeX.convert(mathml);
 
-          expect(result).toMatch('\\left(3,2,1,7\\right)');
+          expect(result).toBe('\\left(3,2,1,7\\right)');
         });
       });
 
@@ -239,7 +239,7 @@ describe('#convert', () => {
 
           const result = MathMLToLaTeX.convert(mathml);
 
-          expect(result).toMatch('\\left(3;2;1\\right)');
+          expect(result).toBe('\\left(3;2;1\\right)');
         });
       });
 
@@ -249,7 +249,7 @@ describe('#convert', () => {
 
           const result = MathMLToLaTeX.convert(mathml);
 
-          expect(result).toMatch('\\left(3;2.1.7\\right)');
+          expect(result).toBe('\\left(3;2.1.7\\right)');
         });
       });
 
@@ -259,7 +259,7 @@ describe('#convert', () => {
 
           const result = MathMLToLaTeX.convert(mathml);
 
-          expect(result).toMatch('\\left(3217\\right)');
+          expect(result).toBe('\\left(3217\\right)');
         });
 
         it('should not add comma to pmatrix based on mfenced', () => {
@@ -267,7 +267,7 @@ describe('#convert', () => {
 
           const result = MathMLToLaTeX.convert(mathml);
 
-          expect(result).toMatch('\\begin{pmatrix} x_{1} & A \\\\ x_{2} & B \\end{pmatrix}');
+          expect(result).toBe('\\begin{pmatrix} x_{1} & A \\\\ x_{2} & B \\end{pmatrix}');
         });
 
         it('should not add comma to linear system based on mfenced', () => {
@@ -275,7 +275,7 @@ describe('#convert', () => {
 
           const result = MathMLToLaTeX.convert(mathml);
 
-          expect(result).toMatch('\\begin{cases} x + y = 1 \\\\ x - y = 3 \\end{cases}');
+          expect(result).toBe('\\begin{cases} x + y = 1 \\\\ x - y = 3 \\end{cases}');
         });
       });
     });
@@ -379,7 +379,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('\\frac{x}{3}');
+        expect(result).toBe('\\frac{x}{3}');
       });
     });
 
@@ -389,7 +389,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('\\frac{a + 2}{b - 3}');
+        expect(result).toBe('\\frac{a + 2}{b - 3}');
       });
     });
 
@@ -399,7 +399,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('1/\\left(x^{3} + 3\\right)');
+        expect(result).toBe('1/\\left(x^{3} + 3\\right)');
       });
     });
 
@@ -421,7 +421,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('\\sqrt[3]{x + 2}');
+        expect(result).toBe('\\sqrt[3]{x + 2}');
       });
     });
 
@@ -442,7 +442,7 @@ describe('#convert', () => {
 
       const result = MathMLToLaTeX.convert(mathml);
 
-      expect(result).toMatch('2 + 2');
+      expect(result).toBe('2 + 2');
     });
   });
 
@@ -717,7 +717,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('x^{2}');
+        expect(result).toBe('x^{2}');
       });
     });
 
@@ -727,7 +727,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('x^{a + b}');
+        expect(result).toBe('x^{a + b}');
       });
     });
 
@@ -737,7 +737,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('\\left(x + y\\right)^{2}');
+        expect(result).toBe('\\left(x + y\\right)^{2}');
       });
     });
 
@@ -747,7 +747,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('\\left(x + y\\right)^{2 + 2}');
+        expect(result).toBe('\\left(x + y\\right)^{2 + 2}');
       });
     });
 
@@ -769,7 +769,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('x_{2}');
+        expect(result).toBe('x_{2}');
       });
     });
 
@@ -779,7 +779,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('x_{a + b}');
+        expect(result).toBe('x_{a + b}');
       });
     });
 
@@ -789,7 +789,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('\\left(x + y\\right)_{2}');
+        expect(result).toBe('\\left(x + y\\right)_{2}');
       });
     });
 
@@ -799,7 +799,7 @@ describe('#convert', () => {
 
         const result = MathMLToLaTeX.convert(mathml);
 
-        expect(result).toMatch('\\left(x + y\\right)_{2 + 2}');
+        expect(result).toBe('\\left(x + y\\right)_{2 + 2}');
       });
     });
 

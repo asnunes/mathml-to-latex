@@ -1,3 +1,5 @@
+import { MathMLElement } from '../../data/protocols/mathml-element';
+
 /**
  * Common contract implemented by every element converter: turn the wrapped
  * MathML element into a LaTeX string.
@@ -12,5 +14,5 @@ export interface ToLaTeXConverter {
  * instantiate the right converter for a given MathML element.
  */
 export interface ToLaTeXConverterClass {
-  new (...args: any): ToLaTeXConverter;
+  new (mathMLElement: MathMLElement): ToLaTeXConverter;
 }

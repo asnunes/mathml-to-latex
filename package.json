@@ -21,7 +21,7 @@
   "scripts": {
     "prebuild": "rm -rf ./dist",
     "build": "rollup -c",
-    "watch": "tsc -w",
+    "watch": "tsc --noEmit -w",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "test": "jest --passWithNoTests --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",

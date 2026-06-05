@@ -1,4 +1,4 @@
-import { MathMLToLaTeX } from '../../src';
+import { MathMLToLaTeX } from '.';
 
 /**
  * Security/robustness tests derived from issue #44 (vulnerable @xmldom/xmldom).

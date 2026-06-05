@@ -1,8 +1,4 @@
-import {
-  XmlToMathMLAdapter,
-  ElementsToMathMLAdapter,
-  ErrorHandler,
-} from '../../../src/infra/usecases/xmldom-to-mathml-elements';
+import { XmlToMathMLAdapter, ElementsToMathMLAdapter, ErrorHandler } from '.';
 
 import {
   singleMi,
@@ -14,7 +10,7 @@ import {
   mfencedWithBrokenAttributeCase4,
   mfencedWithBrokenAttributeCase3,
   mfencedWithBrokenAttributeCase5,
-} from '../../mocks/mathmlStrings';
+} from '../../../__fixtures__/mathmlStrings';
 
 describe('#convert', () => {
   const makeSut = (): XmlToMathMLAdapter => {

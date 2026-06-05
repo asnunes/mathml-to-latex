@@ -1,0 +1,139 @@
+import { MathMLToLaTeX } from '.';
+import * as mathmlStrings from './__fixtures__/mathmlStrings';
+
+describe('#convert', () => {
+  describe('long char and glyph convertion', () => {
+    it('should convert ϵ properly to \\epsilon', () => {
+      const mathml = mathmlStrings.mathWithEpsilonGlyph;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('d = \\left(\\frac{q^{2} L}{2 \\pi \\epsilon_{0} m g}\\right)^{1 / 3}');
+    });
+
+    it('should convert µ properly to \\mu', () => {
+      const mathml = mathmlStrings.mathWithMuGlyph;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('2 \\mu s');
+    });
+
+    it('should convert ⋅ properly to \\cdot on text', () => {
+      const mathml = mathmlStrings.mathWithCdotGlyph;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('\\text{kg}\\cdot\\text{m}^{2}');
+    });
+
+    it('should convert alternative ı to \\imath', () => {
+      const mathml = mathmlStrings.mathWithAlternative1;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('E \\left(W_{\\imath}\\right) = \\mu');
+    });
+
+    it('should convert alternative square to \\blacksquare', () => {
+      const mathml = mathmlStrings.mathWithAlternativeSquare;
+
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe('2 \\blacksquare s');
+    });
+
+    for (const inputExpectedPair of mathmlStrings.inputExpectedPairs) {
+      const { input, expected, op } = inputExpectedPair;
+
+      it(`should convert ${input} to ${expected} for tag ${op}`, () => {
+        const mathml = `<math xmlns="http://www.w3.org/1998/Math/MathML"><${op}>${input}</${op}></math>`;
+
+        const result = MathMLToLaTeX.convert(mathml);
+
+        expect(result).toBe(expected);
+      });
+    }
+  });
+
+  it('should remove ms word prefixes and convert tags as expected', () => {
+    const result = MathMLToLaTeX.convert(mathmlStrings.msWordInput);
+
+    expect(result).toBe(
+      'V_{i} \\frac{\\Delta C_{A , i}^{t}}{\\Delta t} = \\sum_{j = k}^{N} G_{i , j}^{D} \\left(C_{A , j} - C_{A , i}\\right)',
+    );
+  });
+
+  it('should convert MathML without unnecessary delimiters and handle mtext spacing correctly', () => {
+    const mathml = `
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <msub>
+            <mtext>Required Value</mtext>
+            <mtext>other</mtext>
+          </msub>
+          <mo>≥</mo>
+          <mfrac>
+            <mrow>
+              <mn>21</mn>
+              <mi>f</mi>
+              <msup>
+                <mi>t</mi>
+                <mn>3</mn>
+              </msup>
+            </mrow>
+            <mrow>
+              <mi>A</mi>
+              <mi>C</mi>
+              <mi>H</mi>
+            </mrow>
+          </mfrac>
+          <mo>⋅</mo>
+          <mo fence="true">(</mo>
+          <mfrac>
+            <msub>
+              <mi>I</mi>
+              <mi>o</mi>
+            </msub>
+            <mrow>
+              <mn>1000</mn>
+              <msub>
+                <mi>B</mi>
+                <mrow>
+                  <mtext>Btu</mtext>
+                  <mi mathvariant="normal">/</mi>
+                  <mtext>h</mtext>
+                </mrow>
+              </msub>
+            </mrow>
+          </mfrac>
+          <mo fence="true">)</mo>
+        </mrow>
+      </semantics>
+    </math>
+    `;
+
+    const expectedLatex = `\\text{Required Value}_{\\text{other}} \\geq \\frac{21 f t^{3}}{A C H} \\cdot \\left(\\right. \\frac{I_{o}}{1000 B_{\\text{Btu} / \\text{h}}} \\left.\\right)`;
+
+    const result = MathMLToLaTeX.convert(mathml);
+
+    expect(result).toBe(expectedLatex);
+  });
+
+  it('should correctly convert mmultiscripts with empty mprescripts', () => {
+    const mathml = `
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mmultiscripts>
+          <mi mathvariant="normal">U</mi>
+          <mprescripts></mprescripts>
+          <mn>238</mn>
+        </mmultiscripts>
+      </math>
+    `;
+
+    const result = MathMLToLaTeX.convert(mathml);
+
+    expect(result).toBe('\\_{238}^{}U');
+  });
+});

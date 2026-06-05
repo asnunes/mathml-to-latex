@@ -1,4 +1,4 @@
-import { InvalidNumberOfChildrenError } from '../../../src/data/errors/invalid-number-of-children';
+import { InvalidNumberOfChildrenError } from './invalid-number-of-children';
 
 describe('InvalidNumberOfChildrenError', () => {
   describe('when error is created without comparison', () => {

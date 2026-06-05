@@ -65,6 +65,26 @@ MathMLToLaTeX.convert(mathml);
 // => A = \begin{bmatrix} x & y \\ z & w \end{bmatrix}
 ```
 
+## Module formats
+
+The package ships in three formats, so it works the same in modern bundlers, Node and the browser. TypeScript declarations are bundled in, so no extra `@types` package is needed.
+
+- **ES Modules** — for bundlers (webpack, Vite, Rollup…) and modern Node:
+
+  ```javascript
+  import { MathMLToLaTeX } from 'mathml-to-latex';
+  ```
+
+- **CommonJS** — for Node's `require`:
+
+  ```javascript
+  const { MathMLToLaTeX } = require('mathml-to-latex');
+  ```
+
+- **UMD** — a self-contained, minified bundle for direct use in the browser via a `<script>` tag / CDN (see [Browser](#browser) below).
+
+The right format is selected automatically through the package's `exports` map.
+
 ## Browser
 
 Package is also available directly in the browser through CDN:

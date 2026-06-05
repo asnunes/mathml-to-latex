@@ -32,9 +32,17 @@ export class MFenced implements ToLaTeXConverter {
   }
 
   private _isThereRelativeOfName(mathmlElements: MathMLElement[], elementName: string): boolean {
-    return mathmlElements.some(
-      (child) => child.name === elementName || this._isThereRelativeOfName(child.children, elementName),
-    );
+    // Iterative depth-first search so a deeply nested subtree cannot overflow
+    // the call stack.
+    const stack = [...mathmlElements];
+
+    while (stack.length > 0) {
+      const element = stack.pop() as MathMLElement;
+      if (element.name === elementName) return true;
+      stack.push(...(element.children ?? []));
+    }
+
+    return false;
   }
 }
 

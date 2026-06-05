@@ -1,3 +1,8 @@
+/**
+ * Lookup table mapping math symbols, keyed by their decoded unicode glyph
+ * (e.g. `∀`), to the equivalent LaTeX command. Consumed by the `<mi>`/`<mo>`
+ * converters to translate symbol content into LaTeX.
+ */
 export const allMathSymbolsByGlyph: Record<string, string> = {
   ' ': '\\textrm{ }',
   '∃': '\\exists',

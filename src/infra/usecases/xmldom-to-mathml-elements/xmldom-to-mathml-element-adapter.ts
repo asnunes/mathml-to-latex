@@ -3,6 +3,14 @@ import { ElementsToMathMLAdapter } from './xmldom-elements-to-mathml-elements-ad
 import { ErrorHandler } from './error-handler';
 import { MathMLElement } from '../../../data/protocols/mathml-element';
 
+/**
+ * Parses a MathML/XML string into an array of internal {@link MathMLElement}
+ * trees (one per `<math>` element).
+ *
+ * It cleans up MS Word artefacts (line breaks, `mml:` prefixes), tolerates
+ * malformed attributes through {@link ErrorHandler}, and delegates the DOM →
+ * {@link MathMLElement} mapping to {@link ElementsToMathMLAdapter}.
+ */
 export class XmlToMathMLAdapter {
   private _xml = '';
   private readonly _xmlDOM: DOMParser;
@@ -20,6 +28,12 @@ export class XmlToMathMLAdapter {
     });
   }
 
+  /**
+   * Parses the given markup and returns its `<math>` elements as trees.
+   *
+   * @param xml - the MathML/XML markup to parse.
+   * @returns one {@link MathMLElement} tree per `<math>` element found.
+   */
   convert(xml: string): MathMLElement[] {
     this._xml = this._removeLineBreaks(xml);
     this._xml = this._removeMsWordPrefixes(this._xml);

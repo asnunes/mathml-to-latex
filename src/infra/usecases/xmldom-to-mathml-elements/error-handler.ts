@@ -1,6 +1,21 @@
+/**
+ * Recovers from the malformed-attribute errors commonly produced by MS Word
+ * exports (e.g. `<mfenced open='{' close= >`). It inspects the parser error
+ * message and rewrites the offending value-less attribute out of the XML so the
+ * markup can be re-parsed successfully.
+ */
 export class ErrorHandler {
   private _errors: string[] = [];
 
+  /**
+   * If the parser error is a recoverable missing-attribute-value error, records
+   * it and returns the XML with the offending attribute stripped; otherwise
+   * returns the XML unchanged.
+   *
+   * @param xml - the current (possibly malformed) XML.
+   * @param errorMessage - the message reported by the parser.
+   * @returns the (possibly corrected) XML.
+   */
   fixError(xml: string, errorMessage: string): string {
     if (!this._isMissingAttributeValueError(errorMessage)) return xml;
 
@@ -47,7 +62,7 @@ export class ErrorHandler {
       errorMessage.includes('attribute value missed') ||
       // Since xmldom 0.9 a value-less attribute written as `attr=` is reported
       // as this fatalError instead of a recoverable warning.
-      errorMessage.includes("AttValue: ' or \" expected")
+      errorMessage.includes('AttValue: \' or " expected')
     );
   }
 }

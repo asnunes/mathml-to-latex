@@ -8,6 +8,15 @@ import {
   mathNumberByGlyph,
 } from '../../../../syntax';
 
+/**
+ * Converts a MathML `<mo>` (operator) element into LaTeX.
+ *
+ * Normalizes/trims the value and resolves it to a LaTeX command through the
+ * operator lookup tables, falling back to UTF-8 conversion.
+ *
+ * @example
+ * // <mo>&#x2211;</mo> -> \sum
+ */
 export class MO implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
 
@@ -15,6 +24,9 @@ export class MO implements ToLaTeXConverter {
     this._mathmlElement = mathElement;
   }
 
+  /**
+   * @returns the LaTeX representation of this element.
+   */
   convert(): string {
     const normalizedValue = normalizeWhiteSpaces(this._mathmlElement.value);
     const trimmedValue = normalizedValue.trim();
@@ -23,6 +35,7 @@ export class MO implements ToLaTeXConverter {
   }
 }
 
+/** Resolves a single operator value to its LaTeX command via operator lookup tables, falling back to UTF-8 conversion. */
 class Operator {
   private _value: string;
 

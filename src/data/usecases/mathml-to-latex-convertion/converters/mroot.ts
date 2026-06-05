@@ -3,6 +3,15 @@ import { MathMLElement } from '../../../protocols/mathml-element';
 import { mathMLElementToLaTeXConverter } from '../../../helpers';
 import { InvalidNumberOfChildrenError } from '../../../errors';
 
+/**
+ * Converts a MathML `<mroot>` element into a LaTeX n-th root.
+ *
+ * Converts the first child as the radicand and the second child as the index,
+ * producing `\sqrt[index]{content}`.
+ *
+ * @example
+ * // <mroot><mn>8</mn><mn>3</mn></mroot> -> \sqrt[3]{8}
+ */
 export class MRoot implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
 
@@ -10,6 +19,10 @@ export class MRoot implements ToLaTeXConverter {
     this._mathmlElement = mathElement;
   }
 
+  /**
+   * @returns the LaTeX representation of this element.
+   * @throws {InvalidNumberOfChildrenError} if the element does not have exactly 2 children.
+   */
   convert(): string {
     const { name, children } = this._mathmlElement;
     const childrenLength = children.length;

@@ -2,6 +2,16 @@ import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { MI } from './mi';
 
+/**
+ * Converts a MathML `<mtext>` element into LaTeX.
+ *
+ * Splits the text into runs of alphanumeric/space characters and standalone
+ * symbols: alphanumeric runs are wrapped by the `mathvariant` text command while
+ * each symbol is delegated to the `<mi>` converter.
+ *
+ * @example
+ * // <mtext mathvariant="bold">hi</mtext> -> \textbf{hi}
+ */
 export class MText implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
 
@@ -9,6 +19,9 @@ export class MText implements ToLaTeXConverter {
     this._mathmlElement = mathElement;
   }
 
+  /**
+   * @returns the LaTeX representation of this element.
+   */
   convert(): string {
     const { attributes, value } = this._mathmlElement;
 
@@ -55,6 +68,7 @@ export class MText implements ToLaTeXConverter {
   }
 }
 
+/** Wraps a text value in the LaTeX text/font command(s) matching the given `mathvariant`. */
 class TextCommand {
   private readonly _mathvariant: string;
 

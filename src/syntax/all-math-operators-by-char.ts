@@ -1,3 +1,8 @@
+/**
+ * Lookup table mapping math operators, keyed by their literal HTML character
+ * reference (e.g. `&#x2211;`), to the equivalent LaTeX command. Consumed by the
+ * `<mo>` converter to translate operator content into LaTeX.
+ */
 export const allMathOperatorsByChar: Record<string, string> = {
   _: '\\underline',
   '&#x23E1;': '\\underbrace',

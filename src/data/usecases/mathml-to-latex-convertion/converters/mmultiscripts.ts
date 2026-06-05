@@ -3,6 +3,15 @@ import { MathMLElement } from '../../../protocols/mathml-element';
 import { mathMLElementToLaTeXConverter, ParenthesisWrapper } from '../../../helpers';
 import { InvalidNumberOfChildrenError } from '../../../errors';
 
+/**
+ * Converts a MathML `<mmultiscripts>` element into LaTeX.
+ *
+ * Renders the base with attached subscript/superscript pairs, honoring an
+ * optional `<mprescripts>` marker to emit pre-scripts before the base.
+ *
+ * @example
+ * // <mmultiscripts><mi>X</mi><mn>1</mn><mn>2</mn></mmultiscripts> -> X_{1}^{2}
+ */
 export class MMultiscripts implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
 
@@ -10,6 +19,10 @@ export class MMultiscripts implements ToLaTeXConverter {
     this._mathmlElement = mathElement;
   }
 
+  /**
+   * @returns the LaTeX representation of this element.
+   * @throws {InvalidNumberOfChildrenError} when fewer than 3 children are present.
+   */
   convert(): string {
     const { name, children } = this._mathmlElement;
     const childrenLength = children.length;
@@ -21,6 +34,7 @@ export class MMultiscripts implements ToLaTeXConverter {
     return this._prescriptLatex() + this._wrapInParenthesisIfThereIsSpace(baseContent) + this._postscriptLatex();
   }
 
+  /** Builds the pre-script `_{...}^{...}` segment when an `<mprescripts>` marker is present. */
   private _prescriptLatex(): string {
     const { children } = this._mathmlElement;
     let sub;
@@ -40,6 +54,7 @@ export class MMultiscripts implements ToLaTeXConverter {
     return `\\_{${subLatex}}^{${supLatex}}`;
   }
 
+  /** Builds the post-script `_{...}^{...}` segment that follows the base. */
   private _postscriptLatex(): string {
     const { children } = this._mathmlElement;
     if (this._isPrescripts(children[1])) return '';
@@ -53,11 +68,13 @@ export class MMultiscripts implements ToLaTeXConverter {
     return `_{${subLatex}}^{${supLatex}}`;
   }
 
+  /** Wraps the base in parentheses when it contains whitespace, to keep scripts attached correctly. */
   private _wrapInParenthesisIfThereIsSpace(str: string): string {
     if (!str.match(/\s+/g)) return str;
     return new ParenthesisWrapper().wrap(str);
   }
 
+  /** Returns true when the child is the `<mprescripts>` marker element. */
   private _isPrescripts(child: MathMLElement): boolean {
     return child?.name === 'mprescripts';
   }

@@ -3,6 +3,16 @@ import { MathMLElement } from '../../../protocols/mathml-element';
 import { mathMLElementToLaTeXConverter } from '../../../helpers/mathml-element-to-latex-converter';
 import { GenericWrapper, JoinWithManySeparators } from '../../../helpers';
 
+/**
+ * Converts a MathML `<mfenced>` element into LaTeX delimited content.
+ *
+ * Children are converted and either wrapped as a matrix (when a descendant
+ * `<mtable>` is present, picking the environment from the open/close fences) or
+ * joined with the `separators`/`open`/`close` attributes as a delimited vector.
+ *
+ * @example
+ * // <mfenced open="(" close=")"><mi>a</mi><mi>b</mi></mfenced> -> \left(a,b\right)
+ */
 export class MFenced implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
   private readonly open: string;
@@ -14,6 +24,9 @@ export class MFenced implements ToLaTeXConverter {
     this.close = this._mathmlElement.attributes.close || '';
   }
 
+  /**
+   * @returns the LaTeX representation of this element.
+   */
   convert(): string {
     const latexChildren = this._mathmlElement.children
       .map((child) => mathMLElementToLaTeXConverter(child))
@@ -31,6 +44,7 @@ export class MFenced implements ToLaTeXConverter {
     return new Vector(this.open, this.close, separatorsArray, defaultSeparator).apply(latexChildren);
   }
 
+  /** Depth-first searches the subtree for any descendant element with the given name. */
   private _isThereRelativeOfName(mathmlElements: MathMLElement[], elementName: string): boolean {
     // Iterative depth-first search so a deeply nested subtree cannot overflow
     // the call stack.

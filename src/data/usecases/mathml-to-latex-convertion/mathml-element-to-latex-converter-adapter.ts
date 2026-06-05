@@ -2,6 +2,11 @@ import * as ToLatexConverters from './converters';
 import { MathMLElement, VoidMathMLElement } from '../../../data/protocols/mathml-element';
 import { ToLaTeXConverter, ToLaTeXConverterClass } from '../../../domain/usecases/to-latex-converter';
 
+/**
+ * Maps a {@link MathMLElement} to the concrete {@link ToLaTeXConverter} that
+ * knows how to render it, based on the element's tag name. Unknown tags fall
+ * back to the generic spacing wrapper that simply joins the children.
+ */
 export class MathMLElementToLatexConverterAdapter {
   private readonly _mathMLElement: MathMLElement;
 
@@ -9,6 +14,7 @@ export class MathMLElementToLatexConverterAdapter {
     this._mathMLElement = mathMLElement ?? new VoidMathMLElement();
   }
 
+  /** @returns a converter instance bound to the wrapped element. */
   toLatexConverter(): ToLaTeXConverter {
     const { name } = this._mathMLElement;
     const Converter = fromMathMLElementToLatexConverter[name] || ToLatexConverters.GenericSpacingWrapper;
@@ -17,6 +23,7 @@ export class MathMLElementToLatexConverterAdapter {
   }
 }
 
+/** Registry mapping each supported MathML tag name to its converter class. */
 const fromMathMLElementToLatexConverter: Record<string, ToLaTeXConverterClass> = {
   math: ToLatexConverters.Math,
   mi: ToLatexConverters.MI,

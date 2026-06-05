@@ -2,6 +2,19 @@ import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { mathMLElementToLaTeXConverter } from '../../../helpers';
 
+/**
+ * Converts a MathML `<mrow>` grouping element into LaTeX.
+ *
+ * By default it recursively converts every child and joins the results with
+ * spaces. As a special case, when the row matches the linear-system pattern
+ * (an opening `{` operator, an `<mtable>`, and an empty closing operator) it is
+ * rendered as a LaTeX `cases` environment.
+ *
+ * @example
+ * // <mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow> -> a + b
+ * @example
+ * // <mrow><mo>{</mo><mtable>...</mtable><mo></mo></mrow> -> \begin{cases} ... \end{cases}
+ */
 export class MRow implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
 
@@ -9,6 +22,9 @@ export class MRow implements ToLaTeXConverter {
     this._mathmlElement = mathElement;
   }
 
+  /**
+   * @returns the LaTeX representation of this element.
+   */
   convert(): string {
     // Check if this is a linear system pattern: { + mtable + empty closing operator
     if (this._isLinearSystemPattern()) {
@@ -21,6 +37,7 @@ export class MRow implements ToLaTeXConverter {
       .join(' ');
   }
 
+  /** Detects the `{` + `<mtable>` + empty closing operator shape used for linear systems. */
   private _isLinearSystemPattern(): boolean {
     const { children } = this._mathmlElement;
 
@@ -41,6 +58,7 @@ export class MRow implements ToLaTeXConverter {
     return isOpeningBrace && isMTable && isEmptyClosing;
   }
 
+  /** Renders the inner `<mtable>` rows as a LaTeX `cases` environment. */
   private _convertAsLinearSystem(): string {
     const mtableChild = this._mathmlElement.children[1];
     const tableContent = mtableChild.children

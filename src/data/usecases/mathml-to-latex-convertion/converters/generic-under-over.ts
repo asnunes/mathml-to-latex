@@ -4,6 +4,16 @@ import { mathMLElementToLaTeXConverter } from '../../../helpers/mathml-element-t
 import { InvalidNumberOfChildrenError } from '../../../errors';
 import { latexAccents } from '../../../../syntax/latex-accents';
 
+/**
+ * Converts a MathML `<mover>` or `<munder>` element into LaTeX.
+ *
+ * Converts the base and the accent, then either applies the accent as a LaTeX
+ * accent command (when it is a known accent) or wraps it with `\overset`/
+ * `\underset` depending on whether the element name contains `under`.
+ *
+ * @example
+ * // <munder><mi>x</mi><mo>+</mo></munder> -> \underset{+}{x}
+ */
 export class GenericUnderOver implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
 
@@ -11,6 +21,10 @@ export class GenericUnderOver implements ToLaTeXConverter {
     this._mathmlElement = mathElement;
   }
 
+  /**
+   * @returns the LaTeX representation of this element.
+   * @throws {InvalidNumberOfChildrenError} when the element does not have exactly 2 children.
+   */
   convert(): string {
     const { name, children } = this._mathmlElement;
     const childrenLength = children.length;
@@ -23,6 +37,7 @@ export class GenericUnderOver implements ToLaTeXConverter {
     return this._applyCommand(content, accent);
   }
 
+  /** Chooses the under/over command based on the element name and applies it to the content and accent. */
   private _applyCommand(content: string, accent: string): string {
     const type = this._mathmlElement.name.match(/under/) ? TagTypes.Under : TagTypes.Over;
     return new UnderOverSetter(type).apply(content, accent);

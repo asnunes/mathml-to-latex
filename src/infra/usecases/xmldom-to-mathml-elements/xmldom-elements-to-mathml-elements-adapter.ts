@@ -1,6 +1,17 @@
 import { MathMLElement } from '../../../data/protocols/mathml-element';
 
+/**
+ * Maps parsed DOM {@link Element}s into the library's internal
+ * {@link MathMLElement} tree. The mapping is iterative (explicit stack) so very
+ * deeply nested markup cannot overflow the call stack.
+ */
 export class ElementsToMathMLAdapter {
+  /**
+   * Builds {@link MathMLElement} trees from the given DOM elements.
+   *
+   * @param els - the root DOM elements to convert (e.g. the `<math>` elements).
+   * @returns the corresponding internal element trees, in document order.
+   */
   convert(els: Element[]): MathMLElement[] {
     const result: MathMLElement[] = [];
     // Iterative depth-first build with an explicit stack, so deeply nested

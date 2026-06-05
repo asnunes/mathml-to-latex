@@ -1,3 +1,9 @@
+/**
+ * Joins a list of strings using a list of separators, one per gap. When there
+ * are more gaps than separators the last separator is reused; when no
+ * separators are given, `defaultSeparator` is used. Used by `<mfenced>` to honor
+ * its `separators` attribute.
+ */
 export class JoinWithManySeparators {
   private _separators: string[];
 
@@ -5,6 +11,12 @@ export class JoinWithManySeparators {
     this._separators = separators;
   }
 
+  /**
+   * @param arr - the strings to join.
+   * @param separators - the separators to place between items, in order.
+   * @param defaultSeparator - separator used when `separators` is empty.
+   * @returns the joined string.
+   */
   static join(arr: string[], separators: string[], defaultSeparator: string = ''): string {
     const effectiveSeparators =
       separators.length > 0 ? separators : defaultSeparator !== undefined ? [defaultSeparator] : [];

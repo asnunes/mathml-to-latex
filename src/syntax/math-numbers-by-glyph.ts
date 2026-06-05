@@ -1,3 +1,8 @@
+/**
+ * Lookup table mapping unicode sub/superscript digit glyphs (e.g. `₀`, `⁰`),
+ * keyed by glyph, to their LaTeX subscript/superscript form. Consumed by the
+ * `<mi>`/`<mn>` converters to translate numeric script glyphs into LaTeX.
+ */
 export const mathNumberByGlyph: Record<string, string> = {
   '₀': '_{0}',
   '₁': '_{1}',

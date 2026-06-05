@@ -1,3 +1,8 @@
+/**
+ * Lookup table mapping math symbols, keyed by their literal HTML character
+ * reference (e.g. `&#x2200;`), to the equivalent LaTeX command. Consumed by the
+ * `<mi>`/`<mo>` converters to translate symbol content into LaTeX.
+ */
 export const allMathSymbolsByChar: Record<string, string> = {
   '&#xA0;': '\\textrm{ }',
   '&#x2203;': '\\exists',

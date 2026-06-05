@@ -1,3 +1,8 @@
+/**
+ * Lookup table mapping math operators, keyed by their decoded unicode glyph
+ * (e.g. `∑`), to the equivalent LaTeX command. Consumed by the `<mo>` converter
+ * to translate operator content into LaTeX.
+ */
 export const allMathOperatorsByGlyph: Record<string, string> = {
   _: '\\underline',
   '⏡': '\\underbrace',

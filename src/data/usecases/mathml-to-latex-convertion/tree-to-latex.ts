@@ -2,10 +2,16 @@ import { MathMLElement } from '../../protocols/mathml-element';
 import { MathMLElementToLatexConverterAdapter } from './mathml-element-to-latex-converter-adapter';
 import { setConversionMemo } from '../../helpers/mathml-element-to-latex-converter';
 
-// Converts a MathML element tree to LaTeX iteratively, using an explicit stack
-// instead of recursion so arbitrarily deep nesting cannot overflow the call
-// stack. Nodes are evaluated post-order (children before parents) and each
-// result is memoized; converters then read children's precomputed strings.
+/**
+ * Converts a MathML element tree to LaTeX iteratively, using an explicit stack
+ * instead of recursion so arbitrarily deep nesting cannot overflow the call
+ * stack. Nodes are evaluated post-order (children before parents) and each
+ * result is memoized; converters then read their children's precomputed strings
+ * through {@link mathMLElementToLaTeXConverter} instead of recursing.
+ *
+ * @param root - the root element of the tree to convert.
+ * @returns the LaTeX string for the whole tree.
+ */
 export const convertTreeToLatex = (root: MathMLElement): string => {
   annotateInnerTables(root);
 

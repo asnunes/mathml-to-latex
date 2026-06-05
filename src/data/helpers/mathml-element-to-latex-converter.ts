@@ -8,12 +8,27 @@ import { MathMLElementToLatexConverterAdapter } from '../usecases/mathml-to-late
 // a converter that would recurse — keeping the call stack flat at any depth.
 let conversionMemo: Map<MathMLElement, string> | null = null;
 
+/**
+ * Activates (or clears, with `null`) the memo consulted by
+ * {@link mathMLElementToLaTeXConverter}.
+ *
+ * @param memo - the memo to make active, or `null` to disable memoization.
+ * @returns the previously active memo, so callers can restore it afterwards.
+ */
 export const setConversionMemo = (memo: Map<MathMLElement, string> | null): Map<MathMLElement, string> | null => {
   const previous = conversionMemo;
   conversionMemo = memo;
   return previous;
 };
 
+/**
+ * Resolves the {@link ToLaTeXConverter} for an element. While a memo is active
+ * and already contains the element, returns a converter that yields the
+ * precomputed LaTeX (no recursion); otherwise builds the real converter.
+ *
+ * @param mathMLElement - the element to convert.
+ * @returns a converter bound to the element.
+ */
 export const mathMLElementToLaTeXConverter = (mathMLElement: MathMLElement): ToLaTeXConverter => {
   const precomputed = conversionMemo?.get(mathMLElement);
   if (precomputed !== undefined) return new PrecomputedConverter(precomputed);

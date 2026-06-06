@@ -1,5 +1,5 @@
-import { MathMLToLaTeX } from '../../../..';
-import { InvalidNumberOfChildrenError } from '../../../errors/invalid-number-of-children';
+import { MathMLToLaTeX } from '../../../../..';
+import { InvalidNumberOfChildrenError } from '../../../../errors/invalid-number-of-children';
 
 describe('mfrac (integration)', () => {
   it.each([
@@ -59,6 +59,66 @@ describe('mfrac (integration)', () => {
 </root>
 `,
       latex: '1/\\left(x^{3} + 3\\right)',
+    },
+    {
+      name: 'a bar-less fraction (linethickness="0pt")',
+      mathml: `
+<root>
+<math>
+  <mfrac linethickness="0pt">
+    <mrow>
+      <mi>n</mi>
+    </mrow>
+    <mrow>
+      <mi>k</mi>
+    </mrow>
+  </mfrac>
+</math>
+</root>
+`,
+      latex: '\\genfrac{}{}{0pt}{}{n}{k}',
+    },
+    {
+      name: 'a binomial coefficient (bar-less fraction wrapped in parentheses)',
+      mathml: `
+<root>
+<math>
+  <mrow>
+    <mo>(</mo>
+    <mfrac linethickness="0pt">
+      <mrow>
+        <mi>n</mi>
+      </mrow>
+      <mrow>
+        <mi>k</mi>
+      </mrow>
+    </mfrac>
+    <mo>)</mo>
+  </mrow>
+</math>
+</root>
+`,
+      latex: '\\left(\\right. \\genfrac{}{}{0pt}{}{n}{k} \\left.\\right)',
+    },
+    {
+      name: 'a binomial coefficient (bar-less fraction wrapped in mfenced for auto-sizing parentheses)',
+      mathml: `
+<root>
+<math>
+  <mfenced open="(" close=")">
+    <mfrac linethickness="0pt">
+      <mrow>
+        <mi>n</mi>
+      </mrow>
+      <mrow>
+        <mi>k</mi>
+      </mrow>
+    </mfrac>
+  </mfenced>
+</math>
+</root>
+`,
+      latex: '\\left(\\genfrac{}{}{0pt}{}{n}{k}\\right)',
     },
   ])('converts $name', ({ mathml, latex }) => {
     expect(MathMLToLaTeX.convert(mathml)).toBe(latex);

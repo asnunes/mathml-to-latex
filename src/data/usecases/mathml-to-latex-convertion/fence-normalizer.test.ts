@@ -91,4 +91,23 @@ describe('FenceNormalizer', () => {
     expect(numerator.children).toHaveLength(1);
     expect(numerator.children[0]).toMatchObject({ name: 'mfenced', attributes: { open: '(', close: ')' } });
   });
+
+  it('handles deeply nested fences without overflowing the stack', () => {
+    const depth = 20000;
+    const openers = Array.from({ length: depth }, () => mo('('));
+    const closers = Array.from({ length: depth }, () => mo(')'));
+    const root = parent([...openers, mi('x'), ...closers]);
+
+    expect(() => new FenceNormalizer(root).normalize()).not.toThrow();
+
+    // Walk down the nested mfenced chain and confirm the full depth was paired.
+    let node = root.children[0];
+    let levels = 0;
+    while (node && node.name === 'mfenced') {
+      levels += 1;
+      node = node.children[0];
+    }
+    expect(levels).toBe(depth);
+    expect(node).toMatchObject({ name: 'mi', value: 'x' });
+  });
 });

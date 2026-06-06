@@ -56,7 +56,7 @@ class FencePairing {
     this._closerByOpener = this._match();
     if (this._closerByOpener.size === 0) return this._children;
 
-    return this._build(0, this._children.length);
+    return this._build();
   }
 
   /** Maps each matched opener index to its closer index via a stack (nearest open wins). */
@@ -64,36 +64,51 @@ class FencePairing {
     const closerByOpener = new Map<number, number>();
     const openIndexes: number[] = [];
 
-    this._children.forEach((child, index) => {
+    for (const [index, child] of this._children.entries()) {
       if (this._isOpener(child)) {
         openIndexes.push(index);
-      } else if (this._isCloser(child) && openIndexes.length > 0) {
-        closerByOpener.set(openIndexes.pop() as number, index);
+        continue;
       }
-    });
+      if (this._isCloser(child) && openIndexes.length > 0) closerByOpener.set(openIndexes.pop() as number, index);
+    }
 
     return closerByOpener;
   }
 
-  /** Rebuilds the `[start, end)` range, recursing into the content of each matched pair. */
-  private _build(start: number, end: number): MathMLElement[] {
-    const result: MathMLElement[] = [];
-    let index = start;
+  /**
+   * Rebuilds the list with each matched pair nested into an `<mfenced>`.
+   *
+   * Uses an explicit frame stack instead of recursion so deeply nested fences
+   * cannot overflow the call stack, matching the iterative design of the rest of
+   * the pipeline. Each open frame collects the content that will become an
+   * `<mfenced>` once its closer is reached.
+   */
+  private _build(): MathMLElement[] {
+    const root: MathMLElement[] = [];
+    const frames: { opener: MathMLElement; closerIndex: number; outer: MathMLElement[] }[] = [];
+    let current = root;
 
-    while (index < end) {
+    for (const [index, child] of this._children.entries()) {
       const closerIndex = this._closerByOpener.get(index);
-      if (closerIndex === undefined || closerIndex >= end) {
-        result.push(this._children[index]);
-        index += 1;
+      if (closerIndex !== undefined) {
+        frames.push({ opener: child, closerIndex, outer: current });
+        current = [];
         continue;
       }
 
-      const content = this._build(index + 1, closerIndex);
-      result.push(this._makeFence(this._children[index], this._children[closerIndex], content));
-      index = closerIndex + 1;
+      const open = frames[frames.length - 1];
+      if (open && open.closerIndex === index) {
+        const content = current;
+        frames.pop();
+        current = open.outer;
+        current.push(this._makeFence(open.opener, child, content));
+        continue;
+      }
+
+      current.push(child);
     }
 
-    return result;
+    return root;
   }
 
   /** Builds an `<mfenced>` around the paired content, passing a lone child directly to preserve matrix mode. */

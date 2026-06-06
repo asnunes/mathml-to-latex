@@ -1,6 +1,6 @@
 {
   "name": "mathml-to-latex",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "A JavaScript tool to convert mathml string to LaTeX string",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -18,6 +18,9 @@
     "./dist/*": "./dist/*"
   },
   "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "prebuild": "rm -rf ./dist",
     "build": "rollup -c",

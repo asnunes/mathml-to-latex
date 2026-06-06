@@ -1,5 +1,5 @@
 import { MO } from './mo';
-import { MathMLElement } from '../../../protocols/mathml-element';
+import { MathMLElement } from '../../../../protocols/mathml-element';
 
 const mo = (value: string): MathMLElement => ({ name: 'mo', value, children: [], attributes: {} });
 

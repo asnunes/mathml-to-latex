@@ -1,4 +1,4 @@
-import { MathMLToLaTeX } from '../../../..';
+import { MathMLToLaTeX } from '../../../../..';
 
 describe('mfenced (integration)', () => {
   it.each([

@@ -1,5 +1,5 @@
 import { MText } from './mtext';
-import { MathMLElement } from '../../../protocols/mathml-element';
+import { MathMLElement } from '../../../../protocols/mathml-element';
 
 const mtext = (value: string, attributes: Record<string, string> = {}): MathMLElement => ({
   name: 'mtext',

@@ -25,14 +25,40 @@ Pick the level from the highest-impact commit:
 
 Note: changing the generated LaTeX for some inputs is **not** a breaking change by itself; the public API is what counts. New `feat` always beats fixes when choosing the level.
 
-## 2. Branch off the latest main
+## 2. Smoke-test the real package before bumping
+
+Before touching the version, prove the built artifact actually works when consumed like a real npm install. This catches broken `exports` maps, missing `dist` files, stray files leaking into the tarball, and changes that didn't make it into the build. Do it from a clean tree on the latest `main`.
+
+```bash
+# 1. Build and pack exactly what would be published (publish.yml runs `npm run build` then publish)
+npm run build
+npm pack --pack-destination /tmp
+
+# 2. Inspect the tarball contents: only dist/, README, LICENSE, package.json should ship.
+#    Anything else (e.g. .claude/, src/, test files) is a packaging leak to fix first.
+tar -tzf /tmp/mathml-to-latex-*.tgz
+
+# 3. Install the tarball into a throwaway project, NOT a workspace link
+rm -rf /tmp/mtl-smoke && mkdir -p /tmp/mtl-smoke && cd /tmp/mtl-smoke && npm init -y >/dev/null
+npm install /tmp/mathml-to-latex-*.tgz
+```
+
+Then validate, in that separate project:
+
+- **README usage works in both module systems.** Run the README's own examples via `import { MathMLToLaTeX } from 'mathml-to-latex'` (`.mjs`) and `require('mathml-to-latex')` (`.cjs`), asserting the documented outputs (`a + b`, the `bmatrix` matrix, `2 + 2 = 4`).
+- **Types resolve.** A tiny `.ts` file importing the package should type-check (`npx tsc --noEmit --moduleResolution bundler ...`) with `convert()` typed as `string`.
+- **Every change since the last tag is present.** For each `feat`/`fix` since `$LAST`, pull the expected LaTeX from its test (`git show <commit> -- '*.test.ts'`) and assert the installed package produces it. This confirms the build carries the fixes, not just that it loads.
+
+Only proceed to the bump once this passes. If the tarball leaks files or a change is missing, fix that first (separate PR/commit) and do not release a broken package.
+
+## 3. Branch off the latest main
 
 ```bash
 git fetch origin --quiet
 git checkout -b chore/bump-version-<VERSION> origin/main
 ```
 
-## 3. Bump via npm (never hand-edit the lockfile graph)
+## 4. Bump via npm (never hand-edit the lockfile graph)
 
 ```bash
 npm version --no-git-tag-version <VERSION>
@@ -46,7 +72,7 @@ Editing `package.json`'s `version` by hand and copying it into the two root `ver
 git diff --stat   # package.json | 2 +-   package-lock.json | 4 ++--
 ```
 
-## 4. Commit, push, open the PR
+## 5. Commit, push, open the PR
 
 Commit message follows the project's semantic style (see `~/.claude/CLAUDE.md`):
 
@@ -59,6 +85,6 @@ gh pr create --base main --title "chore(release): bump version to <VERSION>" --b
 
 Keep the PR body short: a one-line summary plus the feat/fix highlights since the last release. No long descriptions, no test/todo sections (per user PR conventions). Do not add the version tag yourself.
 
-## 5. After merge: cut the release
+## 6. After merge: cut the release
 
 Once this bump PR is merged, use the **create-release** skill to publish. It creates a GitHub Release with tag `v<VERSION>` from main, and that `release: published` event triggers `publish.yml`, which builds, tests, and runs `npm publish` via Trusted Publishing. The bump must be on `main` before the release is created.

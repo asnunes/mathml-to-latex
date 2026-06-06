@@ -79,7 +79,7 @@ describe('mfrac (integration)', () => {
       latex: '\\genfrac{}{}{0pt}{}{n}{k}',
     },
     {
-      name: 'a binomial coefficient (bar-less fraction wrapped in parentheses)',
+      name: 'a binomial coefficient (bar-less fraction wrapped in bare mo parentheses)',
       mathml: `
 <root>
 <math>
@@ -98,7 +98,7 @@ describe('mfrac (integration)', () => {
 </math>
 </root>
 `,
-      latex: '\\left(\\right. \\genfrac{}{}{0pt}{}{n}{k} \\left.\\right)',
+      latex: '\\left(\\genfrac{}{}{0pt}{}{n}{k}\\right)',
     },
     {
       name: 'a binomial coefficient (bar-less fraction wrapped in mfenced for auto-sizing parentheses)',

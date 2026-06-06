@@ -1,6 +1,7 @@
 import { MathMLElement } from '../../protocols/mathml-element';
 import { MathMLElementToLatexConverterAdapter } from './mathml-element-to-latex-converter-adapter';
 import { setConversionMemo } from '../../helpers/mathml-element-to-latex-converter';
+import { FenceNormalizer } from './fence-normalizer';
 
 /**
  * Converts a MathML element tree to LaTeX iteratively, using an explicit stack
@@ -13,6 +14,7 @@ import { setConversionMemo } from '../../helpers/mathml-element-to-latex-convert
  * @returns the LaTeX string for the whole tree.
  */
 export const convertTreeToLatex = (root: MathMLElement): string => {
+  new FenceNormalizer(root).normalize();
   annotateInnerTables(root);
 
   const memo = new Map<MathMLElement, string>();

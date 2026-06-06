@@ -123,6 +123,17 @@ DOM nodes, only this internal tree.
 ## Conventions
 
 - **All code and comments in English**, even in non-English conversations.
+- **Object-oriented by default.** Any unit with real logic is a class, not a bag
+  of exported functions. Converters implement `ToLaTeXConverter`; helpers and
+  value objects are classes (`GenericWrapper`, `JoinWithManySeparators`,
+  `LineThickness`); a converter that needs collaborators keeps them as classes in
+  the same file (`MO` → `Operator`, `MFenced` → `Vector`/`Matrix`/`Separators`,
+  `FenceNormalizer` → `FencePairing`). A file is named after the kebab-case of the
+  class it exports (`line-thickness.ts` → `LineThickness`). The only free
+  functions are the two tree pre-passes in `tree-to-latex.ts`
+  (`convertTreeToLatex`, `annotateInnerTables`) — treat them as the exception, not
+  the template; new tree passes should be classes invoked as
+  `new Thing(root).run()`.
 - **File layout:** exported/public code first, then private and non-exported
   code; private methods go below public ones, and type/interface definitions go
   at the bottom of the file.

@@ -1,5 +1,5 @@
-import { MathMLToLaTeX } from '../../../..';
-import { InvalidNumberOfChildrenError } from '../../../errors/invalid-number-of-children';
+import { MathMLToLaTeX } from '../../../../..';
+import { InvalidNumberOfChildrenError } from '../../../../errors/invalid-number-of-children';
 
 describe('mfrac (integration)', () => {
   it.each([

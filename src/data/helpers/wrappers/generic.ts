@@ -9,12 +9,21 @@ export class GenericWrapper {
   protected _close: string;
 
   constructor(open: string, close: string) {
-    this._open = '\\left' + open;
-    this._close = '\\right' + close;
+    this._open = '\\left' + this._escapeDelimiter(open);
+    this._close = '\\right' + this._escapeDelimiter(close);
   }
 
   /** @returns `str` wrapped in `\left`/`\right` delimiters. */
   wrap(str: string): string {
     return new Wrapper(this._open, this._close).wrap(str);
+  }
+
+  /**
+   * Braces are grouping characters in LaTeX, so a bare `{`/`}` is not a valid
+   * `\left`/`\right` delimiter. They must be escaped to `\{`/`\}`.
+   */
+  private _escapeDelimiter(delimiter: string): string {
+    if (delimiter === '{' || delimiter === '}') return '\\' + delimiter;
+    return delimiter;
   }
 }

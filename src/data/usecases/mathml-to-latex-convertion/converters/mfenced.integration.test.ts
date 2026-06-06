@@ -26,7 +26,7 @@ describe('mfenced (integration)', () => {
 </math>
 </root>
 `,
-      latex: '\\left{3\\right)',
+      latex: '\\left\\{3\\right)',
     },
     {
       name: 'converts mfenced wrapping it content between parenthesis',
@@ -52,7 +52,20 @@ describe('mfenced (integration)', () => {
 </math>
 </root>
 `,
-      latex: '\\left{3\\right)',
+      latex: '\\left\\{3\\right)',
+    },
+    {
+      name: 'escapes brace fences to valid \\left\\{ ... \\right\\} delimiters (issue #66)',
+      mathml: `
+<root>
+<math>
+<mfenced open="{" close="}">
+  <mn>3</mn>
+</mfenced>
+</math>
+</root>
+`,
+      latex: '\\left\\{3\\right\\}',
     },
     {
       name: 'converts mfenced wrapping it content inside parenthesis and joining using commas',
@@ -355,6 +368,6 @@ describe('mfenced (integration)', () => {
 
   it('renders an mtable with mismatched fences as a wrapped generic matrix', () => {
     const mathml = `<math><mfenced open="[" close="}"><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable></mfenced></math>`;
-    expect(MathMLToLaTeX.convert(mathml)).toBe('\\left[\\begin{matrix} 1 & 2 \\\\ 3 & 4 \\end{matrix}\\right}');
+    expect(MathMLToLaTeX.convert(mathml)).toBe('\\left[\\begin{matrix} 1 & 2 \\\\ 3 & 4 \\end{matrix}\\right\\}');
   });
 });

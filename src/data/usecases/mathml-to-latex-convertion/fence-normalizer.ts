@@ -45,70 +45,56 @@ export class FenceNormalizer {
 /** Pairs the fence operators within a single list of sibling nodes. */
 class FencePairing {
   private readonly _children: MathMLElement[];
-  private _closerByOpener: Map<number, number> = new Map();
 
   constructor(children: MathMLElement[]) {
     this._children = children;
   }
 
-  /** @returns a rewritten list with matched pairs turned into `<mfenced>`, or the original when nothing pairs. */
-  pair(): MathMLElement[] {
-    this._closerByOpener = this._match();
-    if (this._closerByOpener.size === 0) return this._children;
-
-    return this._build();
-  }
-
-  /** Maps each matched opener index to its closer index via a stack (nearest open wins). */
-  private _match(): Map<number, number> {
-    const closerByOpener = new Map<number, number>();
-    const openIndexes: number[] = [];
-
-    for (const [index, child] of this._children.entries()) {
-      if (this._isOpener(child)) {
-        openIndexes.push(index);
-        continue;
-      }
-      if (this._isCloser(child) && openIndexes.length > 0) closerByOpener.set(openIndexes.pop() as number, index);
-    }
-
-    return closerByOpener;
-  }
-
   /**
-   * Rebuilds the list with each matched pair nested into an `<mfenced>`.
+   * @returns a rewritten list with each matched pair nested into an `<mfenced>`,
+   * or the original list (same reference) when nothing pairs.
    *
-   * Uses an explicit frame stack instead of recursion so deeply nested fences
-   * cannot overflow the call stack, matching the iterative design of the rest of
-   * the pipeline. Each open frame collects the content that will become an
-   * `<mfenced>` once its closer is reached.
+   * Single left-to-right pass: an opener starts a frame that collects its
+   * content, a closer turns the innermost open frame into an `<mfenced>`, and any
+   * frame still open at the end (an unmatched opener) is spilled back so it stays
+   * a plain self-balanced delimiter. No recursion and no per-pop copying, so it
+   * stays `O(n)` even for deeply nested or unbalanced input.
    */
-  private _build(): MathMLElement[] {
+  pair(): MathMLElement[] {
     const root: MathMLElement[] = [];
-    const frames: { opener: MathMLElement; closerIndex: number; outer: MathMLElement[] }[] = [];
+    const openFrames: Frame[] = [];
     let current = root;
+    let paired = false;
 
-    for (const [index, child] of this._children.entries()) {
-      const closerIndex = this._closerByOpener.get(index);
-      if (closerIndex !== undefined) {
-        frames.push({ opener: child, closerIndex, outer: current });
-        current = [];
+    for (const child of this._children) {
+      if (this._isOpener(child)) {
+        const frame: Frame = { opener: child, content: [] };
+        openFrames.push(frame);
+        current = frame.content;
         continue;
       }
 
-      const open = frames[frames.length - 1];
-      if (open && open.closerIndex === index) {
-        const content = current;
-        frames.pop();
-        current = open.outer;
-        current.push(this._makeFence(open.opener, child, content));
+      if (this._isCloser(child) && openFrames.length > 0) {
+        const frame = openFrames.pop() as Frame;
+        current = openFrames.length > 0 ? openFrames[openFrames.length - 1].content : root;
+        current.push(this._makeFence(frame.opener, child, frame.content));
+        paired = true;
         continue;
       }
 
       current.push(child);
     }
 
+    if (!paired) return this._children;
+
+    for (const frame of openFrames) this._spill(frame, root);
     return root;
+  }
+
+  /** Spills an unmatched opener and its collected content back into the result, keeping source order. */
+  private _spill(frame: Frame, target: MathMLElement[]): void {
+    target.push(frame.opener);
+    for (const node of frame.content) target.push(node);
   }
 
   /** Builds an `<mfenced>` around the paired content, passing a lone child directly to preserve matrix mode. */
@@ -137,3 +123,9 @@ class FencePairing {
 
 const OPENERS = new Set(['(', '[', '{']);
 const CLOSERS = new Set([')', ']', '}']);
+
+/** An open fence and the sibling content collected since, awaiting a closer. */
+interface Frame {
+  opener: MathMLElement;
+  content: MathMLElement[];
+}

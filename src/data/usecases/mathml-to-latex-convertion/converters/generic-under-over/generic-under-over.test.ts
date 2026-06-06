@@ -1,6 +1,6 @@
 import { GenericUnderOver } from './generic-under-over';
-import { MathMLElement } from '../../../protocols/mathml-element';
-import { InvalidNumberOfChildrenError } from '../../../errors/invalid-number-of-children';
+import { MathMLElement } from '../../../../protocols/mathml-element';
+import { InvalidNumberOfChildrenError } from '../../../../errors/invalid-number-of-children';
 
 const node = (name: string, value: string): MathMLElement => ({ name, value, children: [], attributes: {} });
 const wrap = (name: 'mover' | 'munder', children: MathMLElement[]): MathMLElement => ({

@@ -1,8 +1,8 @@
-import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
-import { MathMLElement } from '../../../protocols/mathml-element';
-import { mathMLElementToLaTeXConverter } from '../../../helpers/mathml-element-to-latex-converter';
-import { InvalidNumberOfChildrenError } from '../../../errors';
-import { latexAccents } from '../../../../syntax/latex-accents';
+import { ToLaTeXConverter } from '../../../../../domain/usecases/to-latex-converter';
+import { MathMLElement } from '../../../../protocols/mathml-element';
+import { mathMLElementToLaTeXConverter } from '../../../../helpers/mathml-element-to-latex-converter';
+import { InvalidNumberOfChildrenError } from '../../../../errors';
+import { UnderOverSetter, TagTypes } from './under-over-setter';
 
 /**
  * Converts a MathML `<mover>` or `<munder>` element into LaTeX.
@@ -42,26 +42,4 @@ export class GenericUnderOver implements ToLaTeXConverter {
     const type = this._mathmlElement.name.match(/under/) ? TagTypes.Under : TagTypes.Over;
     return new UnderOverSetter(type).apply(content, accent);
   }
-}
-
-class UnderOverSetter {
-  private readonly _type;
-
-  constructor(type: TagTypes) {
-    this._type = type;
-  }
-
-  apply(content: string, accent: string) {
-    return latexAccents.includes(accent) ? `${accent}{${content}}` : `${this._defaultCommand}{${accent}}{${content}}`;
-  }
-
-  private get _defaultCommand(): string {
-    if (this._type === TagTypes.Under) return '\\underset';
-    return '\\overset';
-  }
-}
-
-enum TagTypes {
-  Under,
-  Over,
 }

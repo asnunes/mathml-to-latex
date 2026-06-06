@@ -1,6 +1,7 @@
-import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
-import { MathMLElement } from '../../../protocols/mathml-element';
-import { MI } from './mi';
+import { ToLaTeXConverter } from '../../../../../domain/usecases/to-latex-converter';
+import { MathMLElement } from '../../../../protocols/mathml-element';
+import { MI } from '../mi';
+import { TextCommand } from './text-command';
 
 /**
  * Converts a MathML `<mtext>` element into LaTeX.
@@ -65,42 +66,6 @@ export class MText implements ToLaTeXConverter {
         return new TextCommand(attributes.mathvariant).apply(char.value);
       })
       .join('');
-  }
-}
-
-/** Wraps a text value in the LaTeX text/font command(s) matching the given `mathvariant`. */
-class TextCommand {
-  private readonly _mathvariant: string;
-
-  constructor(mathvariant: string | undefined) {
-    this._mathvariant = mathvariant || 'normal';
-  }
-
-  apply(value: string) {
-    return this._commands.reduce((acc, command, index) => {
-      if (index === 0) return `${command}{${value}}`;
-      return `${command}{${acc}}`;
-    }, '');
-  }
-
-  private get _commands(): string[] {
-    switch (this._mathvariant) {
-      case 'bold':
-        return ['\\textbf'];
-      case 'italic':
-        return ['\\textit'];
-      case 'bold-italic':
-        return ['\\textit', '\\textbf'];
-      case 'double-struck':
-        return ['\\mathbb'];
-      case 'monospace':
-        return ['\\mathtt'];
-      case 'bold-fraktur':
-      case 'fraktur':
-        return ['\\mathfrak'];
-      default:
-        return ['\\text'];
-    }
   }
 }
 

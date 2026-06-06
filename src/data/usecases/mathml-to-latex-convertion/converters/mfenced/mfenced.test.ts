@@ -1,5 +1,5 @@
 import { MFenced } from './mfenced';
-import { MathMLElement } from '../../../protocols/mathml-element';
+import { MathMLElement } from '../../../../protocols/mathml-element';
 
 const mn = (v: string): MathMLElement => ({ name: 'mn', value: v, children: [], attributes: {} });
 const mtd = (c: MathMLElement): MathMLElement => ({ name: 'mtd', value: '', children: [c], attributes: {} });

@@ -9,8 +9,8 @@ export class GenericWrapper {
   protected _close: string;
 
   constructor(open: string, close: string) {
-    this._open = '\\left' + this._escapeDelimiter(open);
-    this._close = '\\right' + this._escapeDelimiter(close);
+    this._open = '\\left' + this._toLatexDelimiter(open);
+    this._close = '\\right' + this._toLatexDelimiter(close);
   }
 
   /** @returns `str` wrapped in `\left`/`\right` delimiters. */
@@ -18,12 +18,19 @@ export class GenericWrapper {
     return new Wrapper(this._open, this._close).wrap(str);
   }
 
-  /**
-   * Braces are grouping characters in LaTeX, so a bare `{`/`}` is not a valid
-   * `\left`/`\right` delimiter. They must be escaped to `\{`/`\}`.
-   */
-  private _escapeDelimiter(delimiter: string): string {
-    if (delimiter === '{' || delimiter === '}') return '\\' + delimiter;
-    return delimiter;
+  /** Maps a MathML fence character to its valid `\left`/`\right` delimiter form. */
+  private _toLatexDelimiter(delimiter: string): string {
+    return DELIMITER_TRANSLATIONS.get(delimiter) ?? delimiter;
   }
 }
+
+/**
+ * MathML fence characters that are not valid `\left`/`\right` delimiters as-is:
+ * braces are grouping characters (need `\{`/`\}`) and a double bar is the norm
+ * delimiter `\|` (a bare `\left||` is a stretchy bar followed by a literal one).
+ */
+const DELIMITER_TRANSLATIONS = new Map([
+  ['{', '\\{'],
+  ['}', '\\}'],
+  ['||', '\\|'],
+]);

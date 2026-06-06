@@ -426,7 +426,7 @@ export const allMathOperatorsByChar: Record<string, string> = {
   '&#x2191;': '\\uparrow',
   '&#x2190;': '\\leftarrow',
   '|||': '\\left|||\\right.',
-  '||': '\\left||\\right.',
+  '||': '\\left\\|\\right.',
   '|': '\\left|\\right.',
   '&#x2AFE;': '',
   '&#x2AFD;': '//',

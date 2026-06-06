@@ -74,12 +74,81 @@ describe('FenceNormalizer', () => {
     expect(root.children.map((c) => `${c.name}:${c.value}`)).toEqual(['mi:a', 'mo:)']);
   });
 
-  it('leaves vertical bars untouched', () => {
+  it('pairs a matched vertical bar pair (absolute value)', () => {
     const root = parent([mo('|'), mi('a'), mo('|')]);
 
     new FenceNormalizer(root).normalize();
 
-    expect(root.children.map((c) => `${c.name}:${c.value}`)).toEqual(['mo:|', 'mi:a', 'mo:|']);
+    expect(root.children).toHaveLength(1);
+    expect(root.children[0]).toMatchObject({ name: 'mfenced', attributes: { open: '|', close: '|' } });
+    expect(root.children[0].children[0]).toMatchObject({ name: 'mi', value: 'a' });
+  });
+
+  it('toggles bars so consecutive pairs do not cross (|a| + |b|)', () => {
+    const root = parent([mo('|'), mi('a'), mo('|'), mo('+'), mo('|'), mi('b'), mo('|')]);
+
+    new FenceNormalizer(root).normalize();
+
+    expect(root.children.map((c) => `${c.name}:${c.attributes.open ?? c.value}`)).toEqual([
+      'mfenced:|',
+      'mo:+',
+      'mfenced:|',
+    ]);
+  });
+
+  it('leaves an odd (unmatched) bar self-balanced', () => {
+    const root = parent([mo('|'), mi('a'), mo('|'), mi('b'), mo('|')]);
+
+    new FenceNormalizer(root).normalize();
+
+    expect(root.children.map((c) => `${c.name}:${c.attributes.open ?? c.value}`)).toEqual([
+      'mfenced:|',
+      'mi:b',
+      'mo:|',
+    ]);
+  });
+
+  it('nests a bar pair inside parentheses and vice versa', () => {
+    const parens = parent([mo('('), mo('|'), mi('x'), mo('|'), mo(')')]);
+    new FenceNormalizer(parens).normalize();
+    const outer = parens.children[0];
+    expect(outer).toMatchObject({ name: 'mfenced', attributes: { open: '(', close: ')' } });
+    expect(outer.children[0]).toMatchObject({ name: 'mfenced', attributes: { open: '|', close: '|' } });
+
+    const bars = parent([mo('|'), mo('('), mi('x'), mo(')'), mo('|')]);
+    new FenceNormalizer(bars).normalize();
+    const outerBar = bars.children[0];
+    expect(outerBar).toMatchObject({ name: 'mfenced', attributes: { open: '|', close: '|' } });
+    expect(outerBar.children[0]).toMatchObject({ name: 'mfenced', attributes: { open: '(', close: ')' } });
+  });
+
+  it('pairs a matched double bar pair (norm)', () => {
+    const root = parent([mo('||'), mi('a'), mo('||')]);
+
+    new FenceNormalizer(root).normalize();
+
+    expect(root.children).toHaveLength(1);
+    expect(root.children[0]).toMatchObject({ name: 'mfenced', attributes: { open: '||', close: '||' } });
+    expect(root.children[0].children[0]).toMatchObject({ name: 'mi', value: 'a' });
+  });
+
+  it('does not cross single and double bars when improperly nested', () => {
+    const root = parent([mo('|'), mi('a'), mo('||'), mi('b'), mo('|')]);
+
+    new FenceNormalizer(root).normalize();
+
+    // A bar only closes a same-glyph bar on top, so nothing here pairs.
+    expect(root.children.map((c) => `${c.name}:${c.value}`)).toEqual(['mo:|', 'mi:a', 'mo:||', 'mi:b', 'mo:|']);
+  });
+
+  it('nests a single bar pair inside a double bar pair', () => {
+    const root = parent([mo('||'), mo('|'), mi('x'), mo('|'), mo('||')]);
+
+    new FenceNormalizer(root).normalize();
+
+    const outer = root.children[0];
+    expect(outer).toMatchObject({ name: 'mfenced', attributes: { open: '||', close: '||' } });
+    expect(outer.children[0]).toMatchObject({ name: 'mfenced', attributes: { open: '|', close: '|' } });
   });
 
   it('descends into nested elements', () => {

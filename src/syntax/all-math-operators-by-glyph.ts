@@ -423,7 +423,7 @@ export const allMathOperatorsByGlyph: Record<string, string> = {
   '↑': '\\uparrow',
   '←': '\\leftarrow',
   '|||': '\\left|||\\right.',
-  '||': '\\left||\\right.',
+  '||': '\\left\\|\\right.',
   '|': '\\mid',
   '⫾': '',
   '⫽': '//',

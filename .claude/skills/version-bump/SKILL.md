@@ -38,10 +38,15 @@ npm pack --pack-destination /tmp
 #    Anything else (e.g. .claude/, src/, test files) is a packaging leak to fix first.
 tar -tzf /tmp/mathml-to-latex-*.tgz
 
-# 3. Install the tarball into a throwaway project, NOT a workspace link
+# 3. Install the tarball into a throwaway project, NOT a workspace link.
+#    Use a fresh dir AND bypass the cache: repacking the SAME version reuses the
+#    old tarball name, so npm can resolve a stale cached copy and you'd validate
+#    the previous package. --no-cache (or `npm cache clean --force`) forces a re-extract.
 rm -rf /tmp/mtl-smoke && mkdir -p /tmp/mtl-smoke && cd /tmp/mtl-smoke && npm init -y >/dev/null
-npm install /tmp/mathml-to-latex-*.tgz
+npm install --no-cache /tmp/mathml-to-latex-*.tgz
 ```
+
+The authoritative check for what ships is `tar -tzf` on the tarball itself (step 2), which never touches the cache. The install is to validate runtime behavior; keep it cache-free so a re-pack of the same version can't pass on stale bits.
 
 Then validate, in that separate project:
 

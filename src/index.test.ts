@@ -114,7 +114,7 @@ describe('#convert', () => {
     </math>
     `;
 
-    const expectedLatex = `\\text{Required Value}_{\\text{other}} \\geq \\frac{21 f t^{3}}{A C H} \\cdot \\left(\\right. \\frac{I_{o}}{1000 B_{\\text{Btu} / \\text{h}}} \\left.\\right)`;
+    const expectedLatex = `\\text{Required Value}_{\\text{other}} \\geq \\frac{21 f t^{3}}{A C H} \\cdot \\left(\\frac{I_{o}}{1000 B_{\\text{Btu} / \\text{h}}}\\right)`;
 
     const result = MathMLToLaTeX.convert(mathml);
 

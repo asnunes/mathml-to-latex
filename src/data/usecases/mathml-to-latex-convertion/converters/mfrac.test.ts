@@ -23,8 +23,23 @@ describe('MFrac', () => {
     expect(new MFrac(mfrac([mn('n'), mn('k')], { linethickness })).convert()).toBe('\\genfrac{}{}{0pt}{}{n}{k}');
   });
 
-  it('keeps \\frac when linethickness is non-zero', () => {
-    expect(new MFrac(mfrac([mn('1'), mn('2')], { linethickness: '2pt' })).convert()).toBe('\\frac{1}{2}');
+  it.each(['1', 'medium', 'unknownvalue'])('keeps \\frac for default-equivalent linethickness %s', (linethickness) => {
+    expect(new MFrac(mfrac([mn('1'), mn('2')], { linethickness })).convert()).toBe('\\frac{1}{2}');
+  });
+
+  it.each([
+    { linethickness: '2pt', thickness: '2pt' },
+    { linethickness: '0.4mm', thickness: '0.4mm' },
+    { linethickness: '2em', thickness: '2em' },
+    { linethickness: '2', thickness: '0.8pt' },
+    { linethickness: 'thin', thickness: '0.2pt' },
+    { linethickness: 'thick', thickness: '0.8pt' },
+    { linethickness: '3px', thickness: '2.25pt' },
+    { linethickness: '50%', thickness: '0.2pt' },
+  ])('keeps the bar thickness with \\genfrac when linethickness is $linethickness', ({ linethickness, thickness }) => {
+    expect(new MFrac(mfrac([mn('1'), mn('2')], { linethickness })).convert()).toBe(
+      `\\genfrac{}{}{${thickness}}{}{1}{2}`,
+    );
   });
 
   it('throws when it does not have exactly two children', () => {

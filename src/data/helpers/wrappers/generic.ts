@@ -18,15 +18,19 @@ export class GenericWrapper {
     return new Wrapper(this._open, this._close).wrap(str);
   }
 
-  /**
-   * Maps a MathML fence character to a valid `\left`/`\right` delimiter:
-   * braces are grouping characters so a bare `{`/`}` must be escaped to `\{`/`\}`,
-   * and a double bar `||` is the norm delimiter `\|` (a bare `\left||` would be a
-   * stretchy bar followed by a literal one).
-   */
+  /** Maps a MathML fence character to its valid `\left`/`\right` delimiter form. */
   private _toLatexDelimiter(delimiter: string): string {
-    if (delimiter === '{' || delimiter === '}') return '\\' + delimiter;
-    if (delimiter === '||') return '\\|';
-    return delimiter;
+    return DELIMITER_TRANSLATIONS.get(delimiter) ?? delimiter;
   }
 }
+
+/**
+ * MathML fence characters that are not valid `\left`/`\right` delimiters as-is:
+ * braces are grouping characters (need `\{`/`\}`) and a double bar is the norm
+ * delimiter `\|` (a bare `\left||` is a stretchy bar followed by a literal one).
+ */
+const DELIMITER_TRANSLATIONS = new Map([
+  ['{', '\\{'],
+  ['}', '\\}'],
+  ['||', '\\|'],
+]);

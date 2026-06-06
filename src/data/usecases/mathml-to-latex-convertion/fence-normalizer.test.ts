@@ -1,4 +1,4 @@
-import { normalizeFences } from './normalize-fences';
+import { FenceNormalizer } from './fence-normalizer';
 import { MathMLElement } from '../../protocols/mathml-element';
 
 const el = (name: string, value = '', children: MathMLElement[] = []): MathMLElement => ({
@@ -11,11 +11,11 @@ const mo = (value: string): MathMLElement => el('mo', value);
 const mi = (value: string): MathMLElement => el('mi', value);
 const parent = (children: MathMLElement[]): MathMLElement => el('mrow', '', children);
 
-describe('normalizeFences', () => {
+describe('FenceNormalizer', () => {
   it('pairs sibling ( ) into an mfenced and passes a lone child directly', () => {
     const root = parent([mo('('), mi('x'), mo(')')]);
 
-    normalizeFences(root);
+    new FenceNormalizer(root).normalize();
 
     expect(root.children).toHaveLength(1);
     const fenced = root.children[0];
@@ -28,7 +28,7 @@ describe('normalizeFences', () => {
   it('wraps multi-node content in a single mrow to avoid separators', () => {
     const root = parent([mo('('), mi('a'), mo('+'), mi('b'), mo(')')]);
 
-    normalizeFences(root);
+    new FenceNormalizer(root).normalize();
 
     const fenced = root.children[0];
     expect(fenced.name).toBe('mfenced');
@@ -40,7 +40,7 @@ describe('normalizeFences', () => {
   it('nests pairs', () => {
     const root = parent([mo('('), mo('['), mi('a'), mo(']'), mo(')')]);
 
-    normalizeFences(root);
+    new FenceNormalizer(root).normalize();
 
     expect(root.children).toHaveLength(1);
     const outer = root.children[0];
@@ -53,7 +53,7 @@ describe('normalizeFences', () => {
   it('pairs mixed types (( with ])', () => {
     const root = parent([mo('('), mi('a'), mo(']')]);
 
-    normalizeFences(root);
+    new FenceNormalizer(root).normalize();
 
     expect(root.children[0]).toMatchObject({ name: 'mfenced', attributes: { open: '(', close: ']' } });
   });
@@ -61,7 +61,7 @@ describe('normalizeFences', () => {
   it('leaves an unmatched opener untouched', () => {
     const root = parent([mo('('), mi('a')]);
 
-    normalizeFences(root);
+    new FenceNormalizer(root).normalize();
 
     expect(root.children.map((c) => `${c.name}:${c.value}`)).toEqual(['mo:(', 'mi:a']);
   });
@@ -69,7 +69,7 @@ describe('normalizeFences', () => {
   it('leaves an unmatched closer untouched', () => {
     const root = parent([mi('a'), mo(')')]);
 
-    normalizeFences(root);
+    new FenceNormalizer(root).normalize();
 
     expect(root.children.map((c) => `${c.name}:${c.value}`)).toEqual(['mi:a', 'mo:)']);
   });
@@ -77,7 +77,7 @@ describe('normalizeFences', () => {
   it('leaves vertical bars untouched', () => {
     const root = parent([mo('|'), mi('a'), mo('|')]);
 
-    normalizeFences(root);
+    new FenceNormalizer(root).normalize();
 
     expect(root.children.map((c) => `${c.name}:${c.value}`)).toEqual(['mo:|', 'mi:a', 'mo:|']);
   });
@@ -85,7 +85,7 @@ describe('normalizeFences', () => {
   it('descends into nested elements', () => {
     const root = parent([el('mfrac', '', [parent([mo('('), mi('x'), mo(')')]), mi('y')])]);
 
-    normalizeFences(root);
+    new FenceNormalizer(root).normalize();
 
     const numerator = root.children[0].children[0];
     expect(numerator.children).toHaveLength(1);

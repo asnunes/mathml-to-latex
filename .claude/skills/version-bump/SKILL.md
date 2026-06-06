@@ -38,7 +38,7 @@ git checkout -b chore/bump-version-<VERSION> origin/main
 npm version --no-git-tag-version <VERSION>
 ```
 
-This updates the root `version` in both `package.json` and `package-lock.json` consistently. `--no-git-tag-version` stops npm from creating its own commit/tag — the tag is created later by the GitHub Release.
+This updates the root `version` in both `package.json` and `package-lock.json` consistently. `--no-git-tag-version` stops npm from creating its own commit/tag, since the tag is created later by the GitHub Release.
 
 Editing `package.json`'s `version` by hand and copying it into the two root `version` fields of `package-lock.json` produces the identical result and is safe, but `npm version` is preferred: it guarantees the two files stay in sync and never risks touching a dependency entry that happens to share the version string. Verify the diff is exactly 3 lines:
 
@@ -59,6 +59,6 @@ gh pr create --base main --title "chore(release): bump version to <VERSION>" --b
 
 Keep the PR body short: a one-line summary plus the feat/fix highlights since the last release. No long descriptions, no test/todo sections (per user PR conventions). Do not add the version tag yourself.
 
-## 5. After merge (not part of this skill, for reference)
+## 5. After merge: cut the release
 
-Create a GitHub Release with tag `v<VERSION>` from main. That `release: published` event triggers `publish.yml`, which builds, tests, and runs `npm publish` via Trusted Publishing.
+Once this bump PR is merged, use the **create-release** skill to publish. It creates a GitHub Release with tag `v<VERSION>` from main, and that `release: published` event triggers `publish.yml`, which builds, tests, and runs `npm publish` via Trusted Publishing. The bump must be on `main` before the release is created.

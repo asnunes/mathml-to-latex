@@ -18,6 +18,9 @@
     "./dist/*": "./dist/*"
   },
   "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "prebuild": "rm -rf ./dist",
     "build": "rollup -c",

@@ -64,9 +64,30 @@ describe('normalize-fences (integration)', () => {
       latex: '\\left(a\\right) \\left|\\right. b',
     },
     {
-      name: 'double bars are left untouched',
+      name: 'a matched double bar pair (norm) renders with \\| delimiters',
       mathml: '<math><mrow><mo>||</mo><mi>a</mi><mo>||</mo></mrow></math>',
-      latex: '\\left||\\right. a \\left||\\right.',
+      latex: '\\left\\|a\\right\\|',
+    },
+    {
+      name: 'a double bar pair around a table becomes a Vmatrix',
+      mathml: `
+<math>
+  <mrow>
+    <mo>||</mo>
+    <mtable>
+      <mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr>
+      <mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr>
+    </mtable>
+    <mo>||</mo>
+  </mrow>
+</math>
+`,
+      latex: '\\begin{Vmatrix} 1 & 2 \\\\ 3 & 4 \\end{Vmatrix}',
+    },
+    {
+      name: 'an unmatched double bar stays a valid self-balanced norm delimiter',
+      mathml: '<math><mrow><mo>(</mo><mi>a</mi><mo>)</mo><mo>||</mo><mi>b</mi></mrow></math>',
+      latex: '\\left(a\\right) \\left\\|\\right. b',
     },
     {
       // A single separator bar (divides, such-that, evaluated-at) never pairs,

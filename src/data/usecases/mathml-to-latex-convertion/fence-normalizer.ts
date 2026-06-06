@@ -15,10 +15,11 @@ import { MathMLElement } from '../../protocols/mathml-element';
  * Pairing is positional (a closer matches the nearest open fence) and may mix
  * types (`(` with `]`), which `<mfenced>` renders as valid asymmetric
  * delimiters. Parentheses, square brackets and braces are directional. Vertical
- * bars (`|`) share one glyph for both sides, so they toggle: a bar opens a pair
- * unless one is already open at the current level, in which case it closes it
- * (so `|x|` becomes `\left|x\right|`). Double bars (`||`) and any fence that does
- * not find a match are left untouched as valid self-balanced delimiters.
+ * bars (`|`) and double bars (`||`) share one glyph for both sides, so they
+ * toggle: a bar opens a pair unless a same-glyph bar is already open at the
+ * current level, in which case it closes it (so `|x|` becomes `\left|x\right|`
+ * and `||x||` becomes the norm `\left\|x\right\|`). Any fence that does not find
+ * a match is left untouched as a valid self-balanced delimiter.
  */
 export class FenceNormalizer {
   private readonly _root: MathMLElement;
@@ -116,22 +117,23 @@ class FencePairing {
     return { name: 'mrow', value: '', children, attributes: {} };
   }
 
-  /** A directional opener, or a vertical bar when no bar is open at the current level. */
+  /** A directional opener, or a vertical bar that does not close the current frame. */
   private _opensFrame(child: MathMLElement, top: Frame | undefined): boolean {
     if (this._isOpener(child)) return true;
-    return this._isBar(child) && !this._isBarFrame(top);
+    return this._isBar(child) && !this._closesBar(child, top);
   }
 
-  /** A directional closer matching a directional frame, or a bar closing an open bar frame. */
+  /** A directional closer matching a directional frame, or a bar closing a same-glyph bar frame. */
   private _closesFrame(child: MathMLElement, top: Frame | undefined): boolean {
     if (top === undefined) return false;
     if (this._isCloser(child) && this._isOpener(top.opener)) return true;
-    return this._isBar(child) && this._isBarFrame(top);
+    return this._closesBar(child, top);
   }
 
-  /** Whether the frame was opened by a vertical bar. */
-  private _isBarFrame(frame: Frame | undefined): boolean {
-    return frame !== undefined && this._isBar(frame.opener);
+  /** Whether `child` is a bar that closes `top`, i.e. `top` is a bar frame opened by the same glyph. */
+  private _closesBar(child: MathMLElement, top: Frame | undefined): boolean {
+    if (top === undefined || !this._isBar(child) || !this._isBar(top.opener)) return false;
+    return top.opener.value.trim() === child.value.trim();
   }
 
   private _isOpener(element: MathMLElement): boolean {
@@ -143,12 +145,13 @@ class FencePairing {
   }
 
   private _isBar(element: MathMLElement): boolean {
-    return element.name === 'mo' && element.value.trim() === '|';
+    return element.name === 'mo' && BARS.has(element.value.trim());
   }
 }
 
 const OPENERS = new Set(['(', '[', '{']);
 const CLOSERS = new Set([')', ']', '}']);
+const BARS = new Set(['|', '||']);
 
 /** An open fence and the sibling content collected since, awaiting a closer. */
 interface Frame {

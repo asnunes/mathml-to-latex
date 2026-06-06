@@ -12,4 +12,8 @@ describe('GenericWrapper', () => {
   ])('escapes a $name to a valid LaTeX delimiter (issue #66)', ({ open, close, latex }) => {
     expect(new GenericWrapper(open, close).wrap('x')).toBe(latex);
   });
+
+  it('maps a double bar to the norm delimiter', () => {
+    expect(new GenericWrapper('||', '||').wrap('x')).toBe('\\left\\|x\\right\\|');
+  });
 });

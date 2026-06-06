@@ -65,6 +65,28 @@ describe('mo (integration)', () => {
 `,
       latex: 'a \\Rightarrow b',
     },
+    {
+      name: 'an opening brace operator into an escaped delimiter (issue #66)',
+      mathml: `
+<root>
+<math>
+  <mo>{</mo>
+</math>
+</root>
+`,
+      latex: '\\left\\{\\right.',
+    },
+    {
+      name: 'a closing brace operator into an escaped delimiter (issue #66)',
+      mathml: `
+<root>
+<math>
+  <mo>}</mo>
+</math>
+</root>
+`,
+      latex: '\\left.\\right\\}',
+    },
   ])('converts $name', ({ mathml, latex }) => {
     expect(MathMLToLaTeX.convert(mathml)).toBe(latex);
   });

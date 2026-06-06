@@ -14,9 +14,11 @@ import { MathMLElement } from '../../protocols/mathml-element';
  *
  * Pairing is positional (a closer matches the nearest open fence) and may mix
  * types (`(` with `]`), which `<mfenced>` renders as valid asymmetric
- * delimiters. Only parentheses, square brackets and braces participate; vertical
- * bars are ambiguous (same glyph on both sides) and are left untouched, as is
- * any fence that does not find a match.
+ * delimiters. Parentheses, square brackets and braces are directional. Vertical
+ * bars (`|`) share one glyph for both sides, so they toggle: a bar opens a pair
+ * unless one is already open at the current level, in which case it closes it
+ * (so `|x|` becomes `\left|x\right|`). Double bars (`||`) and any fence that does
+ * not find a match are left untouched as valid self-balanced delimiters.
  */
 export class FenceNormalizer {
   private readonly _root: MathMLElement;
@@ -67,14 +69,16 @@ class FencePairing {
     let paired = false;
 
     for (const child of this._children) {
-      if (this._isOpener(child)) {
+      const top = openFrames[openFrames.length - 1];
+
+      if (this._opensFrame(child, top)) {
         const frame: Frame = { opener: child, content: [] };
         openFrames.push(frame);
         current = frame.content;
         continue;
       }
 
-      if (this._isCloser(child) && openFrames.length > 0) {
+      if (this._closesFrame(child, top)) {
         const frame = openFrames.pop() as Frame;
         current = openFrames.length > 0 ? openFrames[openFrames.length - 1].content : root;
         current.push(this._makeFence(frame.opener, child, frame.content));
@@ -112,12 +116,34 @@ class FencePairing {
     return { name: 'mrow', value: '', children, attributes: {} };
   }
 
+  /** A directional opener, or a vertical bar when no bar is open at the current level. */
+  private _opensFrame(child: MathMLElement, top: Frame | undefined): boolean {
+    if (this._isOpener(child)) return true;
+    return this._isBar(child) && !this._isBarFrame(top);
+  }
+
+  /** A directional closer matching a directional frame, or a bar closing an open bar frame. */
+  private _closesFrame(child: MathMLElement, top: Frame | undefined): boolean {
+    if (top === undefined) return false;
+    if (this._isCloser(child) && this._isOpener(top.opener)) return true;
+    return this._isBar(child) && this._isBarFrame(top);
+  }
+
+  /** Whether the frame was opened by a vertical bar. */
+  private _isBarFrame(frame: Frame | undefined): boolean {
+    return frame !== undefined && this._isBar(frame.opener);
+  }
+
   private _isOpener(element: MathMLElement): boolean {
     return element.name === 'mo' && OPENERS.has(element.value.trim());
   }
 
   private _isCloser(element: MathMLElement): boolean {
     return element.name === 'mo' && CLOSERS.has(element.value.trim());
+  }
+
+  private _isBar(element: MathMLElement): boolean {
+    return element.name === 'mo' && element.value.trim() === '|';
   }
 }
 

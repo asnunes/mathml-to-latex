@@ -22,9 +22,6 @@
           <h2 class="pane-title">MathML source</h2>
           <textarea id="mathml-input" spellcheck="false" rows="12" class="code-input"></textarea>
           <p id="convert-error" class="message hidden"></p>
-          <h2 class="pane-title">MathML rendered <span class="normal-case font-normal">MathJax (mml)</span></h2>
-          <div id="mathml-render" class="render-box"></div>
-          <p id="mathml-render-error" class="message hidden"></p>
         </section>
 
         <section class="rounded-xl border border-zinc-200 bg-white p-4">
@@ -36,6 +33,15 @@
           </h2>
           <pre id="latex-output" class="code-input m-0 min-h-12 break-all whitespace-pre-wrap"></pre>
           <p id="katex-status" class="message"></p>
+        </section>
+
+        <section class="rounded-xl border border-zinc-200 bg-white p-4">
+          <h2 class="pane-title">MathML rendered <span class="normal-case font-normal">MathJax (mml)</span></h2>
+          <div id="mathml-render" class="render-box"></div>
+          <p id="mathml-render-error" class="message hidden"></p>
+        </section>
+
+        <section class="rounded-xl border border-zinc-200 bg-white p-4">
           <h2 class="pane-title">LaTeX rendered <span class="normal-case font-normal">MathJax (tex)</span></h2>
           <div id="latex-render" class="render-box"></div>
         </section>

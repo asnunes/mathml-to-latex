@@ -121,6 +121,46 @@ describe('#convert', () => {
     expect(result).toBe(expectedLatex);
   });
 
+  describe('invisible operators (U+2061-U+2064)', () => {
+    it.each([
+      {
+        name: 'function application (U+2061)',
+        mathml: '<math><mi>sin</mi><mo>&#x2061;</mo><mi>x</mi></math>',
+        expected: 'sin x',
+      },
+      {
+        name: 'function application before fences',
+        mathml: '<math><mi>f</mi><mo>&#x2061;</mo><mo>(</mo><mi>x</mi><mo>)</mo></math>',
+        expected: 'f \\left(x\\right)',
+      },
+      {
+        name: 'invisible times (U+2062)',
+        mathml: '<math><mn>2</mn><mo>&#x2062;</mo><mi>x</mi></math>',
+        expected: '2 x',
+      },
+      {
+        name: 'invisible separator (U+2063)',
+        mathml: '<math><mn>1</mn><mo>&#x2063;</mo><mn>2</mn></math>',
+        expected: '1 2',
+      },
+      {
+        name: 'invisible plus (U+2064)',
+        mathml: '<math><mn>1</mn><mo>&#x2064;</mo><mn>2</mn></math>',
+        expected: '1 2',
+      },
+      {
+        name: 'invisible operator inside mtext',
+        mathml: '<math><mtext>f&#x2061;x</mtext></math>',
+        expected: '\\text{f}\\text{x}',
+      },
+    ])('should drop $name instead of leaking the raw character', ({ mathml, expected }) => {
+      const result = MathMLToLaTeX.convert(mathml);
+
+      expect(result).toBe(expected);
+      expect(result).not.toMatch(/[⁡-⁤]/);
+    });
+  });
+
   it('should correctly convert mmultiscripts with empty mprescripts', () => {
     const mathml = `
       <math xmlns="http://www.w3.org/1998/Math/MathML">

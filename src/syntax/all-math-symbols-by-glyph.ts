@@ -5,6 +5,11 @@
  */
 export const allMathSymbolsByGlyph: Record<string, string> = {
   ' ': '\\textrm{ }',
+  // Invisible operators (U+2061-U+2064): no visual rendering in LaTeX.
+  '⁡': '',
+  '⁢': '',
+  '⁣': '',
+  '⁤': '',
   '∃': '\\exists',
   '∀': '\\forall',
   '⇔': '\\iff',

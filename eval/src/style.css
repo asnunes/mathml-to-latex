@@ -1,0 +1,45 @@
+@import 'tailwindcss';
+
+/* One-off layout/styling lives as utility classes in index.html. This layer
+   covers the patterns repeated across panes and the state classes toggled at
+   runtime by playground.ts. */
+@layer components {
+  .pane-title {
+    @apply mt-4 mb-2 flex items-center gap-2 text-xs font-semibold tracking-wide text-zinc-500 uppercase first:mt-0;
+  }
+
+  .code-input {
+    @apply w-full rounded-lg border border-zinc-300 bg-zinc-50 p-2.5 font-mono text-sm leading-6;
+  }
+
+  textarea.code-input {
+    @apply resize-y;
+  }
+
+  .render-box {
+    @apply flex min-h-20 items-center justify-center overflow-x-auto rounded-lg border border-dashed border-zinc-300 p-3;
+  }
+
+  .message {
+    @apply mt-1.5 text-xs;
+  }
+
+  .message.error,
+  .message.invalid {
+    @apply rounded-md bg-red-50 px-2.5 py-1.5 text-red-700;
+  }
+
+  .message.valid {
+    @apply text-green-700;
+  }
+
+  /* Text color must live in this layer: an inline `text-*` utility would sit
+     in the later utilities layer and override the `.active` state. */
+  #mode-toggle button {
+    @apply text-zinc-500;
+  }
+
+  #mode-toggle button.active {
+    @apply bg-blue-600 text-white;
+  }
+}

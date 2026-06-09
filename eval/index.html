@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mathml-to-latex playground</title>
+  </head>
+  <body class="bg-zinc-50 text-zinc-900">
+    <div id="app" class="mx-auto max-w-6xl p-6">
+      <header class="mb-5 flex items-center justify-between">
+        <h1 class="text-xl font-semibold">mathml-to-latex <span class="font-normal text-zinc-500">playground</span></h1>
+        <nav id="mode-toggle" role="tablist" class="inline-flex overflow-hidden rounded-lg border border-zinc-300 bg-white">
+          <button type="button" data-mode="convert" class="active cursor-pointer px-4 py-2 text-sm">
+            MathML &rarr; LaTeX
+          </button>
+          <button type="button" data-mode="free" class="cursor-pointer px-4 py-2 text-sm">Free LaTeX</button>
+        </nav>
+      </header>
+
+      <main id="convert-mode" class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <section class="rounded-xl border border-zinc-200 bg-white p-4">
+          <h2 class="pane-title">MathML source</h2>
+          <textarea id="mathml-input" spellcheck="false" rows="12" class="code-input"></textarea>
+          <p id="convert-error" class="message hidden"></p>
+        </section>
+
+        <section class="rounded-xl border border-zinc-200 bg-white p-4">
+          <h2 class="pane-title">
+            LaTeX output
+            <button type="button" id="copy-latex" class="cursor-pointer rounded-md border border-zinc-300 bg-white px-2 py-0.5 text-[11px] normal-case tracking-normal text-zinc-500 hover:text-zinc-900">
+              copy
+            </button>
+          </h2>
+          <pre id="latex-output" class="code-input m-0 min-h-12 break-all whitespace-pre-wrap"></pre>
+          <p id="katex-status" class="message"></p>
+        </section>
+
+        <section class="rounded-xl border border-zinc-200 bg-white p-4">
+          <h2 class="pane-title">MathML rendered <span class="normal-case font-normal">MathJax (mml)</span></h2>
+          <div id="mathml-render" class="render-box"></div>
+          <p id="mathml-render-error" class="message hidden"></p>
+        </section>
+
+        <section class="rounded-xl border border-zinc-200 bg-white p-4">
+          <h2 class="pane-title">LaTeX rendered <span class="normal-case font-normal">MathJax (tex)</span></h2>
+          <div id="latex-render" class="render-box"></div>
+        </section>
+      </main>
+
+      <main id="free-mode" class="hidden">
+        <section class="rounded-xl border border-zinc-200 bg-white p-4">
+          <h2 class="pane-title">LaTeX source</h2>
+          <textarea id="free-input" spellcheck="false" rows="8" class="code-input"></textarea>
+          <p id="free-katex-status" class="message"></p>
+          <h2 class="pane-title">Rendered <span class="normal-case font-normal">MathJax (tex)</span></h2>
+          <div id="free-render" class="render-box"></div>
+        </section>
+      </main>
+
+      <footer class="mt-5 text-xs text-zinc-500">
+        <p>
+          Converts with the library source at <code>../src</code> (current working tree). The URL hash keeps the
+          current input, so it can be shared as a permalink in issues and PRs.
+        </p>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

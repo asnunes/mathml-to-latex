@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
 import path from 'node:path';
 
 // The playground imports the library straight from `../src`, so it always
@@ -6,6 +7,7 @@ import path from 'node:path';
 // aliases mirror the `paths` of the root tsconfig, which the library source
 // relies on for its bare `data/...` and `domain/...` imports.
 export default defineConfig({
+  plugins: [tailwindcss()],
   resolve: {
     alias: {
       'mathml-to-latex': path.resolve(__dirname, '../src/index.ts'),

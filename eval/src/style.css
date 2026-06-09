@@ -1,183 +1,39 @@
-:root {
-  --bg: #f7f7f8;
-  --pane: #ffffff;
-  --border: #d9d9e0;
-  --text: #1d1d20;
-  --muted: #71717a;
-  --accent: #2563eb;
-  --error-bg: #fef2f2;
-  --error-text: #b91c1c;
-  --ok-text: #15803d;
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-}
+@import 'tailwindcss';
 
-* {
-  box-sizing: border-box;
-}
+/* One-off layout/styling lives as utility classes in index.html. This layer
+   covers the patterns repeated across panes and the state classes toggled at
+   runtime by playground.ts. */
+@layer components {
+  .pane-title {
+    @apply mt-4 mb-2 flex items-center gap-2 text-xs font-semibold tracking-wide text-zinc-500 uppercase first:mt-0;
+  }
 
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-}
+  .code-input {
+    @apply w-full rounded-lg border border-zinc-300 bg-zinc-50 p-2.5 font-mono text-sm leading-6;
+  }
 
-#app {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.5rem;
-}
+  textarea.code-input {
+    @apply resize-y;
+  }
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.25rem;
-}
+  .render-box {
+    @apply flex min-h-20 items-center justify-center overflow-x-auto rounded-lg border border-dashed border-zinc-300 p-3;
+  }
 
-h1 {
-  font-size: 1.25rem;
-  margin: 0;
-}
+  .message {
+    @apply mt-1.5 text-xs;
+  }
 
-h1 .subtitle {
-  color: var(--muted);
-  font-weight: 400;
-}
+  .message.error,
+  .message.invalid {
+    @apply rounded-md bg-red-50 px-2.5 py-1.5 text-red-700;
+  }
 
-#mode-toggle {
-  display: inline-flex;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--pane);
-}
+  .message.valid {
+    @apply text-green-700;
+  }
 
-#mode-toggle button {
-  border: 0;
-  background: transparent;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  cursor: pointer;
-  color: var(--muted);
-}
-
-#mode-toggle button.active {
-  background: var(--accent);
-  color: #fff;
-}
-
-.two-panes {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.pane {
-  background: var(--pane);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1rem;
-}
-
-h2 {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-  margin: 1rem 0 0.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-h2:first-child {
-  margin-top: 0;
-}
-
-h2 .engine {
-  font-weight: 400;
-  text-transform: none;
-  letter-spacing: 0;
-}
-
-textarea,
-.code-output {
-  width: 100%;
-  font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 0.6rem;
-  background: #fbfbfc;
-  color: var(--text);
-}
-
-textarea {
-  resize: vertical;
-}
-
-.code-output {
-  min-height: 3rem;
-  margin: 0;
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-
-.render {
-  min-height: 4.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px dashed var(--border);
-  border-radius: 8px;
-  padding: 0.75rem;
-  overflow-x: auto;
-}
-
-.message {
-  font-size: 0.8rem;
-  margin: 0.4rem 0 0;
-}
-
-.message.error,
-.message.invalid {
-  background: var(--error-bg);
-  color: var(--error-text);
-  border-radius: 6px;
-  padding: 0.4rem 0.6rem;
-}
-
-.message.valid {
-  color: var(--ok-text);
-}
-
-.hidden {
-  display: none;
-}
-
-button.small {
-  font-size: 0.7rem;
-  border: 1px solid var(--border);
-  background: var(--pane);
-  border-radius: 6px;
-  padding: 0.15rem 0.5rem;
-  cursor: pointer;
-  color: var(--muted);
-}
-
-button.small:hover {
-  color: var(--text);
-}
-
-footer {
-  margin-top: 1.25rem;
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-
-@media (max-width: 900px) {
-  .two-panes {
-    grid-template-columns: 1fr;
+  #mode-toggle button.active {
+    @apply bg-blue-600 text-white;
   }
 }

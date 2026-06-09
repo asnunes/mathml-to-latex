@@ -1,4 +1,4 @@
-import { MathMLElement } from '../protocols/mathml-element';
+import { MathMLElement } from '../../protocols/mathml-element';
 
 /**
  * Detects the linear-system/piecewise shape emitted by editors and MathJax:

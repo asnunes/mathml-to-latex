@@ -1,4 +1,5 @@
 import { MathMLElement } from '../../../../protocols/mathml-element';
+import { relationOperatorsByGlyph } from '../../../../../syntax';
 
 /**
  * Detects whether a `<mtable>` represents multiline equation alignment (the
@@ -57,7 +58,7 @@ export class EquationAlignment {
     const firstChild = cell?.children[0];
     if (firstChild === undefined || firstChild.name !== 'mo') return false;
 
-    return RELATION_OPERATORS.has(firstChild.value.trim());
+    return relationOperatorsByGlyph.has(firstChild.value.trim());
   }
 
   private _rows(): MathMLElement[] {
@@ -68,33 +69,3 @@ export class EquationAlignment {
     return row.children.filter((child) => child.name === 'mtd');
   }
 }
-
-/** Relational operator characters, as they appear in `<mo>` content after XML decoding. */
-const RELATION_OPERATORS = new Set([
-  '=',
-  '<',
-  '>',
-  '≠',
-  '≤',
-  '≥',
-  '≦',
-  '≧',
-  '≪',
-  '≫',
-  '≈',
-  '∼',
-  '≃',
-  '≅',
-  '≡',
-  '∝',
-  '∈',
-  '∉',
-  '⊂',
-  '⊃',
-  '⊆',
-  '⊇',
-  '→',
-  '⇒',
-  '⇔',
-  '↦',
-]);

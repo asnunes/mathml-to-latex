@@ -32,6 +32,11 @@ describe('EquationAlignment.matches', () => {
     expect(EquationAlignment.matches(table)).toBe(true);
   });
 
+  it('matches relation glyph variants derived from the operator table', () => {
+    const table = mtable([mtr(mtd([mn('1')]), mtd([mo('⟶'), mn('2')])), mtr(mtd([mn('3')]), mtd([mo('≦'), mn('4')]))]);
+    expect(EquationAlignment.matches(table)).toBe(true);
+  });
+
   it('rejects a single-alignment columnalign declaration', () => {
     const table = mtable([mtr(mtd([mn('1')]), mtd([mn('2')]))], { columnalign: 'center center' });
     expect(EquationAlignment.matches(table)).toBe(false);

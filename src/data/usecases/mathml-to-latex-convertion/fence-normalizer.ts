@@ -1,4 +1,5 @@
 import { MathMLElement } from '../../protocols/mathml-element';
+import { TreeNormalizer } from './tree-normalizer';
 
 /**
  * Normalizes bare fence operators into `<mfenced>` elements, in place.
@@ -21,7 +22,7 @@ import { MathMLElement } from '../../protocols/mathml-element';
  * and `||x||` becomes the norm `\left\|x\right\|`). Any fence that does not find
  * a match is left untouched as a valid self-balanced delimiter.
  */
-export class FenceNormalizer {
+export class FenceNormalizer implements TreeNormalizer {
   private readonly _root: MathMLElement;
 
   constructor(root: MathMLElement) {

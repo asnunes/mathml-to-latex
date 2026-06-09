@@ -54,7 +54,7 @@ describe('mtable (integration)', () => {
     expect(MathMLToLaTeX.convert(mathml)).toBe('\\begin{aligned}a_{1} & = b \\\\ a_{2} & = c\\end{aligned}');
   });
 
-  it('wraps a bare table whose rows break before a relation in an aligned environment', () => {
+  it('keeps a bare table without columnalign on matrix, even when rows start with relations', () => {
     const mathml = `
 <math>
   <mtable>
@@ -69,7 +69,7 @@ describe('mtable (integration)', () => {
   </mtable>
 </math>
 `;
-    expect(MathMLToLaTeX.convert(mathml)).toBe('\\begin{aligned}x & = 1 \\\\ y & \\leq 2\\end{aligned}');
+    expect(MathMLToLaTeX.convert(mathml)).toBe('\\begin{matrix}x & = 1 \\\\ y & \\leq 2\\end{matrix}');
   });
 
   it('wraps an orphan mtr (no mtable ancestor) in a matrix environment', () => {

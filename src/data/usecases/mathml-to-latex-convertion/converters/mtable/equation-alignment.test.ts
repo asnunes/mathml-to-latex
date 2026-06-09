@@ -27,32 +27,19 @@ describe('EquationAlignment.matches', () => {
     expect(EquationAlignment.matches(table)).toBe(true);
   });
 
-  it('matches when every row has its second cell starting with a relational mo', () => {
-    const table = mtable([mtr(mtd([mn('1')]), mtd([mo('='), mn('2')])), mtr(mtd([mn('3')]), mtd([mo('≤'), mn('4')]))]);
-    expect(EquationAlignment.matches(table)).toBe(true);
-  });
-
-  it('matches relation glyph variants derived from the operator table', () => {
-    const table = mtable([mtr(mtd([mn('1')]), mtd([mo('⟶'), mn('2')])), mtr(mtd([mn('3')]), mtd([mo('≦'), mn('4')]))]);
-    expect(EquationAlignment.matches(table)).toBe(true);
-  });
-
   it('rejects a single-alignment columnalign declaration', () => {
     const table = mtable([mtr(mtd([mn('1')]), mtd([mn('2')]))], { columnalign: 'center center' });
     expect(EquationAlignment.matches(table)).toBe(false);
   });
 
-  it('rejects when only some rows break before a relation', () => {
-    const table = mtable([mtr(mtd([mn('1')]), mtd([mo('='), mn('2')])), mtr(mtd([mn('3')]), mtd([mn('4')]))]);
+  it('rejects a table without columnalign even when every row starts with a relation', () => {
+    // Cell content must never decide alignment: without columnalign the spec
+    // default is centered columns, so this renders as a matrix.
+    const table = mtable([mtr(mtd([mn('1')]), mtd([mo('='), mn('2')])), mtr(mtd([mn('3')]), mtd([mo('≤'), mn('4')]))]);
     expect(EquationAlignment.matches(table)).toBe(false);
   });
 
-  it('rejects when the second cell starts with a non-relational mo', () => {
-    const table = mtable([mtr(mtd([mn('1')]), mtd([mo('−'), mn('2')]))]);
-    expect(EquationAlignment.matches(table)).toBe(false);
-  });
-
-  it('rejects single-cell rows and empty tables', () => {
+  it('rejects a table with no columnalign declaration anywhere', () => {
     expect(EquationAlignment.matches(mtable([mtr(mtd([mn('1')]))]))).toBe(false);
     expect(EquationAlignment.matches(mtable([]))).toBe(false);
   });

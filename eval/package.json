@@ -1,0 +1,19 @@
+{
+  "name": "mathml-to-latex-eval",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Visual playground and evaluator for mathml-to-latex. Not published; see README.md.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "katex": "^0.17.0",
+    "mathjax": "^4.1.2",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16"
+  }
+}

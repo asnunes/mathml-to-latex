@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mathml-to-latex playground</title>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>mathml-to-latex <span class="subtitle">playground</span></h1>
+        <nav id="mode-toggle" role="tablist">
+          <button type="button" data-mode="convert" class="active">MathML &rarr; LaTeX</button>
+          <button type="button" data-mode="free">Free LaTeX</button>
+        </nav>
+      </header>
+
+      <main id="convert-mode" class="two-panes">
+        <section class="pane">
+          <h2>MathML source</h2>
+          <textarea id="mathml-input" spellcheck="false" rows="12"></textarea>
+          <p id="convert-error" class="message error hidden"></p>
+          <h2>MathML rendered <span class="engine">MathJax (mml)</span></h2>
+          <div id="mathml-render" class="render"></div>
+          <p id="mathml-render-error" class="message error hidden"></p>
+        </section>
+
+        <section class="pane">
+          <h2>LaTeX output <button type="button" id="copy-latex" class="small">copy</button></h2>
+          <pre id="latex-output" class="code-output"></pre>
+          <p id="katex-status" class="message"></p>
+          <h2>LaTeX rendered <span class="engine">MathJax (tex)</span></h2>
+          <div id="latex-render" class="render"></div>
+        </section>
+      </main>
+
+      <main id="free-mode" class="hidden">
+        <section class="pane">
+          <h2>LaTeX source</h2>
+          <textarea id="free-input" spellcheck="false" rows="8"></textarea>
+          <p id="free-katex-status" class="message"></p>
+          <h2>Rendered <span class="engine">MathJax (tex)</span></h2>
+          <div id="free-render" class="render"></div>
+        </section>
+      </main>
+
+      <footer>
+        <p>
+          Converts with the library source at <code>../src</code> (current working tree). The URL hash keeps the
+          current input, so it can be shared as a permalink in issues and PRs.
+        </p>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

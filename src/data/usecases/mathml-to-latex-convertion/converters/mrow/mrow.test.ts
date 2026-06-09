@@ -1,5 +1,5 @@
 import { MRow } from './mrow';
-import { MathMLElement } from '../../../protocols/mathml-element';
+import { MathMLElement } from '../../../../protocols/mathml-element';
 
 const node = (name: string, value: string): MathMLElement => ({ name, value, children: [], attributes: {} });
 

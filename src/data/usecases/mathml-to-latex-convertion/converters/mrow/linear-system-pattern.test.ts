@@ -1,5 +1,5 @@
 import { LinearSystemPattern } from './linear-system-pattern';
-import { MathMLElement } from '../../protocols/mathml-element';
+import { MathMLElement } from '../../../../protocols/mathml-element';
 
 const element = (name: string, value = '', children: MathMLElement[] = []): MathMLElement => ({
   name,

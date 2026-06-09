@@ -1,7 +1,7 @@
 import { MathMLElement } from '../../protocols/mathml-element';
 import { MathMLElementToLatexConverterAdapter } from './mathml-element-to-latex-converter-adapter';
 import { setConversionMemo } from '../../helpers/mathml-element-to-latex-converter';
-import { LinearSystemPattern } from './linear-system-pattern';
+import { LinearSystemPattern } from './converters/mrow/linear-system-pattern';
 import { FenceNormalizer } from './fence-normalizer';
 
 /**

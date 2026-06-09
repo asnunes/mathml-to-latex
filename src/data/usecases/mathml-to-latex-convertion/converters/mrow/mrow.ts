@@ -1,7 +1,7 @@
-import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
-import { MathMLElement } from '../../../protocols/mathml-element';
-import { mathMLElementToLaTeXConverter } from '../../../helpers';
-import { LinearSystemPattern } from '../linear-system-pattern';
+import { ToLaTeXConverter } from '../../../../../domain/usecases/to-latex-converter';
+import { MathMLElement } from '../../../../protocols/mathml-element';
+import { mathMLElementToLaTeXConverter } from '../../../../helpers';
+import { LinearSystemPattern } from './linear-system-pattern';
 
 /**
  * Converts a MathML `<mrow>` grouping element into LaTeX.

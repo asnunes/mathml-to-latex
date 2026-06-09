@@ -1,7 +1,9 @@
 import { MathMLElement } from '../../protocols/mathml-element';
 import { MathMLElementToLatexConverterAdapter } from './mathml-element-to-latex-converter-adapter';
 import { setConversionMemo } from '../../helpers/mathml-element-to-latex-converter';
+import { TreeNormalizer } from './tree-normalizer';
 import { FenceNormalizer } from './fence-normalizer';
+import { TableAnnotator } from './table-annotator';
 
 /**
  * Converts a MathML element tree to LaTeX iteratively, using an explicit stack
@@ -10,12 +12,15 @@ import { FenceNormalizer } from './fence-normalizer';
  * result is memoized; converters then read their children's precomputed strings
  * through {@link mathMLElementToLaTeXConverter} instead of recursing.
  *
+ * Before the conversion loop, every {@link TreeNormalizer} in the pipeline runs
+ * over the tree in order. New pre-passes are added to {@link makeTreeNormalizers}
+ * without modifying the loop or the existing passes.
+ *
  * @param root - the root element of the tree to convert.
  * @returns the LaTeX string for the whole tree.
  */
 export const convertTreeToLatex = (root: MathMLElement): string => {
-  new FenceNormalizer(root).normalize();
-  annotateInnerTables(root);
+  for (const normalizer of makeTreeNormalizers(root)) normalizer.normalize();
 
   const memo = new Map<MathMLElement, string>();
   const stack: { node: MathMLElement; visited: boolean }[] = [{ node: root, visited: false }];
@@ -42,18 +47,8 @@ export const convertTreeToLatex = (root: MathMLElement): string => {
   return memo.get(root) ?? '';
 };
 
-// Flags every mtable nested inside another mtable. This reproduces the
-// cumulative effect of the previous recursive per-converter flagging, but in a
-// single iterative top-down pass so it cannot overflow the call stack.
-const annotateInnerTables = (root: MathMLElement): void => {
-  const stack: { node: MathMLElement; insideMtable: boolean }[] = [{ node: root, insideMtable: false }];
-
-  while (stack.length > 0) {
-    const { node, insideMtable } = stack.pop() as { node: MathMLElement; insideMtable: boolean };
-    if (node.name === 'mtable' && insideMtable) node.attributes['innerTable'] = 'innerTable';
-
-    const childInsideMtable = insideMtable || node.name === 'mtable';
-    const children = node.children ?? [];
-    for (let i = 0; i < children.length; i++) stack.push({ node: children[i], insideMtable: childInsideMtable });
-  }
-};
+/** The normalization pipeline, in execution order. */
+const makeTreeNormalizers = (root: MathMLElement): TreeNormalizer[] => [
+  new FenceNormalizer(root),
+  new TableAnnotator(root),
+];

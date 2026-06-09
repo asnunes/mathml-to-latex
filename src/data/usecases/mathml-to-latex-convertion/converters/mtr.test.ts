@@ -9,4 +9,14 @@ describe('MTr', () => {
     const mtr: MathMLElement = { name: 'mtr', value: '', children: [mtd(mn('1')), mtd(mn('2'))], attributes: {} };
     expect(new MTr(mtr).convert()).toBe('1 & 2');
   });
+
+  it('wraps itself in a matrix environment when flagged as a bare row', () => {
+    const mtr: MathMLElement = {
+      name: 'mtr',
+      value: '',
+      children: [mtd(mn('1')), mtd(mn('2'))],
+      attributes: { bareRow: 'bareRow' },
+    };
+    expect(new MTr(mtr).convert()).toBe('\\begin{matrix}1 & 2\\end{matrix}');
+  });
 });

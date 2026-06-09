@@ -1,7 +1,7 @@
 import { MathMLToLaTeX } from '../../../..';
 
 describe('mtable (integration)', () => {
-  it('joins rows with line breaks and cells with ampersands', () => {
+  it('wraps a bare table in a matrix environment (issue #74)', () => {
     const mathml = `
 <math>
   <mtable>
@@ -16,7 +16,7 @@ describe('mtable (integration)', () => {
   </mtable>
 </math>
 `;
-    expect(MathMLToLaTeX.convert(mathml)).toBe('1 & 2 \\\\ 3 & 4');
+    expect(MathMLToLaTeX.convert(mathml)).toBe('\\begin{matrix}1 & 2 \\\\ 3 & 4\\end{matrix}');
   });
 
   it('wraps a nested mtable in a matrix environment', () => {
@@ -33,6 +33,58 @@ describe('mtable (integration)', () => {
   </mtable>
 </math>
 `;
-    expect(MathMLToLaTeX.convert(mathml)).toBe('\\begin{matrix}1\\end{matrix}');
+    expect(MathMLToLaTeX.convert(mathml)).toBe('\\begin{matrix}\\begin{matrix}1\\end{matrix}\\end{matrix}');
+  });
+
+  it('wraps a bare table declaring right/left column alignment in an aligned environment', () => {
+    const mathml = `
+<math display="block">
+  <mtable columnalign="right left">
+    <mtr>
+      <mtd><msub><mi>a</mi><mn>1</mn></msub></mtd>
+      <mtd><mo>=</mo><mi>b</mi></mtd>
+    </mtr>
+    <mtr>
+      <mtd><msub><mi>a</mi><mn>2</mn></msub></mtd>
+      <mtd><mo>=</mo><mi>c</mi></mtd>
+    </mtr>
+  </mtable>
+</math>
+`;
+    expect(MathMLToLaTeX.convert(mathml)).toBe('\\begin{aligned}a_{1} & = b \\\\ a_{2} & = c\\end{aligned}');
+  });
+
+  it('wraps a bare table whose rows break before a relation in an aligned environment', () => {
+    const mathml = `
+<math>
+  <mtable>
+    <mtr>
+      <mtd><mi>x</mi></mtd>
+      <mtd><mo>=</mo><mn>1</mn></mtd>
+    </mtr>
+    <mtr>
+      <mtd><mi>y</mi></mtd>
+      <mtd><mo>&#x2264;</mo><mn>2</mn></mtd>
+    </mtr>
+  </mtable>
+</math>
+`;
+    expect(MathMLToLaTeX.convert(mathml)).toBe('\\begin{aligned}x & = 1 \\\\ y & \\leq 2\\end{aligned}');
+  });
+
+  it('keeps a fenced table on its matrix environment without double wrapping', () => {
+    const mathml = `
+<math>
+  <mo>(</mo>
+  <mtable>
+    <mtr>
+      <mtd><mn>1</mn></mtd>
+      <mtd><mn>2</mn></mtd>
+    </mtr>
+  </mtable>
+  <mo>)</mo>
+</math>
+`;
+    expect(MathMLToLaTeX.convert(mathml)).toBe('\\begin{pmatrix} 1 & 2 \\end{pmatrix}');
   });
 });

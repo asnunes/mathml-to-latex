@@ -1,6 +1,7 @@
 import { MathMLElement } from '../../protocols/mathml-element';
 import { MathMLElementToLatexConverterAdapter } from './mathml-element-to-latex-converter-adapter';
 import { setConversionMemo } from '../../helpers/mathml-element-to-latex-converter';
+import { isLinearSystemPattern } from '../../helpers/linear-system-pattern';
 import { FenceNormalizer } from './fence-normalizer';
 
 /**
@@ -15,7 +16,7 @@ import { FenceNormalizer } from './fence-normalizer';
  */
 export const convertTreeToLatex = (root: MathMLElement): string => {
   new FenceNormalizer(root).normalize();
-  annotateInnerTables(root);
+  annotateTables(root);
 
   const memo = new Map<MathMLElement, string>();
   const stack: { node: MathMLElement; visited: boolean }[] = [{ node: root, visited: false }];
@@ -42,18 +43,34 @@ export const convertTreeToLatex = (root: MathMLElement): string => {
   return memo.get(root) ?? '';
 };
 
-// Flags every mtable nested inside another mtable. This reproduces the
-// cumulative effect of the previous recursive per-converter flagging, but in a
-// single iterative top-down pass so it cannot overflow the call stack.
-const annotateInnerTables = (root: MathMLElement): void => {
-  const stack: { node: MathMLElement; insideMtable: boolean }[] = [{ node: root, insideMtable: false }];
+// Flags tables for their converter in a single iterative top-down pass (so it
+// cannot overflow the call stack): `innerTable` marks every mtable nested
+// inside another mtable, and `bareTable` marks every mtable that no other
+// converter wraps in an environment (not inside an mfenced, not the table of a
+// linear-system row), so MTable emits a valid environment instead of raw
+// `&`/`\\` alignment markers.
+const annotateTables = (root: MathMLElement): void => {
+  type Frame = { node: MathMLElement; insideMtable: boolean; wrapped: boolean };
+  const stack: Frame[] = [{ node: root, insideMtable: false, wrapped: false }];
 
   while (stack.length > 0) {
-    const { node, insideMtable } = stack.pop() as { node: MathMLElement; insideMtable: boolean };
-    if (node.name === 'mtable' && insideMtable) node.attributes['innerTable'] = 'innerTable';
+    const { node, insideMtable, wrapped } = stack.pop() as Frame;
+    if (node.name === 'mtable') {
+      if (insideMtable) node.attributes['innerTable'] = 'innerTable';
+      else if (!wrapped) node.attributes['bareTable'] = 'bareTable';
+    }
 
     const childInsideMtable = insideMtable || node.name === 'mtable';
+    const childWrapped = wrapped || node.name === 'mfenced';
+    const linearSystemTable = isLinearSystemPattern(node) ? node.children[1] : undefined;
+
     const children = node.children ?? [];
-    for (let i = 0; i < children.length; i++) stack.push({ node: children[i], insideMtable: childInsideMtable });
+    for (let i = 0; i < children.length; i++) {
+      stack.push({
+        node: children[i],
+        insideMtable: childInsideMtable,
+        wrapped: childWrapped || children[i] === linearSystemTable,
+      });
+    }
   }
 };

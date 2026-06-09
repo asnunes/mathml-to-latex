@@ -15,4 +15,19 @@ describe('mrow (integration)', () => {
 `;
     expect(MathMLToLaTeX.convert(mathml)).toBe('2 + 2');
   });
+
+  it('converts the MathJax piecewise shape (brace + table, no closing operator) to cases', () => {
+    const mathml = `
+<math>
+  <mrow>
+    <mo>{</mo>
+    <mtable>
+      <mtr><mtd><mi>x</mi></mtd></mtr>
+      <mtr><mtd><mi>y</mi></mtd></mtr>
+    </mtable>
+  </mrow>
+</math>
+`;
+    expect(MathMLToLaTeX.convert(mathml)).toBe('\\begin{cases} x \\\\ y \\end{cases}');
+  });
 });

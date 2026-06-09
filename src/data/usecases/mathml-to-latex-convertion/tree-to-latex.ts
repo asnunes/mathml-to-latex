@@ -1,7 +1,7 @@
 import { MathMLElement } from '../../protocols/mathml-element';
 import { MathMLElementToLatexConverterAdapter } from './mathml-element-to-latex-converter-adapter';
 import { setConversionMemo } from '../../helpers/mathml-element-to-latex-converter';
-import { isLinearSystemPattern } from './linear-system-pattern';
+import { LinearSystemPattern } from './linear-system-pattern';
 import { FenceNormalizer } from './fence-normalizer';
 
 /**
@@ -64,7 +64,7 @@ const annotateTables = (root: MathMLElement): void => {
 
     const childInsideMtable = insideMtable || node.name === 'mtable';
     const childWrapped = wrapped || node.name === 'mfenced';
-    const linearSystemTable = isLinearSystemPattern(node) ? node.children[1] : undefined;
+    const linearSystemTable = LinearSystemPattern.matches(node) ? node.children[1] : undefined;
 
     const children = node.children ?? [];
     for (let i = 0; i < children.length; i++) {

@@ -1,7 +1,7 @@
 import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { mathMLElementToLaTeXConverter } from '../../../helpers';
-import { isLinearSystemPattern } from '../linear-system-pattern';
+import { LinearSystemPattern } from '../linear-system-pattern';
 
 /**
  * Converts a MathML `<mrow>` grouping element into LaTeX.
@@ -28,7 +28,7 @@ export class MRow implements ToLaTeXConverter {
    */
   convert(): string {
     // Linear system pattern: { + mtable, optionally closed by an empty operator
-    if (isLinearSystemPattern(this._mathmlElement)) {
+    if (LinearSystemPattern.matches(this._mathmlElement)) {
       return this._convertAsLinearSystem();
     }
 

@@ -1,16 +1,23 @@
 import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
-import { mathMLElementToLaTeXConverter, ParenthesisWrapper } from '../../../helpers';
+import { mathMLElementToLaTeXConverter } from '../../../helpers';
 import { InvalidNumberOfChildrenError } from '../../../errors';
 
 /**
  * Converts a MathML `<mmultiscripts>` element into LaTeX.
  *
- * Renders the base with attached subscript/superscript pairs, honoring an
- * optional `<mprescripts>` marker to emit pre-scripts before the base.
+ * Parses the structure the spec defines, `base (sub sup)* [mprescripts
+ * (presub presup)*]`, accepting the `<mprescripts/>` marker at any position:
+ * every prescript pair is emitted as `{}_{sub}^{sup}` before the base and
+ * every postscript pair after it, with `{}` atoms separating consecutive
+ * pairs so multiple pairs never produce a LaTeX double-subscript error.
+ * `<none/>` placeholders and missing trailing scripts are omitted instead of
+ * emitting empty `_{}`/`^{}`.
  *
  * @example
- * // <mmultiscripts><mi>X</mi><mn>1</mn><mn>2</mn></mmultiscripts> -> X_{1}^{2}
+ * // <mmultiscripts><mi>X</mi><mprescripts/><mn>1</mn><mn>2</mn></mmultiscripts> -> {}_{1}^{2}X
+ * @example
+ * // <mmultiscripts><mi>F</mi><mn>1</mn><mn>2</mn><mn>3</mn><mn>4</mn></mmultiscripts> -> F_{1}^{2}{}_{3}^{4}
  */
 export class MMultiscripts implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
@@ -21,61 +28,77 @@ export class MMultiscripts implements ToLaTeXConverter {
 
   /**
    * @returns the LaTeX representation of this element.
-   * @throws {InvalidNumberOfChildrenError} when fewer than 3 children are present.
+   * @throws {InvalidNumberOfChildrenError} when the base child is missing.
    */
   convert(): string {
     const { name, children } = this._mathmlElement;
-    const childrenLength = children.length;
+    if (children.length === 0) throw new InvalidNumberOfChildrenError(name, 1, 0, 'at least');
 
-    if (childrenLength < 3) throw new InvalidNumberOfChildrenError(name, 3, childrenLength, 'at least');
+    const base = this._baseLatex(children[0]);
+    const { prescripts, postscripts } = this._splitScripts(children.slice(1));
 
-    const baseContent = mathMLElementToLaTeXConverter(children[0]).convert();
-
-    return this._prescriptLatex() + this._wrapInParenthesisIfThereIsSpace(baseContent) + this._postscriptLatex();
+    return this._pairsLatex(prescripts, true) + base + this._pairsLatex(postscripts, false);
   }
 
-  /** Builds the pre-script `_{...}^{...}` segment when an `<mprescripts>` marker is present. */
-  private _prescriptLatex(): string {
-    const { children } = this._mathmlElement;
-    let sub;
-    let sup;
-
-    if (this._isPrescripts(children[1])) {
-      sub = children[2];
-      sup = children[3];
-    } else if (this._isPrescripts(children[3])) {
-      sub = children[4];
-      sup = children[5];
-    } else return '';
-
-    const subLatex = mathMLElementToLaTeXConverter(sub).convert();
-    const supLatex = mathMLElementToLaTeXConverter(sup).convert();
-
-    return `\\_{${subLatex}}^{${supLatex}}`;
+  /**
+   * Converts the base, grouping a multi-token result with braces so the
+   * scripts attach to all of it (and never collide with the base's own
+   * scripts, e.g. a `msub` base). An empty base becomes an empty atom so the
+   * surrounding scripts still have something valid to attach to.
+   */
+  private _baseLatex(base: MathMLElement): string {
+    const latex = mathMLElementToLaTeXConverter(base).convert();
+    if (latex === '') return '{}';
+    return latex.length === 1 ? latex : `{${latex}}`;
   }
 
-  /** Builds the post-script `_{...}^{...}` segment that follows the base. */
-  private _postscriptLatex(): string {
-    const { children } = this._mathmlElement;
-    if (this._isPrescripts(children[1])) return '';
+  /** Splits the script children at the `<mprescripts/>` marker, wherever it is. */
+  private _splitScripts(scripts: MathMLElement[]): { prescripts: ScriptPair[]; postscripts: ScriptPair[] } {
+    const markerIndex = scripts.findIndex((child) => child.name === 'mprescripts');
+    const postscripts = markerIndex === -1 ? scripts : scripts.slice(0, markerIndex);
+    const prescripts = markerIndex === -1 ? [] : scripts.slice(markerIndex + 1);
 
-    const sub = children[1];
-    const sup = children[2];
-
-    const subLatex = mathMLElementToLaTeXConverter(sub).convert();
-    const supLatex = mathMLElementToLaTeXConverter(sup).convert();
-
-    return `_{${subLatex}}^{${supLatex}}`;
+    return { prescripts: this._toPairs(prescripts), postscripts: this._toPairs(postscripts) };
   }
 
-  /** Wraps the base in parentheses when it contains whitespace, to keep scripts attached correctly. */
-  private _wrapInParenthesisIfThereIsSpace(str: string): string {
-    if (!str.match(/\s+/g)) return str;
-    return new ParenthesisWrapper().wrap(str);
+  private _toPairs(elements: MathMLElement[]): ScriptPair[] {
+    const pairs: ScriptPair[] = [];
+    for (let i = 0; i < elements.length; i += 2) {
+      pairs.push({ sub: this._scriptLatex(elements[i]), sup: this._scriptLatex(elements[i + 1]) });
+    }
+    return pairs;
   }
 
-  /** Returns true when the child is the `<mprescripts>` marker element. */
-  private _isPrescripts(child: MathMLElement): boolean {
-    return child?.name === 'mprescripts';
+  /** `<none/>` placeholders and missing trailing scripts become empty scripts. */
+  private _scriptLatex(element: MathMLElement | undefined): string {
+    if (element === undefined || element.name === 'none') return '';
+    return mathMLElementToLaTeXConverter(element).convert();
   }
+
+  /**
+   * Renders the pairs. Prescript pairs always hang off their own empty `{}`
+   * atom; the first postscript pair attaches straight to the base and every
+   * following pair gets a `{}` atom, which is what prevents double-subscript
+   * errors. Fully empty pairs have no LaTeX representation and are skipped.
+   */
+  private _pairsLatex(pairs: ScriptPair[], isPrescript: boolean): string {
+    let latex = '';
+    let attachesToBase = !isPrescript;
+
+    for (const pair of pairs) {
+      const scripts = (pair.sub ? `_{${pair.sub}}` : '') + (pair.sup ? `^{${pair.sup}}` : '');
+      if (scripts === '') continue;
+
+      latex += (attachesToBase ? '' : '{}') + scripts;
+      attachesToBase = false;
+    }
+
+    return latex;
+  }
+}
+
+/** One (subscript, superscript) column of the scripts list, already converted. */
+interface ScriptPair {
+  sub: string;
+  sup: string;
 }

@@ -19,7 +19,7 @@ describe('mmultiscript (integration)', () => {
 </mrow>
 </mmultiscripts>
 </math>`,
-      latex: '\\left(N a\\right)_{11}^{+}',
+      latex: '{N a}_{11}^{+}',
     },
     {
       name: 'handles it as it were a subsup tag',
@@ -35,7 +35,7 @@ describe('mmultiscript (integration)', () => {
 <none/>
 </mmultiscripts>
 </math>`,
-      latex: '\\left(N a\\right)_{11}^{}',
+      latex: '{N a}_{11}',
     },
     {
       name: 'handles it as it were a subsup tag',
@@ -51,7 +51,7 @@ describe('mmultiscript (integration)', () => {
 </mrow>
 </mmultiscripts>
 </math>`,
-      latex: '\\left(N a\\right)_{}^{+}',
+      latex: '{N a}^{+}',
     },
     {
       name: 'adds prescript to latex subsup expression',
@@ -69,7 +69,7 @@ describe('mmultiscript (integration)', () => {
 
 </mmultiscripts>
 </math>`,
-      latex: '\\_{b}^{a}X_{d}^{c}',
+      latex: '{}_{b}^{a}X_{d}^{c}',
     },
     {
       name: 'adds prescript to latex subsup expression',
@@ -87,7 +87,7 @@ describe('mmultiscript (integration)', () => {
 
 </mmultiscripts>
 </math>`,
-      latex: '\\_{b}^{}X_{}^{c}',
+      latex: '{}_{b}X^{c}',
     },
     {
       name: 'adds prescript and ignore subsup',
@@ -100,7 +100,7 @@ describe('mmultiscript (integration)', () => {
 
 </mmultiscripts>
 </math>`,
-      latex: '\\_{b}^{}X',
+      latex: '{}_{b}X',
     },
     {
       name: 'should trim empty spaces at the start and end',
@@ -117,7 +117,7 @@ describe('mmultiscript (integration)', () => {
     expect(MathMLToLaTeX.convert(mathml)).toBe(latex);
   });
 
-  it('throws InvalidNumberOfChildrenError', () => {
+  it('renders an odd trailing script as a lone subscript', () => {
     const mathml = `<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 <mmultiscripts>
 <mrow>
@@ -129,8 +129,40 @@ describe('mmultiscript (integration)', () => {
 </mrow>
 </mmultiscripts>
 </math>`;
-    expect(() => MathMLToLaTeX.convert(mathml)).toThrow(
-      new InvalidNumberOfChildrenError('mmultiscripts', 3, 2, 'at least'),
+    expect(MathMLToLaTeX.convert(mathml)).toBe('{N a}_{11}');
+  });
+
+  it('keeps every script pair, separating pairs with empty atoms (no double subscript)', () => {
+    const mathml = `<math>
+<mmultiscripts>
+  <mi>F</mi>
+  <mn>1</mn><mn>2</mn>
+  <mn>3</mn><mn>4</mn>
+</mmultiscripts>
+</math>`;
+    expect(MathMLToLaTeX.convert(mathml)).toBe('F_{1}^{2}{}_{3}^{4}');
+  });
+
+  it('finds mprescripts after multiple postscript pairs', () => {
+    const mathml = `<math>
+<mmultiscripts>
+  <mi>X</mi>
+  <mn>5</mn><mn>6</mn>
+  <mn>7</mn><mn>8</mn>
+  <mprescripts/>
+  <mn>9</mn><mn>3</mn>
+</mmultiscripts>
+</math>`;
+    expect(MathMLToLaTeX.convert(mathml)).toBe('{}_{9}^{3}X_{5}^{6}{}_{7}^{8}');
+  });
+
+  it('accepts a base-only element, as the spec allows', () => {
+    expect(MathMLToLaTeX.convert('<math><mmultiscripts><mi>X</mi></mmultiscripts></math>')).toBe('X');
+  });
+
+  it('throws when the base is missing entirely', () => {
+    expect(() => MathMLToLaTeX.convert('<math><mmultiscripts></mmultiscripts></math>')).toThrow(
+      new InvalidNumberOfChildrenError('mmultiscripts', 1, 0, 'at least'),
     );
   });
 });

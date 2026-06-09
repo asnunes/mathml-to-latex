@@ -1,4 +1,4 @@
-import { MathMLToLaTeX } from '../../../..';
+import { MathMLToLaTeX } from '../../../../..';
 
 describe('mtable (integration)', () => {
   it('wraps a bare table in a matrix environment (issue #74)', () => {

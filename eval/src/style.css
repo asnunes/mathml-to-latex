@@ -33,6 +33,12 @@
     @apply text-green-700;
   }
 
+  /* Text color must live in this layer: an inline `text-*` utility would sit
+     in the later utilities layer and override the `.active` state. */
+  #mode-toggle button {
+    @apply text-zinc-500;
+  }
+
   #mode-toggle button.active {
     @apply bg-blue-600 text-white;
   }

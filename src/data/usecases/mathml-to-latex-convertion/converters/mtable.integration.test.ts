@@ -72,6 +72,21 @@ describe('mtable (integration)', () => {
     expect(MathMLToLaTeX.convert(mathml)).toBe('\\begin{aligned}x & = 1 \\\\ y & \\leq 2\\end{aligned}');
   });
 
+  it('wraps an orphan mtr (no mtable ancestor) in a matrix environment', () => {
+    const mathml = `
+<math>
+  <mrow>
+    <mi>y</mi>
+    <mtr>
+      <mtd><mi>a</mi></mtd>
+      <mtd><mi>b</mi></mtd>
+    </mtr>
+  </mrow>
+</math>
+`;
+    expect(MathMLToLaTeX.convert(mathml)).toBe('y \\begin{matrix}a & b\\end{matrix}');
+  });
+
   it('keeps a fenced table on its matrix environment without double wrapping', () => {
     const mathml = `
 <math>

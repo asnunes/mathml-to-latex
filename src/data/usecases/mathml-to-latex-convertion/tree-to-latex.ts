@@ -43,12 +43,13 @@ export const convertTreeToLatex = (root: MathMLElement): string => {
   return memo.get(root) ?? '';
 };
 
-// Flags tables for their converter in a single iterative top-down pass (so it
-// cannot overflow the call stack): `innerTable` marks every mtable nested
-// inside another mtable, and `bareTable` marks every mtable that no other
+// Flags tables and rows for their converters in a single iterative top-down
+// pass (so it cannot overflow the call stack): `innerTable` marks every mtable
+// nested inside another mtable, `bareTable` marks every mtable that no other
 // converter wraps in an environment (not inside an mfenced, not the table of a
-// linear-system row), so MTable emits a valid environment instead of raw
-// `&`/`\\` alignment markers.
+// linear-system row), and `bareRow` marks every mtr with no mtable ancestor.
+// The flagged converters then emit a valid environment themselves, keeping the
+// invariant that `&`/`\\` alignment markers never appear outside one.
 const annotateTables = (root: MathMLElement): void => {
   type Frame = { node: MathMLElement; insideMtable: boolean; wrapped: boolean };
   const stack: Frame[] = [{ node: root, insideMtable: false, wrapped: false }];
@@ -59,6 +60,7 @@ const annotateTables = (root: MathMLElement): void => {
       if (insideMtable) node.attributes['innerTable'] = 'innerTable';
       else if (!wrapped) node.attributes['bareTable'] = 'bareTable';
     }
+    if (node.name === 'mtr' && !insideMtable) node.attributes['bareRow'] = 'bareRow';
 
     const childInsideMtable = insideMtable || node.name === 'mtable';
     const childWrapped = wrapped || node.name === 'mfenced';

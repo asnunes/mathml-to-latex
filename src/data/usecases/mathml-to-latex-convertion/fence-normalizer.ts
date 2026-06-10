@@ -1,5 +1,6 @@
 import { MathMLElement } from '../../protocols/mathml-element';
 import { TreeNormalizer } from './tree-normalizer';
+import { doubleBarFenceGlyphs } from '../../../syntax';
 
 /**
  * Normalizes bare fence operators into `<mfenced>` elements, in place.
@@ -184,10 +185,10 @@ class FencePairing {
 
 const OPENERS = new Set(['(', '[', '{']);
 const CLOSERS = new Set([')', ']', '}']);
-// The unicode double-bar glyphs (`‖` U+2016, `∥` U+2225) toggle like their
-// ascii counterparts: a sibling pair is read as a norm (issue #43). An odd
-// leftover spills back and keeps its relational meaning (`\parallel`).
-const BARS = new Set(['|', '||', '‖', '∥']);
+// Single bar plus the double-bar family: bars toggle, so a sibling pair is
+// read as an absolute value or norm (issue #43), while an odd leftover spills
+// back and keeps its standalone meaning (`\mid`, `\parallel`).
+const BARS = new Set(['|', ...doubleBarFenceGlyphs]);
 
 /** Script elements whose base can hide the closing bar of a norm. */
 const SCRIPT_ELEMENTS = new Set(['msub', 'msup', 'msubsup']);

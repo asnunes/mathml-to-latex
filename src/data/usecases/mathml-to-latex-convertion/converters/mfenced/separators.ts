@@ -1,3 +1,4 @@
+import { doubleBarFenceGlyphs } from '../../../../../syntax';
 import { GenericWrapper } from '../../../../helpers';
 
 /** Classifies a pair of open/close fences and wraps content in them. */
@@ -28,8 +29,7 @@ export class Separators {
   }
 
   areParallels(): boolean {
-    // Ascii double bar and the unicode double-bar glyphs (issue #43).
-    return this._compare('||', '||') || this._compare('‖', '‖') || this._compare('∥', '∥');
+    return this.open === this.close && doubleBarFenceGlyphs.has(this.open);
   }
 
   areNotEqual(): boolean {

@@ -1,4 +1,5 @@
 import { Wrapper } from './wrapper';
+import { doubleBarFenceGlyphs } from '../../../syntax';
 
 /**
  * Wraps a string with auto-sizing LaTeX delimiters, prefixing the given
@@ -26,15 +27,13 @@ export class GenericWrapper {
 
 /**
  * MathML fence characters that are not valid `\left`/`\right` delimiters as-is:
- * braces are grouping characters (need `\{`/`\}`) and the double-bar forms are
- * the norm delimiter `\|` (a bare `\left||` is a stretchy bar followed by a
- * literal one, and the unicode glyphs `‖`/`∥` are not delimiters LaTeX
- * knows at all, as in issue #43).
+ * braces are grouping characters (need `\{`/`\}`) and the double-bar family
+ * is the norm delimiter `\|` (a bare `\left||` is a stretchy bar followed by a
+ * literal one, and the unicode glyphs are not delimiters LaTeX knows at all,
+ * as in issue #43).
  */
 const DELIMITER_TRANSLATIONS = new Map([
   ['{', '\\{'],
   ['}', '\\}'],
-  ['||', '\\|'],
-  ['‖', '\\|'],
-  ['∥', '\\|'],
+  ...[...doubleBarFenceGlyphs].map((glyph): [string, string] => [glyph, '\\|']),
 ]);

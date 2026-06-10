@@ -1,6 +1,7 @@
 import { ownLookup } from '../../../../helpers';
 import {
   HashUTF8ToLtXConverter,
+  LatexSpecials,
   allMathOperatorsByChar,
   allMathOperatorsByGlyph,
   mathNumberByGlyph,
@@ -21,12 +22,15 @@ export class Operator {
   private _operate(): string {
     // `??` instead of `||`: entries mapped to an empty string (e.g. the
     // invisible operators U+2061-U+2064) are valid results, not lookup misses.
-    return (
-      this._findByCharacter() ??
-      this._findByGlyph() ??
-      this._findByNumber() ??
-      new HashUTF8ToLtXConverter().convert(this._value)
-    );
+    const mapped = this._findByCharacter() ?? this._findByGlyph() ?? this._findByNumber();
+    if (mapped !== undefined) return mapped;
+
+    const converted = new HashUTF8ToLtXConverter().convert(this._value);
+    if (converted !== this._value) return converted;
+
+    // No mapping anywhere: the value reaches the output verbatim, so LaTeX
+    // specials must be escaped to stay literal glyphs.
+    return LatexSpecials.escapeForMath(this._value);
   }
 
   private _findByCharacter(): string | undefined {

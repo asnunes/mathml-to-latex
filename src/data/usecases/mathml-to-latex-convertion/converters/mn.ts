@@ -1,13 +1,14 @@
 import { ToLaTeXConverter } from '../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../protocols/mathml-element';
 import { normalizeWhiteSpaces, ownLookup } from '../../../helpers';
-import { mathNumberByGlyph } from '../../../../syntax';
+import { LatexSpecials, mathNumberByGlyph } from '../../../../syntax';
 
 /**
  * Converts a MathML `<mn>` (number) element into LaTeX.
  *
  * Normalizes/trims the value and maps it through the number-by-glyph table,
- * returning the raw normalized value when no mapping exists.
+ * returning the normalized value with LaTeX specials escaped when no mapping
+ * exists (`#1` would otherwise not even compile).
  *
  * @example
  * // <mn>42</mn> -> 42
@@ -25,7 +26,8 @@ export class MN implements ToLaTeXConverter {
   convert(): string {
     const normalizedValue = normalizeWhiteSpaces(this._mathmlElement.value).trim();
     const convertedValue = ownLookup(mathNumberByGlyph, normalizedValue);
+    if (convertedValue !== undefined) return convertedValue;
 
-    return convertedValue || normalizedValue;
+    return LatexSpecials.escapeForMath(normalizedValue);
   }
 }

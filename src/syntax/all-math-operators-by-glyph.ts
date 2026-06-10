@@ -4,7 +4,7 @@
  * to translate operator content into LaTeX.
  */
 export const allMathOperatorsByGlyph: Record<string, string> = {
-  _: '\\underline',
+  _: '\\_',
   '⏡': '\\underbrace',
   '⏠': '\\overbrace',
   '⏟': '\\underbrace',

@@ -1,17 +1,24 @@
 import { ToLaTeXConverter } from '../../../../../domain/usecases/to-latex-converter';
 import { MathMLElement } from '../../../../protocols/mathml-element';
+import { LatexSpecials } from '../../../../../syntax';
 import { MI } from '../mi';
+import { Character } from '../mi/character';
 import { TextCommand } from './text-command';
 
 /**
  * Converts a MathML `<mtext>` element into LaTeX.
  *
- * Splits the text into runs of alphanumeric/space characters and standalone
- * symbols: alphanumeric runs are wrapped by the `mathvariant` text command while
- * each symbol is delegated to the `<mi>` converter.
+ * Keeps the content as a single text run wrapped by the `mathvariant` text
+ * command: ASCII alphanumerics and spaces verbatim, LaTeX specials escaped, and
+ * characters without a symbol-table mapping (accented letters, plain
+ * punctuation) kept literal, since `\text{...}` renders unicode directly. Only
+ * glyphs the symbol tables know (Greek letters, arrows, invisible operators)
+ * leave the run and are delegated to the `<mi>` converter as math.
  *
  * @example
  * // <mtext mathvariant="bold">hi</mtext> -> \textbf{hi}
+ * // <mtext>café</mtext> -> \text{café}
+ * // <mtext>a_b</mtext> -> \text{a\_b}
  */
 export class MText implements ToLaTeXConverter {
   private readonly _mathmlElement: MathMLElement;
@@ -25,51 +32,38 @@ export class MText implements ToLaTeXConverter {
    */
   convert(): string {
     const { attributes, value } = this._mathmlElement;
+    const textCommand = new TextCommand(attributes.mathvariant);
 
     return [...value]
-      .map<Char>((char) => {
-        // if is a letter, number or space, return it
-        if (/^[a-zA-Z0-9]$/.test(char) || char === ' ')
-          return {
-            value: char,
-            isAlphanumeric: true,
-          };
-
-        // if is a symbol, set it to mi parser
-        return {
-          value: char,
-          isAlphanumeric: false,
-        };
-      })
-      .reduce<Char[]>((acc, char) => {
-        // merge consecutive alphanumeric characters
-        if (char.isAlphanumeric) {
-          const lastChar = acc[acc.length - 1];
-          if (lastChar && lastChar.isAlphanumeric) {
-            lastChar.value += char.value;
-            return acc;
-          }
+      .map((char) => this._classify(char))
+      .reduce<Run[]>((runs, run) => {
+        // merge consecutive text characters into a single run
+        const lastRun = runs[runs.length - 1];
+        if (run.isText && lastRun && lastRun.isText) {
+          lastRun.value += run.value;
+          return runs;
         }
 
-        return [...acc, char];
+        return [...runs, run];
       }, [])
-      .map((char) => {
-        if (!char.isAlphanumeric) {
-          return new MI({
-            name: 'mi',
-            attributes: {},
-            children: [],
-            value: char.value,
-          }).convert();
-        }
-
-        return new TextCommand(attributes.mathvariant).apply(char.value);
-      })
+      .map((run) => (run.isText ? textCommand.apply(run.value) : this._convertSymbol(run.value)))
       .join('');
+  }
+
+  private _classify(char: string): Run {
+    if (/^[a-zA-Z0-9]$/.test(char) || char === ' ') return { value: char, isText: true };
+    if (LatexSpecials.isSpecial(char)) return { value: LatexSpecials.escapeForText(char), isText: true };
+    if (Character.findMapping(char) !== undefined) return { value: char, isText: false };
+
+    return { value: char, isText: true };
+  }
+
+  private _convertSymbol(value: string): string {
+    return new MI({ name: 'mi', attributes: {}, children: [], value }).convert();
   }
 }
 
-type Char = {
+type Run = {
   value: string;
-  isAlphanumeric: boolean;
+  isText: boolean;
 };

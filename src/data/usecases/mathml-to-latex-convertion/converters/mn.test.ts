@@ -11,4 +11,9 @@ describe('MN', () => {
   it('trims surrounding whitespace', () => {
     expect(new MN(mn('  7  ')).convert()).toBe('7');
   });
+
+  it('escapes LaTeX specials in unmapped values', () => {
+    expect(new MN(mn('#1')).convert()).toBe('\\#1');
+    expect(new MN(mn('$5.00')).convert()).toBe('\\$5.00');
+  });
 });

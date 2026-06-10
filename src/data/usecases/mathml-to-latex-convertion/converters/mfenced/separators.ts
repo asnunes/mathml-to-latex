@@ -28,7 +28,8 @@ export class Separators {
   }
 
   areParallels(): boolean {
-    return this._compare('||', '||');
+    // Ascii double bar and the unicode double-bar glyphs (issue #43).
+    return this._compare('||', '||') || this._compare('‖', '‖') || this._compare('∥', '∥');
   }
 
   areNotEqual(): boolean {

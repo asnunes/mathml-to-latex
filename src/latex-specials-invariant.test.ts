@@ -37,16 +37,7 @@ const SEED_BY_TAG: Record<string, number> = { mtext: 1, mi: 2, mn: 3, mo: 4 };
 
 // Letters, accents, digits, every LaTeX special, plain punctuation and glyphs
 // the lookup tables know — the mix real documents throw at token elements.
-const TEXT_CHARS = [
-  ...'aBz39 ',
-  ...'éãçüñõ',
-  ...'αβΔ→±≤',
-  ...'#$%&_{}~^\\',
-  ...'+-=:;.,!?()<>/\'"',
-  '⁡',
-  '⁢',
-  '日',
-];
+const TEXT_CHARS = [...'aBz39 ', ...'éãçüñõ', ...'αβΔ→±≤', ...'#$%&_{}~^\\', ...'+-=:;.,!?()<>/\'"', '⁡', '⁢', '日'];
 
 const randomText = (random: Random): string => {
   const length = 1 + Math.floor(random() * 8);
@@ -56,7 +47,12 @@ const randomText = (random: Random): string => {
 };
 
 const xmlEscape = (text: string): string =>
-  text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+  text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
 
 /** Removes LaTeX commands and single-char escapes, leaving only literal output text. */
 const stripCommands = (latex: string): string => latex.replace(/\\[a-zA-Z]+/g, '').replace(/\\[^a-zA-Z]/g, '');

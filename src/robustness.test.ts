@@ -76,18 +76,25 @@ describe('#convert security and robustness', () => {
     // such as "constructor" or "toString" resolves through the prototype chain
     // instead of missing. An unknown token must instead fall through to its
     // literal text, exactly like any other unrecognized token (e.g. "foo").
-    const prototypeKeys = ['constructor', 'hasOwnProperty', 'toString', 'valueOf', '__proto__'];
+    // Underscores come out escaped, since `_` is LaTeX subscript syntax.
+    const prototypeKeys = [
+      ['constructor', 'constructor'],
+      ['hasOwnProperty', 'hasOwnProperty'],
+      ['toString', 'toString'],
+      ['valueOf', 'valueOf'],
+      ['__proto__', '\\_\\_proto\\_\\_'],
+    ];
 
-    it.each(prototypeKeys)('converts <mo>%s</mo> to its literal text', (token) => {
+    it.each(prototypeKeys)('converts <mo>%s</mo> to its literal text', (token, literal) => {
       const result = MathMLToLaTeX.convert(`<math><mo>${token}</mo></math>`);
 
-      expect(result).toBe(token);
+      expect(result).toBe(literal);
       expect(result).not.toContain('[native code]');
     });
 
-    it.each(prototypeKeys)('converts <mi>%s</mi> to its literal text', (token) => {
+    it.each(prototypeKeys)('converts <mi>%s</mi> to its literal text', (token, literal) => {
       expect(() => MathMLToLaTeX.convert(`<math><mi>${token}</mi></math>`)).not.toThrow();
-      expect(MathMLToLaTeX.convert(`<math><mi>${token}</mi></math>`)).toBe(token);
+      expect(MathMLToLaTeX.convert(`<math><mi>${token}</mi></math>`)).toBe(literal);
     });
   });
 

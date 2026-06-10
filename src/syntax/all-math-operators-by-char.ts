@@ -4,7 +4,7 @@
  * `<mo>` converter to translate operator content into LaTeX.
  */
 export const allMathOperatorsByChar: Record<string, string> = {
-  _: '\\underline',
+  _: '\\_',
   '&#x23E1;': '\\underbrace',
   '&#x23E0;': '\\overbrace',
   '&#x23DF;': '\\underbrace',

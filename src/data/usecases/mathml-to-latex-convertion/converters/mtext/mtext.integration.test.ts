@@ -123,6 +123,36 @@ describe('mtext (integration)', () => {
 `,
       latex: '\\text{Creepy}',
     },
+    {
+      name: 'keep accented text as a single literal run',
+      mathml: '<math><mtext>café</mtext></math>',
+      latex: '\\text{café}',
+    },
+    {
+      name: 'keep accented words and spaces together',
+      mathml: '<math><mtext>São Paulo</mtext></math>',
+      latex: '\\text{São Paulo}',
+    },
+    {
+      name: 'escape an underscore so it does not become a subscript',
+      mathml: '<math><mtext>a_b</mtext></math>',
+      latex: '\\text{a\\_b}',
+    },
+    {
+      name: 'escape braces so they do not group silently',
+      mathml: '<math><mtext>{x}</mtext></math>',
+      latex: '\\text{\\{x\\}}',
+    },
+    {
+      name: 'escape percent and dollar inside the run',
+      mathml: '<math><mtext>preço: R$ 5</mtext></math>',
+      latex: '\\text{preço: R\\$ 5}',
+    },
+    {
+      name: 'still delegate known math glyphs to math mode',
+      mathml: '<math><mtext>T = 2α</mtext></math>',
+      latex: '\\text{T = 2}\\alpha',
+    },
   ])('$name', ({ mathml, latex }) => {
     expect(MathMLToLaTeX.convert(mathml)).toBe(latex);
   });

@@ -20,4 +20,9 @@ describe('MI', () => {
   it('ignores an unknown mathvariant', () => {
     expect(new MI(mi('x', { mathvariant: 'nonsense' })).convert()).toBe('x');
   });
+
+  it('escapes LaTeX specials in unmapped values so they stay literal', () => {
+    expect(new MI(mi('x_i')).convert()).toBe('x\\_i');
+    expect(new MI(mi('a#b')).convert()).toBe('a\\#b');
+  });
 });

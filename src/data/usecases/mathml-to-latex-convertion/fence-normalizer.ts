@@ -88,6 +88,16 @@ class FencePairing {
         continue;
       }
 
+      const scriptCloser = this._scriptBaseCloser(child, top);
+      if (scriptCloser !== undefined) {
+        const frame = openFrames.pop() as Frame;
+        current = openFrames.length > 0 ? openFrames[openFrames.length - 1].content : root;
+        const fence = this._makeFence(frame.opener, scriptCloser, frame.content);
+        current.push({ ...child, children: [fence, ...child.children.slice(1)] });
+        paired = true;
+        continue;
+      }
+
       current.push(child);
     }
 
@@ -116,6 +126,28 @@ class FencePairing {
   /** Wraps several nodes in a single `<mrow>` so `<mfenced>` does not insert separators between them. */
   private _wrapInRow(children: MathMLElement[]): MathMLElement {
     return { name: 'mrow', value: '', children, attributes: {} };
+  }
+
+  /**
+   * Detects the closing bar of a scripted norm, the shape editors emit for
+   * `‖P‖_F^2`: a script element whose base holds only the bar that matches the
+   * open bar frame (`<mo>∥</mo><mi>P</mi><msubsup><mrow><mo>∥</mo></mrow>F 2`,
+   * issue #43). Without this, the nested closer is invisible to the sibling
+   * pass and the opener would pair with the *next* norm's opener, fencing the
+   * wrong span. The frame content becomes the fence and the script attaches to
+   * it: `msubsup(mfenced(P), F, 2)`.
+   *
+   * @returns the matching bar, or undefined when the child is not this shape.
+   */
+  private _scriptBaseCloser(child: MathMLElement, top: Frame | undefined): MathMLElement | undefined {
+    if (top === undefined || !this._isBar(top.opener)) return undefined;
+    if (!SCRIPT_ELEMENTS.has(child.name) || child.children.length === 0) return undefined;
+
+    const base = child.children[0];
+    const bar = base.name === 'mrow' && base.children.length === 1 ? base.children[0] : base;
+    if (bar.name !== 'mo' || bar.value.trim() !== top.opener.value.trim()) return undefined;
+
+    return bar;
   }
 
   /** A directional opener, or a vertical bar that does not close the current frame. */
@@ -152,7 +184,13 @@ class FencePairing {
 
 const OPENERS = new Set(['(', '[', '{']);
 const CLOSERS = new Set([')', ']', '}']);
-const BARS = new Set(['|', '||']);
+// The unicode double-bar glyphs (`‖` U+2016, `∥` U+2225) toggle like their
+// ascii counterparts: a sibling pair is read as a norm (issue #43). An odd
+// leftover spills back and keeps its relational meaning (`\parallel`).
+const BARS = new Set(['|', '||', '‖', '∥']);
+
+/** Script elements whose base can hide the closing bar of a norm. */
+const SCRIPT_ELEMENTS = new Set(['msub', 'msup', 'msubsup']);
 
 /** An open fence and the sibling content collected since, awaiting a closer. */
 interface Frame {

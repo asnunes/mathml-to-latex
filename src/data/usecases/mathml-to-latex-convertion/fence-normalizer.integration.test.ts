@@ -90,6 +90,68 @@ describe('normalize-fences (integration)', () => {
       latex: '\\left(a\\right) \\left\\|\\right. b',
     },
     {
+      name: 'a parallel-to glyph pair (norm, issue #43) renders with \\| delimiters',
+      mathml: '<math><mrow><mo>∥</mo><mi>P</mi><mo>∥</mo></mrow></math>',
+      latex: '\\left\\|P\\right\\|',
+    },
+    {
+      name: 'a double-vertical-line glyph pair renders with \\| delimiters',
+      mathml: '<math><mrow><mo>‖</mo><mi>P</mi><mo>‖</mo></mrow></math>',
+      latex: '\\left\\|P\\right\\|',
+    },
+    {
+      name: 'a lone parallel-to glyph keeps its relational meaning',
+      mathml: '<math><mrow><mi>a</mi><mo>∥</mo><mi>b</mi></mrow></math>',
+      latex: 'a \\parallel b',
+    },
+    {
+      name: 'a lone double-vertical-line glyph keeps its standalone meaning',
+      mathml: '<math><mrow><mi>a</mi><mo>‖</mo><mi>b</mi></mrow></math>',
+      latex: 'a \\parallel b',
+    },
+    {
+      name: 'a scripted norm closes through the script base (issue #43)',
+      mathml: '<math><mo>∥</mo><mi>P</mi><msubsup><mrow><mo>∥</mo></mrow><mi>F</mi><mn>2</mn></msubsup></math>',
+      latex: '\\left\\|P\\right\\|_{F}^{2}',
+    },
+    {
+      name: 'a scripted norm with the double-vertical-line glyph closes through the script base',
+      mathml: '<math><mo>‖</mo><mi>P</mi><msubsup><mrow><mo>‖</mo></mrow><mi>F</mi><mn>2</mn></msubsup></math>',
+      latex: '\\left\\|P\\right\\|_{F}^{2}',
+    },
+    {
+      name: 'two scripted norms do not cross-pair',
+      mathml:
+        '<math><mo>∥</mo><mi>P</mi><msubsup><mrow><mo>∥</mo></mrow><mi>F</mi><mn>2</mn></msubsup><mo>+</mo><mo>∥</mo><mi>Q</mi><msubsup><mrow><mo>∥</mo></mrow><mi>F</mi><mn>2</mn></msubsup></math>',
+      latex: '\\left\\|P\\right\\|_{F}^{2} + \\left\\|Q\\right\\|_{F}^{2}',
+    },
+    {
+      name: 'an evaluated-at bar closes through the msub base',
+      mathml: '<math><mo>|</mo><mi>f</mi><msub><mrow><mo>|</mo></mrow><mi>a</mi></msub></math>',
+      latex: '\\left|f\\right|_{a}',
+    },
+    {
+      name: 'a scripted bar with no open frame stays untouched',
+      mathml: '<math><msubsup><mrow><mo>∥</mo></mrow><mi>F</mi><mn>2</mn></msubsup></math>',
+      latex: '\\parallel_{F}^{2}',
+    },
+    {
+      name: 'a parallel-to glyph pair around a table becomes a Vmatrix',
+      mathml: `
+<math>
+  <mrow>
+    <mo>∥</mo>
+    <mtable>
+      <mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr>
+      <mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr>
+    </mtable>
+    <mo>∥</mo>
+  </mrow>
+</math>
+`,
+      latex: '\\begin{Vmatrix} 1 & 2 \\\\ 3 & 4 \\end{Vmatrix}',
+    },
+    {
       // A single separator bar (divides, such-that, evaluated-at) never pairs,
       // so it stays exactly as it converts today.
       name: 'a lone separator bar stays untouched',

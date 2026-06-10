@@ -16,4 +16,11 @@ describe('GenericWrapper', () => {
   it('maps a double bar to the norm delimiter', () => {
     expect(new GenericWrapper('||', '||').wrap('x')).toBe('\\left\\|x\\right\\|');
   });
+
+  it.each([
+    { name: 'parallel-to glyph (U+2225)', fence: '∥' },
+    { name: 'double vertical line glyph (U+2016)', fence: '‖' },
+  ])('maps the $name to the norm delimiter (issue #43)', ({ fence }) => {
+    expect(new GenericWrapper(fence, fence).wrap('x')).toBe('\\left\\|x\\right\\|');
+  });
 });

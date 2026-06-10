@@ -1,3 +1,4 @@
+import { doubleBarFenceGlyphs } from '../../../../../syntax';
 import { GenericWrapper } from '../../../../helpers';
 
 /** Classifies a pair of open/close fences and wraps content in them. */
@@ -28,7 +29,7 @@ export class Separators {
   }
 
   areParallels(): boolean {
-    return this._compare('||', '||');
+    return this.open === this.close && doubleBarFenceGlyphs.has(this.open);
   }
 
   areNotEqual(): boolean {

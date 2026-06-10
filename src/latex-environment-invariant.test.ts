@@ -50,7 +50,7 @@ const pick = <T>(random: Random, options: T[]): T => options[Math.floor(random()
 
 const MI_VALUES = ['x', 'y', 'sin', 'α'];
 const MN_VALUES = ['1', '42', '3.14'];
-const MO_VALUES = ['+', '=', '−', '(', ')', '[', ']', '{', '}', '|', '∥', '≤', '→', '∑', ''];
+const MO_VALUES = ['+', '=', '−', '(', ')', '[', ']', '{', '}', '|', '∥', '‖', '≤', '→', '∑', ''];
 const MTEXT_VALUES = ['if', 'caf', 'a b'];
 const FENCE_PAIRS = [
   ['(', ')'],

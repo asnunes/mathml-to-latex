@@ -105,8 +105,18 @@ describe('normalize-fences (integration)', () => {
       latex: 'a \\parallel b',
     },
     {
+      name: 'a lone double-vertical-line glyph keeps its standalone meaning',
+      mathml: '<math><mrow><mi>a</mi><mo>‖</mo><mi>b</mi></mrow></math>',
+      latex: 'a \\parallel b',
+    },
+    {
       name: 'a scripted norm closes through the script base (issue #43)',
       mathml: '<math><mo>∥</mo><mi>P</mi><msubsup><mrow><mo>∥</mo></mrow><mi>F</mi><mn>2</mn></msubsup></math>',
+      latex: '\\left\\|P\\right\\|_{F}^{2}',
+    },
+    {
+      name: 'a scripted norm with the double-vertical-line glyph closes through the script base',
+      mathml: '<math><mo>‖</mo><mi>P</mi><msubsup><mrow><mo>‖</mo></mrow><mi>F</mi><mn>2</mn></msubsup></math>',
       latex: '\\left\\|P\\right\\|_{F}^{2}',
     },
     {

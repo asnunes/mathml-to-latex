@@ -17,9 +17,21 @@ describe('MMultiscripts', () => {
     );
   });
 
-  it('throws when it has fewer than three children', () => {
-    expect(() => new MMultiscripts(mmultiscripts([node('mi', 'x'), node('mn', '1')])).convert()).toThrow(
-      InvalidNumberOfChildrenError,
+  it('renders a lone subscript when the superscript of a pair is missing', () => {
+    expect(new MMultiscripts(mmultiscripts([node('mi', 'x'), node('mn', '1')])).convert()).toBe('x_{1}');
+  });
+
+  it('omits none placeholders instead of emitting empty scripts', () => {
+    expect(new MMultiscripts(mmultiscripts([node('mi', 'x'), node('none', ''), node('mn', '2')])).convert()).toBe(
+      'x^{2}',
     );
+  });
+
+  it('returns the base alone when there are no scripts', () => {
+    expect(new MMultiscripts(mmultiscripts([node('mi', 'x')])).convert()).toBe('x');
+  });
+
+  it('throws when the base is missing', () => {
+    expect(() => new MMultiscripts(mmultiscripts([])).convert()).toThrow(InvalidNumberOfChildrenError);
   });
 });

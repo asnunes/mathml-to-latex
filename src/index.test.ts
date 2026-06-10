@@ -174,6 +174,6 @@ describe('#convert', () => {
 
     const result = MathMLToLaTeX.convert(mathml);
 
-    expect(result).toBe('\\_{238}^{}U');
+    expect(result).toBe('{}_{238}U');
   });
 });
